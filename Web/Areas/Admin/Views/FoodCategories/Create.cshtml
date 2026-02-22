@@ -1,0 +1,58 @@
+@model Web.Areas.Admin.Models.FoodCategoryFormVm
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "افزودن دسته بندی";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <h1 class="m-0">@ViewData["Title"]</h1>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @await Html.PartialAsync("_Alerts")
+
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <label>عنوان</label>
+                        <input class="form-control" asp-for="Dto.Title" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>توضیح</label>
+                        <textarea class="form-control" rows="3" asp-for="Dto.Description"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>ترتیب نمایش</label>
+                                <input class="form-control" type="number" asp-for="Dto.DisplayOrder" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>فعال</label>
+                                <select class="form-control" asp-for="Dto.IsActive">
+                                    <option value="true">بله</option>
+                                    <option value="false">خیر</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success" type="submit">
+                        <i class="fas fa-save ml-1"></i> ذخیره
+                    </button>
+                    <a class="btn btn-secondary" asp-area="Admin" asp-controller="FoodCategories" asp-action="Index">بازگشت</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

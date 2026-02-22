@@ -1,11 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa">
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>
-		پنل مدیریت
+		??? ??????
 	</title>
 
 	<!-- Styles -->
@@ -36,7 +36,7 @@
 		<div class="gl-backdrop"></div>
 		<div class="gl-box">
 			<div class="spinner-border" role="status" aria-hidden="true"></div>
-			<div class="mt-2 small">در حال پردازش...</div>
+			<div class="mt-2 small">?? ??? ??????...</div>
 		</div>
 	</div>
 	<div class="wrapper">
@@ -49,7 +49,7 @@
 					<a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
 				</li>
 				<li class="nav-item d-none d-sm-inline-block">
-					<a href="index.php" class="nav-link">داشبورد</a>
+					<a href="index.php" class="nav-link">???????</a>
 				</li>
 			</ul>
 
@@ -74,7 +74,7 @@
 
 				<li class="nav-item">
 					<a href="javascript:void(0)" id="btnLogout" class="nav-link text-danger">
-						<i class="fas fa-sign-out-alt"></i> خروج
+						<i class="fas fa-sign-out-alt"></i> ????
 					</a>
 				</li>
 			</ul>
@@ -85,7 +85,7 @@
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 
 			<a href="/" class="brand-link">
-				<span class="brand-text font-weight-light">مدیریت</span>
+				<span class="brand-text font-weight-light">??????</span>
 			</a>
 
 			<div class="sidebar">
@@ -103,56 +103,56 @@
 						<li class="nav-item">
 							<a href="/" class="nav-link">
 								<i class="nav-icon fas fa-home"></i>
-								<p>داشبورد</p>
+								<p>???????</p>
 							</a>
 						</li>
 
 						<li class="nav-item">
 							<a href="/Visitor" class="nav-link">
 								<i class="nav-icon fas fa-users"></i>
-								<p>مراجعین</p>
+								<p>???????</p>
 							</a>
 						</li>
 
 						<li class="nav-item">
 							<a href="/user" class="nav-link">
 								<i class="nav-icon fas fa-user-cog"></i>
-								<p>مدیریت کاربران</p>
+								<p>?????? ???????</p>
 							</a>
 						</li>
 
 						<li class="nav-item">
 							<a href="/Import" class="nav-link">
 								<i class="nav-icon fas fa-upload"></i>
-								<p>ورود اطلاعات</p>
+								<p>???? ???????</p>
 							</a>
 						</li>
 
 						<li class="nav-item">
 							<a href="/Export" class="nav-link">
 								<i class="nav-icon fas fa-file-excel"></i>
-								<p>خروجی اکسل مراجعین</p>
+								<p>????? ???? ???????</p>
 							</a>
 						</li>
 
 						<li class="nav-item">
 							<a href="/LogHistory" class="nav-link">
 								<i class="nav-icon fas fa-history"></i>
-								<p>تاریخچه فعالیت ها</p>
+								<p>??????? ?????? ??</p>
 							</a>
 						</li>
 
 						<li class="nav-item">
 							<a href="/Personel" class="nav-link">
 								<i class="nav-icon fas fa-user-clock"></i>
-								<p>مدیریت پرسنل</p>
+								<p>?????? ?????</p>
 							</a>
 						</li>
 
 						<li class="nav-item">
 							<a href="/Roles" class="nav-link">
 								<i class="nav-icon fas fa-user-shield"></i>
-								<p>مدیریت نقش ها</p>
+								<p>?????? ??? ??</p>
 							</a>
 						</li>
 
@@ -160,7 +160,7 @@
 							<a href="#" class="nav-link">
 								<i class="nav-icon fas fa-calendar-check"></i>
 								<p>
-									مدیریت ویزیت
+									?????? ?????
 									<i class="right fas fa-angle-left"></i>
 								</p>
 							</a>
@@ -170,14 +170,14 @@
 								<li class="nav-item">
 									<a href="/" class="nav-link">
 										<i class="far fa-clock nav-icon"></i>
-										<p>روزها و شیفت‌های ویزیت</p>
+										<p>????? ? ???????? ?????</p>
 									</a>
 								</li>
 
 								<li class="nav-item">
 									<a href="/" class="nav-link">
 										<i class="far fa-calendar-plus nav-icon"></i>
-										<p>ثبت نوبت مراجعه</p>
+										<p>??? ???? ??????</p>
 									</a>
 								</li>
 
@@ -198,8 +198,8 @@
 
 		<footer class="main-footer text-center">
 			<strong>
-				©
-				سیستم مدیریت مطب دکتر نسرین روشنی
+				�
+				????? ?????? ??? ???? ????? ?????
 			</strong>
 		</footer>
 
@@ -231,14 +231,14 @@
 
 			async function logout() {
 				try {
-					// فراخوانی API لاگ‌اوت
+					// ???????? API ???????
 					await apiRequest('POST', '/api/auth/logout');
 
 				} catch (err) {
-					// حتی اگر خطا خورد، فرانت باید لاگ‌اوت شود
+					// ??? ??? ??? ????? ????? ???? ??????? ???
 					console.warn("Logout API failed:", err);
 				} finally {
-					// پاک‌سازی کامل فرانت
+					// ???????? ???? ?????
 					sessionStorage.removeItem(AUTH_CTX_KEY);
 					sessionStorage.removeItem("api_token");
 					sessionStorage.removeItem("perm_map_v1");
@@ -247,7 +247,7 @@
 					} catch (e) {
 						window.PERM = null;
 					}
-					// ریدایرکت
+					// ????????
 					window.location.href = '/Login';
 				}
 			}
@@ -280,9 +280,9 @@
 			function clearCached() {
 				sessionStorage.removeItem(CACHE_KEY);
 				sessionStorage.removeItem(CACHE_PERM_KEY);
-				sessionStorage.removeItem("api_token"); // اگر توکن رو هم اینجا نگه می‌داری
+				sessionStorage.removeItem("api_token"); // ??? ???? ?? ?? ????? ??? ???????
 
-				// اگر PERM رو گلوبال نگه داشتی
+				// ??? PERM ?? ?????? ??? ?????
 				try {
 					delete window.PERM;
 				} catch (e) {
@@ -312,9 +312,9 @@
 				if ($role.length) $role.text(role);
 			}
 
-			// --- ساخت درخت بر اساس ParentId ---
+			// --- ???? ???? ?? ???? ParentId ---
 			function buildTreeByParentId(menu) {
-				// اگر بعضی آیتم‌ها children هم داشته باشند، همه را فلت می‌کنیم
+				// ??? ???? ??????? children ?? ????? ?????? ??? ?? ??? ???????
 				const flat = [];
 				(menu || []).forEach(m => {
 					flat.push(m);
@@ -322,13 +322,13 @@
 					if (Array.isArray(ch) && ch.length) flat.push(...ch);
 				});
 
-				// نودها را نرمال و map می‌کنیم
+				// ????? ?? ????? ? map ???????
 				const map = new Map();
 				flat.forEach(raw => {
 					const id = getVal(raw, "id", "Id");
 					if (id == null) return;
 
-					// کپی نود، و children خالی
+					// ??? ???? ? children ????
 					const node = map.get(id) || {
 						...raw
 					};
@@ -341,23 +341,23 @@
 					map.set(id, node);
 				});
 
-				// وصل کردن فرزندها به والد
+				// ??? ???? ??????? ?? ????
 				const roots = [];
 				map.forEach(node => {
 					const pid = node.__parentId;
 
-					// ریشه: ParentId null/undefined/0/"0"
+					// ????: ParentId null/undefined/0/"0"
 					const isRoot = pid == null || pid === 0 || pid === "0";
 					if (isRoot) {
 						roots.push(node);
 					} else {
 						const parent = map.get(pid);
 						if (parent) parent.__children.push(node);
-						else roots.push(node); // اگر والد پیدا نشد، بیار ریشه تا گم نشه
+						else roots.push(node); // ??? ???? ???? ???? ???? ???? ?? ?? ???
 					}
 				});
 
-				// سورت بازگشتی
+				// ???? ???????
 				function sortRec(list) {
 					list.sort((a, b) => (a.__order ?? 0) - (b.__order ?? 0));
 					list.forEach(n => sortRec(n.__children));
@@ -367,7 +367,7 @@
 				return roots;
 			}
 
-			// --- رندر درخت ---
+			// --- ???? ???? ---
 			function renderMenuByParentId(menu) {
 				const $ul = $("#sideMenu");
 				if (!$ul.length) return;
@@ -381,7 +381,7 @@
 					const children = item.__children;
 
 					if (children && children.length) {
-						const parentId = "m_" + item.__id; // ثابت و قابل تکرار
+						const parentId = "m_" + item.__id; // ???? ? ???? ?????
 						const $li = $(`
 			<li class="nav-item has-treeview">
 			  <a href="#" class="nav-link">
@@ -403,7 +403,7 @@
 							const chIcon = ch.__icon || "far fa-circle";
 							const chUrl = normalizeUrl(ch);
 
-							// اگر چند سطحی خواستی، همینجا می‌تونیم recurse کنیم.
+							// ??? ??? ???? ??????? ?????? ???????? recurse ????.
 							const $chLi = $(`
 			  <li class="nav-item">
 				<a href="${chUrl}" class="nav-link">
@@ -434,9 +434,8 @@
 			// ---- init ----
 			const ctx = getCached();
 			if (!ctx) {
-				window.location.href = "/Login";
-				return;
-			}
+                return;
+            }
 
 			renderUser(ctx);
 			renderMenuByParentId(ctx.menu);
@@ -463,3 +462,5 @@
 
 
 </html>
+
+

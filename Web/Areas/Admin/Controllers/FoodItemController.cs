@@ -1,12 +1,11 @@
-﻿using Application.Features.FastFood.Dtos;
+using Application.Features.FastFood.Dtos;
 using Application.Interfaces.FastFoodInterface;
 using Microsoft.AspNetCore.Mvc;
 using Web.Areas.Admin.Models;
 
-namespace WebApp.Areas.Admin.Controllers
+namespace Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class FoodItemsController : Controller
+    public class FoodItemsController : AdminBaseController
     {
         private readonly IFoodItemService _svc;
         private readonly IFoodCategoryService _catSvc;
@@ -56,8 +55,8 @@ namespace WebApp.Areas.Admin.Controllers
                 return View(vm);
             }
 
-            TempData["ok"] = "آیتم ثبت شد.";
-            return RedirectToAction(nameof(Edit), new { id = res.Data }); // مستقیم برو به ویرایش برای تصاویر
+            TempData["ok"] = "???? ??? ??.";
+            return RedirectToAction(nameof(Edit), new { id = res.Data }); // ?????? ??? ?? ?????? ???? ??????
         }
 
         public async Task<IActionResult> Edit(int id, CancellationToken ct)
@@ -107,7 +106,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return View(vm);
             }
 
-            TempData["ok"] = "ویرایش انجام شد.";
+            TempData["ok"] = "?????? ????? ??.";
             return RedirectToAction(nameof(Edit), new { id });
         }
 
@@ -137,3 +136,5 @@ namespace WebApp.Areas.Admin.Controllers
         }
     }
 }
+
+

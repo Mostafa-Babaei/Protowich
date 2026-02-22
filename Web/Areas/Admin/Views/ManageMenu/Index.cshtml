@@ -1,0 +1,48 @@
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "مدیریت منو";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <h1 class="m-0">@ViewData["Title"]</h1>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-outline card-primary">
+                    <div class="card-header"><h3 class="card-title m-0">دسته بندی ها</h3></div>
+                    <div class="card-body">
+                        <p class="text-muted">ایجاد، ویرایش و حذف دسته بندی های منو.</p>
+                        <a class="btn btn-primary btn-sm" asp-area="Admin" asp-controller="FoodCategories" asp-action="Index">مشاهده</a>
+                        <a class="btn btn-outline-primary btn-sm" asp-area="Admin" asp-controller="FoodCategories" asp-action="Create">افزودن</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-outline card-success">
+                    <div class="card-header"><h3 class="card-title m-0">آیتم های منو</h3></div>
+                    <div class="card-body">
+                        <p class="text-muted">مدیریت غذاها، قیمت، وضعیت نمایش و تصاویر.</p>
+                        <a class="btn btn-success btn-sm" asp-area="Admin" asp-controller="FoodItems" asp-action="Index">مشاهده</a>
+                        <a class="btn btn-outline-success btn-sm" asp-area="Admin" asp-controller="FoodItems" asp-action="Create">افزودن</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-outline card-info">
+                    <div class="card-header"><h3 class="card-title m-0">نمایش منوی عمومی</h3></div>
+                    <div class="card-body">
+                        <p class="text-muted">پیش نمایش همان صفحه ای که کاربر عمومی می بیند.</p>
+                        <a class="btn btn-info btn-sm" asp-area="" asp-controller="Menu" asp-action="Index">مشاهده منوی عمومی</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

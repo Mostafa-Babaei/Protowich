@@ -1,12 +1,11 @@
-﻿using Application.Features.FastFood.Dtos;
+using Application.Features.FastFood.Dtos;
 using Application.Interfaces.FastFoodInterface;
 using Microsoft.AspNetCore.Mvc;
 using Web.Areas.Admin.Models;
 
-namespace WebApp.Areas.Admin.Controllers
+namespace Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class FoodImagesController : Controller
+    public class FoodImagesController : AdminBaseController
     {
         private readonly IFoodImageService _svc;
 
@@ -46,7 +45,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return View(vm);
             }
 
-            TempData["ok"] = "تصویر ثبت شد.";
+            TempData["ok"] = "????? ??? ??.";
             return RedirectToAction(nameof(Index), new { foodItemId = vm.FoodItemId });
         }
 
@@ -61,7 +60,7 @@ namespace WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id, int foodItemId, CancellationToken ct)
         {
-            // فقط برای نمایش تایید حذف
+            // ??? ???? ????? ????? ???
             ViewBag.FoodItemId = foodItemId;
             return View(new FoodImageListItemDto { Id = id, FoodItemId = foodItemId });
         }
@@ -76,3 +75,5 @@ namespace WebApp.Areas.Admin.Controllers
         }
     }
 }
+
+

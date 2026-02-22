@@ -1,4 +1,4 @@
-﻿@model Application.Features.Auth.DTOs.LoginViewModel
+@model Application.Features.Auth.DTOs.LoginViewModel
 
 @{
 	ViewData["Title"] = "Login";
@@ -29,7 +29,7 @@
 				</div>
 			}
 
-			<form asp-action="Login" method="post">
+			<form asp-action="Index" method="post">
 				@Html.AntiForgeryToken()
 				<input type="hidden" asp-for="ReturnUrl" />
 
@@ -83,3 +83,4 @@
 		}
 	</script>
 }
+

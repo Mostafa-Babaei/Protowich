@@ -1,12 +1,11 @@
-﻿using Application.Features.FastFood.Dtos;
+using Application.Features.FastFood.Dtos;
 using Application.Interfaces.FastFoodInterface;
 using Microsoft.AspNetCore.Mvc;
 using Web.Areas.Admin.Models;
 
-namespace WebApp.Areas.Admin.Controllers
+namespace Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class FoodCategoriesController : Controller
+    public class FoodCategoriesController : AdminBaseController
     {
         private readonly IFoodCategoryService _svc;
 
@@ -43,7 +42,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return View(vm);
             }
 
-            TempData["ok"] = "دسته‌بندی ثبت شد.";
+            TempData["ok"] = "????????? ??? ??.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -78,7 +77,7 @@ namespace WebApp.Areas.Admin.Controllers
                 return View(vm);
             }
 
-            TempData["ok"] = "ویرایش انجام شد.";
+            TempData["ok"] = "?????? ????? ??.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -99,3 +98,5 @@ namespace WebApp.Areas.Admin.Controllers
         }
     }
 }
+
+

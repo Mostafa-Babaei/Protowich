@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Areas.Admin.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : AdminBaseController
     {
         public IActionResult Index()
         {
@@ -10,3 +10,5 @@ namespace Web.Areas.Admin.Controllers
         }
     }
 }
+
+
