@@ -1,0 +1,107 @@
+﻿@model Web.Areas.Admin.Models.FoodCategoryIndexVm
+@{
+    Layout = "_AdminLayout"; ViewData["Title"] = "دسته‌بندی غذا";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="m-0">دسته‌بندی‌های منو</h1>
+            <a class="btn btn-primary" asp-area="Admin" asp-controller="FoodCategories" asp-action="Create">
+                <i class="fas fa-plus ml-1"></i> افزودن
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @await Html.PartialAsync("_Alerts")
+
+        <div class="card">
+            <div class="card-header">
+                <form method="get" class="row">
+                    <div class="col-md-4">
+                        <input class="form-control" name="Keyword" value="@Model.Keyword" placeholder="جستجو (عنوان/توضیح)">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-secondary w-100" type="submit">
+                            <i class="fas fa-search ml-1"></i> جستجو
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>عنوان</th>
+                            <th>ترتیب</th>
+                            <th>فعال</th>
+                            <th>تعداد آیتم</th>
+                            <th style="width:220px;">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Data?.Items == null || !Model.Data.Items.Any())
+                        {
+                            <tr><td colspan="6" class="text-center text-muted p-4">موردی یافت نشد</td></tr>
+                        }
+                        else
+                        {
+                            foreach (var x in Model.Data.Items)
+                            {
+                                <tr>
+                                    <td>@x.Id</td>
+                                    <td>@x.Title</td>
+                                    <td>@x.DisplayOrder</td>
+                                    <td>
+                                        @if (x.IsActive)
+                                        {
+                                            <span class="badge badge-success">فعال</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-secondary">غیرفعال</span>
+                                        }
+                                    </td>
+                                    <td>@x.ItemsCount</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-info" asp-area="Admin" asp-controller="FoodCategories" asp-action="Edit" asp-route-id="@x.Id">
+                                            <i class="fas fa-edit ml-1"></i> ویرایش
+                                        </a>
+                                        <a class="btn btn-sm btn-danger" asp-area="Admin" asp-controller="FoodCategories" asp-action="Delete" asp-route-id="@x.Id">
+                                            <i class="fas fa-trash ml-1"></i> حذف
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer">
+                @* Pagination ساده *@
+                @{
+                    var page = Model.Data?.Page ?? 1;
+                    var pageSize = Model.Data?.PageSize ?? 20;
+                    var total = Model.Data?.TotalCount ?? 0;
+                    var totalPages = (int)Math.Ceiling(total / (double)pageSize);
+                }
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-muted">کل: @total</div>
+                    <div>
+                        @for (int p = 1; p <= Math.Max(1, totalPages); p++)
+                        {
+                            <a class="btn btn-sm @(p==page ? "btn-primary" : "btn-outline-primary")"
+                               href="@Url.Action("Index", new { Page=p, PageSize=pageSize, Keyword=Model.Keyword })">@p</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

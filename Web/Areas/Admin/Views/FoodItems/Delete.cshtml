@@ -1,0 +1,20 @@
+﻿@model Domain.Entities.FastFood.FoodItem
+@{
+    Layout = "_AdminLayout"; ViewData["Title"] = "حذف آیتم";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-danger">
+            <div class="card-header"><h3 class="card-title">حذف آیتم</h3></div>
+            <div class="card-body">
+                <p>آیا از حذف «<b>@Model.Title</b>» مطمئن هستید؟</p>
+                <form method="post">
+                    @Html.AntiForgeryToken()
+                    <button class="btn btn-danger" type="submit">حذف</button>
+                    <a class="btn btn-secondary" asp-area="Admin" asp-controller="FoodItems" asp-action="Index">انصراف</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

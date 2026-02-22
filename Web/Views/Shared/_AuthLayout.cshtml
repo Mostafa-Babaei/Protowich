@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@(ViewData["Title"] ?? "Login")</title>
+
+    <!-- Plugins -->
+    <link rel="stylesheet" href="~/assets/css/vendor/all.min.css">
+    <link rel="stylesheet" href="~/dist/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+
+    <!-- Custom -->
+    <link rel="stylesheet" href="~/css/login.css">
+
+</head>
+
+<body class="hold-transition login-page" dir="rtl">
+    @RenderBody()
+
+    <!-- JS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/dist/js/adminlte.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

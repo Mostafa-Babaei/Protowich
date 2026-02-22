@@ -1,0 +1,49 @@
+﻿@model Web.Areas.Admin.Models.FoodImageFormVm
+@{
+    Layout = "_AdminLayout"; ViewData["Title"] = "افزودن تصویر";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        @await Html.PartialAsync("_Alerts")
+
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">افزودن تصویر</h3></div>
+            <div class="card-body">
+                <form method="post">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" asp-for="FoodItemId" />
+
+                    <div class="form-group">
+                        <label>Image Url</label>
+                        <input class="form-control" asp-for="Dto.ImageUrl" placeholder="https://..." />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>اصلی</label>
+                                <select class="form-control" asp-for="Dto.IsMain">
+                                    <option value="false">خیر</option>
+                                    <option value="true">بله</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>ترتیب</label>
+                                <input class="form-control" type="number" asp-for="Dto.DisplayOrder" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success" type="submit">ذخیره</button>
+                    <a class="btn btn-secondary"
+                       asp-area="Admin" asp-controller="FoodItems" asp-action="Edit"
+                       asp-route-id="@Model.FoodItemId">بازگشت</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

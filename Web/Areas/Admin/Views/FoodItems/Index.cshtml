@@ -1,0 +1,117 @@
+﻿@model Web.Areas.Admin.Models.FoodItemIndexVm
+@{
+    Layout = "_AdminLayout"; ViewData["Title"] = "آیتم‌های منو";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="m-0">آیتم‌های منو</h1>
+            <a class="btn btn-primary" asp-area="Admin" asp-controller="FoodItems" asp-action="Create">
+                <i class="fas fa-plus ml-1"></i> افزودن
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @await Html.PartialAsync("_Alerts")
+
+        <div class="card">
+            <div class="card-header">
+                <form method="get" class="row">
+                    <div class="col-md-3">
+                        <select class="form-control" name="CategoryId">
+                            <option value="">همه دسته‌ها</option>
+                            @foreach (var c in Model.Categories)
+                            {
+                                <option value="@c.Id" selected="@(Model.CategoryId == c.Id)">
+                                    @c.Title
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control" name="Keyword" value="@Model.Keyword" placeholder="جستجو (عنوان/توضیح)">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-secondary w-100" type="submit"><i class="fas fa-search ml-1"></i> جستجو</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>تصویر</th>
+                            <th>عنوان</th>
+                            <th>دسته</th>
+                            <th>قیمت</th>
+                            <th>موجود</th>
+                            <th style="width:320px;">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Data?.Items == null || !Model.Data.Items.Any())
+                        {
+                            <tr><td colspan="7" class="text-center text-muted p-4">موردی یافت نشد</td></tr>
+                        }
+                        else
+                        {
+                            foreach (var x in Model.Data.Items)
+                            {
+                                <tr>
+                                    <td>@x.Id</td>
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(x.MainImageUrl))
+                                        {
+                                            <img src="@x.MainImageUrl" style="width:48px;height:48px;object-fit:cover;border-radius:8px;" />
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td>@x.Title</td>
+                                    <td>@x.CategoryTitle</td>
+                                    <td>@x.Price.ToString("N0")</td>
+                                    <td>
+                                        @if (x.IsAvailable)
+                                        {
+                                            <span class="badge badge-success">بله</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-secondary">خیر</span>
+                                        }
+                                    </td>
+                                    <td class="d-flex" style="gap:6px;flex-wrap:wrap;">
+                                        <a class="btn btn-sm btn-info" asp-area="Admin" asp-controller="FoodItems" asp-action="Edit" asp-route-id="@x.Id">
+                                            <i class="fas fa-edit ml-1"></i> ویرایش/تصاویر
+                                        </a>
+
+                                        <form method="post" asp-area="Admin" asp-controller="FoodItems" asp-action="SetAvailability" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@x.Id" />
+                                            <input type="hidden" name="isAvailable" value="@(!x.IsAvailable)" />
+                                            <button class="btn btn-sm @(x.IsAvailable ? "btn-warning" : "btn-success")" type="submit">
+                                                @(x.IsAvailable ? "عدم موجودی" : "موجود شد")
+                                            </button>
+                                        </form>
+
+                                        <a class="btn btn-sm btn-danger" asp-area="Admin" asp-controller="FoodItems" asp-action="Delete" asp-route-id="@x.Id">
+                                            <i class="fas fa-trash ml-1"></i> حذف
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	  <data name="EmailRequired" xml:space="preserve"><value>Email is required</value></data>
+  <data name="EmailRequired" xml:space="preserve"><value>Email is required</value></data>
+<data name="EmailInvalid" xml:space="preserve"><value>Invalid email format</value></data>
+<data name="PasswordRequired" xml:space="preserve"><value>Password is required</value></data>
+<data name="PasswordMinLength" xml:space="preserve"><value>Password must be at least 6 characters long</value></data>
+<data name="PasswordMismatch" xml:space="preserve"><value>Confirm password does not match the new password</value></data>
+<data name="CodeRequired" xml:space="preserve"><value>Verification code is required</value></data>
+<data name="CodeInvalid" xml:space="preserve"><value>Verification code must be 6 digits</value></data>
+<data name="ConfirmPasswordRequired" xml:space="preserve"><value>Confirm password is required</value></data>
+<data name="RefreshTokenRequired" xml:space="preserve"><value>Refresh token is required</value></data>
+<data name="RefreshTokenInvalid" xml:space="preserve"><value>Invalid refresh token</value></data>
+<data name="PasswordMaxLength" xml:space="preserve"><value>Password cannot exceed 64 characters</value></data>
+<data name="PasswordComplexity" xml:space="preserve"><value>Password must contain at least one uppercase letter, one lowercase letter, and one number</value></data>
+<data name="TokenRequired" xml:space="preserve"><value>Token is required</value></data>
+<data name="SalutationRequired" xml:space="preserve"><value>Salutation is required</value></data>
+<data name="SalutationMaxLength" xml:space="preserve"><value>Salutation cannot exceed 20 characters</value></data>
+<data name="TitleRequired" xml:space="preserve"><value>Title is required</value></data>
+<data name="TitleMaxLength" xml:space="preserve"><value>Title cannot exceed 50 characters</value></data>
+<data name="FirstNameRequired" xml:space="preserve"><value>First name is required</value></data>
+<data name="FirstNameMaxLength" xml:space="preserve"><value>First name cannot exceed 128 characters</value></data>
+<data name="LastNameRequired" xml:space="preserve"><value>Last name is required</value></data>
+<data name="LastNameMaxLength" xml:space="preserve"><value>Last name cannot exceed 128 characters</value></data>
+<data name="MobileRequired" xml:space="preserve"><value>Mobile number is required</value></data>
+<data name="MobileInvalid" xml:space="preserve"><value>Invalid mobile number format</value></data>
+<data name="TeamSizeRequired" xml:space="preserve"><value>Team size is required</value></data>
+<data name="CompanyNameRequired" xml:space="preserve"><value>Company name is required</value></data>
+<data name="CompanyNameMaxLength" xml:space="preserve"><value>Company name cannot exceed 256 characters</value></data>
+<data name="CompanyAddressRequired" xml:space="preserve"><value>Company address is required</value></data>
+<data name="CompanyAddressMaxLength" xml:space="preserve"><value>Company address cannot exceed 512 characters</value></data>
+<data name="StreetRequired" xml:space="preserve"><value>Street and house number are required</value></data>
+<data name="StreetMaxLength" xml:space="preserve"><value>Street and house number cannot exceed 256 characters</value></data>
+<data name="PostalCodeRequired" xml:space="preserve"><value>Postal code is required</value></data>
+<data name="PostalCodeInvalid" xml:space="preserve"><value>Invalid postal code format</value></data>
+<data name="CityRequired" xml:space="preserve"><value>City is required</value></data>
+<data name="CityMaxLength" xml:space="preserve"><value>City cannot exceed 128 characters</value></data>
+<data name="IKMaxLength" xml:space="preserve"><value>IK number cannot exceed 50 characters</value></data>
+<data name="InvalidCredentials" xml:space="preserve"><value>Invalid credentials</value></data>
+<data name="LoginSuccessful" xml:space="preserve"><value>Login successful</value></data>
+<data name="ResetCodeSent" xml:space="preserve"><value>Reset code sent to email</value></data>
+<data name="EmailNotFound" xml:space="preserve"><value>Email not found</value></data>
+<data name="InvalidOrExpiredCode" xml:space="preserve"><value>Invalid or expired verification code</value></data>
+<data name="CodeIsValid" xml:space="preserve"><value>Verification code is valid</value></data>
+<data name="PasswordsDoNotMatch" xml:space="preserve"><value>Passwords do not match</value></data>
+<data name="InvalidResetRequest" xml:space="preserve"><value>Invalid password reset request</value></data>
+<data name="PasswordResetSuccess" xml:space="preserve"><value>Password has been reset successfully</value></data>
+<data name="CurrentUserInfo" xml:space="preserve"><value>Current user info</value></data>
+<data name="TestEmailSent" xml:space="preserve"><value>Test email sent successfully</value></data>
+<data name="InvalidRefreshToken" xml:space="preserve"><value>Invalid refresh token</value></data>
+
+
+<data name="CustomerRequired" xml:space="preserve"><value>Customer is required</value></data>
+<data name="EmployeeRequired" xml:space="preserve"><value>Employee is required</value></data>
+<data name="MissionDateRequired" xml:space="preserve"><value>Mission date is required</value></data>
+<data name="StartTimeRequired" xml:space="preserve"><value>Start time is required</value></data>
+<data name="EndTimeRequired" xml:space="preserve"><value>End time is required</value></data>
+<data name="EndTimeAfterStart" xml:space="preserve"><value>End time must be after start time</value></data>
+<data name="CommentMaxLength" xml:space="preserve"><value>Comment cannot exceed 500 characters</value></data>
+<data name="CancelReasonRequired" xml:space="preserve"><value>Cancellation reason is required</value></data>
+<data name="CancelReasonMaxLength" xml:space="preserve"><value>Cancellation reason cannot exceed 300 characters</value></data>
+<data name="DelayMinutesPositive" xml:space="preserve"><value>Delay minutes must be greater than zero</value></data>
+<data name="DelayMinutesMaxLimit" xml:space="preserve"><value>Delay cannot exceed 240 minutes</value></data>
+<data name="ManualEndReasonRequired" xml:space="preserve"><value>Reason for manual end is required</value></data>
+<data name="ManualEndReasonMaxLength" xml:space="preserve"><value>Reason for manual end cannot exceed 300 characters</value></data>
+<data name="ReportRequired" xml:space="preserve"><value>Report text is required</value></data>
+<data name="ReportMaxLength" xml:space="preserve"><value>Report cannot exceed 2000 characters</value></data>
+<data name="SignatureRequired" xml:space="preserve"><value>Signature file is required</value></data>
+<data name="LatitudeRequired" xml:space="preserve"><value>Latitude is required</value></data>
+<data name="LongitudeRequired" xml:space="preserve"><value>Longitude is required</value></data>
+<data name="ExpectedLatitudeRequired" xml:space="preserve"><value>Expected latitude is required</value></data>
+<data name="ExpectedLongitudeRequired" xml:space="preserve"><value>Expected longitude is required</value></data>
+<data name="EmployeeNotFound" xml:space="preserve"><value>Employee not found</value></data>
+<data name="MissionNotFound" xml:space="preserve"><value>Mission not found</value></data>
+<data name="NotAuthorizedForMission" xml:space="preserve"><value>You are not authorized for this mission</value></data>
+<data name="MissionAlreadyStarted" xml:space="preserve"><value>Mission already started</value></data>
+<data name="NoPlannedStartTime" xml:space="preserve"><value>No planned start time defined</value></data>
+<data name="MissionNotToday" xml:space="preserve"><value>Mission is not scheduled for today</value></data>
+<data name="MissionStartOutOfRange" xml:space="preserve"><value>Mission start time is out of allowed range</value></data>
+<data name="MissionLocationOutOfRange" xml:space="preserve"><value>Location is out of allowed range</value></data>
+<data name="MissionStartedSuccess" xml:space="preserve"><value>Mission started successfully</value></data>
+<data name="MissionSignedSuccess" xml:space="preserve"><value>Mission signature saved successfully</value></data>
+<data name="MissionMustBeSignedBeforeEnd" xml:space="preserve"><value>Mission must be signed before completion</value></data>
+<data name="MissionCompletedSuccess" xml:space="preserve"><value>Mission completed successfully</value></data>
+<data name="MissionEndedManually" xml:space="preserve"><value>Mission ended manually</value></data>
+<data name="MissionCanceledSuccess" xml:space="preserve"><value>Mission canceled successfully</value></data>
+<data name="MissionOverlapDetected" xml:space="preserve"><value>Another mission already exists in this time range</value></data>
+<data name="MissionCreatedSuccess" xml:space="preserve"><value>Mission created successfully</value></data>
+<data name="MissionDelayReported" xml:space="preserve"><value>Mission delay reported successfully</value></data>
+<data name="MissionReportSubmitted" xml:space="preserve"><value>Mission report submitted successfully</value></data>
+<data name="MissionNotStarted" xml:space="preserve"><value>Mission has not started yet</value></data>
+<data name="MissionDelayedBy" xml:space="preserve"><value>Mission delayed by</value></data>
+<data name="Minutes" xml:space="preserve"><value>minutes</value></data>
+<data name="SettingsLoaded" xml:space="preserve"><value>Employee settings loaded successfully</value></data>
+<data name="SettingsUpdated" xml:space="preserve"><value>Employee settings updated successfully</value></data>
+<data name="EmployeeNotFound" xml:space="preserve"><value>Employee not found</value></data>
+</root>

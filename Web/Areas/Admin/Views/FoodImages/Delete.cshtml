@@ -1,0 +1,24 @@
+﻿@model Application.Features.FastFood.Dtos.FoodImageListItemDto
+@{
+    Layout = "_AdminLayout"; ViewData["Title"] = "حذف تصویر";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-danger">
+            <div class="card-header"><h3 class="card-title">حذف تصویر</h3></div>
+            <div class="card-body">
+                <p>آیا از حذف تصویر مطمئن هستید؟</p>
+
+                <form method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="foodItemId" value="@ViewBag.FoodItemId" />
+                    <button class="btn btn-danger" type="submit">حذف</button>
+                    <a class="btn btn-secondary"
+                       asp-area="Admin" asp-controller="FoodItems" asp-action="Edit"
+                       asp-route-id="@ViewBag.FoodItemId">انصراف</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

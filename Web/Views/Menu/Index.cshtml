@@ -1,0 +1,160 @@
+﻿
+@model IReadOnlyList<Application.Features.FastFood.Dtos.PublicMenuCategoryDto>
+@{
+    ViewData["Title"] = "منو";
+}
+
+<div class="container-fluid py-3 menu-page">
+    <div class="row mb-3">
+        <div class="col-12">
+            <h1 class="h3 mb-2">منوی رستوران</h1>
+            <p class="text-muted mb-0">دسته‌بندی‌ها و آیتم‌های موجود</p>
+        </div>
+    </div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-warning mb-4">
+            @ViewBag.Error
+        </div>
+    }
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="alert alert-info">فعلا آیتمی برای نمایش وجود ندارد.</div>
+    }
+    else
+    {
+        @foreach (var category in Model.OrderBy(c => c.DisplayOrder))
+        {
+            <section class="card card-outline card-primary mb-4">
+                <div class="card-header">
+                    <h2 class="card-title m-0">@category.Title</h2>
+                </div>
+
+                <div class="card-body">
+                    @if (!string.IsNullOrWhiteSpace(category.Description))
+                    {
+                        <p class="text-muted mb-4">@category.Description</p>
+                    }
+
+                    @if (category.Items == null || category.Items.Count == 0)
+                    {
+                        <div class="text-muted">در این دسته‌بندی آیتمی ثبت نشده است.</div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            @foreach (var item in category.Items.OrderBy(i => i.DisplayOrder))
+                            {
+                                <div class="col-12 col-md-6 col-xl-4 mb-3">
+                                    <article class="menu-item card h-100 shadow-sm">
+                                        @if (!string.IsNullOrWhiteSpace(item.MainImageUrl))
+                                        {
+                                            <img src="@item.MainImageUrl" class="card-img-top menu-item-image" alt="@item.Title" />
+                                        }
+
+                                        <div class="card-body d-flex flex-column">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h3 class="h6 mb-0">@item.Title</h3>
+                                                <span class="badge badge-success menu-price">@item.Price.ToString("N0") تومان</span>
+                                            </div>
+
+                                            @if (!string.IsNullOrWhiteSpace(item.Description))
+                                            {
+                                                <p class="text-muted small mb-0">@item.Description</p>
+                                            }
+                                        </div>
+                                    </article>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </section>
+        }
+    }
+</div>
+
+<style>
+    .menu-page .menu-item {
+        border: 1px solid #e9ecef;
+        border-radius: 0.75rem;
+    }
+
+    .menu-page .menu-item-image {
+        height: 180px;
+        object-fit: cover;
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+    }
+
+    .menu-page .menu-price {
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+</style>
+
+@* 
+@model List<Application.Features.FastFood.Dtos.PublicMenuCategoryDto>
+@{
+    ViewData["Title"] = "منوی فست فود";
+}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="m-0">منو</h2>
+    </div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">منویی برای نمایش وجود ندارد.</div>
+    }
+    else
+    {
+        foreach (var cat in Model.OrderBy(x => x.DisplayOrder))
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="m-0">@cat.Title</h5>
+                    @if (!string.IsNullOrWhiteSpace(cat.Description))
+                    {
+                        <div class="text-muted small mt-1">@cat.Description</div>
+                    }
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        @foreach (var item in cat.Items.OrderBy(x => x.DisplayOrder))
+                        {
+                            <div class="col-md-4 mb-3">
+                                <div class="border rounded p-2 h-100">
+                                    @if (!string.IsNullOrWhiteSpace(item.MainImageUrl))
+                                    {
+                                        <img src="@item.MainImageUrl" class="w-100" style="height:170px;object-fit:cover;border-radius:10px;" />
+                                    }
+                                    <div class="mt-2 d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="font-weight-bold">@item.Title</div>
+                                            @if (!string.IsNullOrWhiteSpace(item.Description))
+                                            {
+                                                <div class="text-muted small">@item.Description</div>
+                                            }
+                                        </div>
+                                        <span class="badge badge-success p-2">@item.Price.ToString("N0")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div> *@

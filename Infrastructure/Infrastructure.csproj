@@ -1,0 +1,84 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Persistence\Services\**" />
+		<EmbeddedResource Remove="Persistence\Services\**" />
+		<None Remove="Persistence\Services\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Amazon.S3" Version="0.25.1" />
+		<PackageReference Include="AWSSDK.S3" Version="4.0.18.6" />
+		<PackageReference Include="Bogus" Version="35.6.4" />
+		<PackageReference Include="FirebaseAdmin" Version="3.4.0" />
+		<PackageReference Include="Google.Apis.Auth" Version="1.72.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.20" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.20">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Application\Application.csproj" />
+		<ProjectReference Include="..\Domain\Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="ClosedXML">
+	    <HintPath>bin\Release\net8.0\ClosedXML.dll</HintPath>
+	  </Reference>
+	  <Reference Include="DocumentFormat.OpenXml">
+	    <HintPath>bin\Release\net8.0\DocumentFormat.OpenXml.dll</HintPath>
+	  </Reference>
+	  <Reference Include="ExcelNumberFormat">
+	    <HintPath>bin\Release\net8.0\ExcelNumberFormat.dll</HintPath>
+	  </Reference>
+	  <Reference Include="SixLabors.Fonts">
+	    <HintPath>bin\Release\net8.0\SixLabors.Fonts.dll</HintPath>
+	  </Reference>
+	  <Reference Include="System.IO.Packaging">
+	    <HintPath>bin\Release\net8.0\System.IO.Packaging.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Notifications\EmailTemplates\AdminReview.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Notifications\EmailTemplates\ContactUsAutoReply.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Notifications\EmailTemplates\EmailLayout.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Notifications\EmailTemplates\NewsletterWelcome.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Notifications\EmailTemplates\ContactUs.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Notifications\EmailTemplates\PreRegistrationReview.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Notifications\EmailTemplates\VerifyEmail.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Notifications\EmailTemplates\ForgetPassword.html">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Migrations\" />
+	</ItemGroup>
+
+</Project>

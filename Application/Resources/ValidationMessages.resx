@@ -1,0 +1,620 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+		
+		
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+
+
+	<!-- 🟢 COMMON -->
+	<data name="Common.Operation.Success" xml:space="preserve"><value>Operation completed successfully.</value></data>
+	<data name="Common.Operation.Failed" xml:space="preserve"><value>Operation failed.</value></data>
+	<data name="Common.AccessDenied" xml:space="preserve"><value>Access denied.</value></data>
+	<data name="Common.NotFound" xml:space="preserve"><value>Item not found.</value></data>
+	<data name="Common.Company.NotFound" xml:space="preserve"><value>Company not found.</value></data>
+	<data name="Common.Minutes" xml:space="preserve"><value>minutes</value></data>
+	<data name="Common.Created" xml:space="preserve"><value>Record created successfully.</value></data>
+	<data name="Common.Updated" xml:space="preserve"><value>Record updated successfully.</value></data>
+	<data name="Common.Deleted" xml:space="preserve"><value>Record deleted successfully.</value></data>
+	<data name="Common.NoChanges" xml:space="preserve"><value>No changes were applied.</value></data>
+
+	<!-- 🟡 VALIDATION / AUTH -->
+	<data name="Validation.Email.Required" xml:space="preserve"><value>Email is required.</value></data>
+	<data name="Validation.Email.Invalid" xml:space="preserve"><value>Invalid email format.</value></data>
+	<data name="Validation.Email.MaxLength" xml:space="preserve"><value>Email cannot exceed 256 characters.</value></data>
+	<data name="Validation.Password.Required" xml:space="preserve"><value>Password is required.</value></data>
+	<data name="Validation.Password.MinLength" xml:space="preserve"><value>Password must be at least 6 characters long.</value></data>
+	<data name="Validation.Password.MaxLength" xml:space="preserve"><value>Password cannot exceed 64 characters.</value></data>
+	<data name="Validation.Password.Mismatch" xml:space="preserve"><value>Confirm password does not match the new password.</value></data>
+	<data name="Validation.Password.ConfirmRequired" xml:space="preserve"><value>Confirm password is required</value></data>
+	<data name="Validation.Password.Complexity" xml:space="preserve"><value>Password must contain at least one uppercase letter, one lowercase letter, and one number.</value></data>
+	<data name="Validation.Code.Required" xml:space="preserve"><value>Verification code is required.</value></data>
+	<data name="Validation.Code.Invalid" xml:space="preserve"><value>Verification code must be 6 digits.</value></data>
+	<data name="Validation.RefreshToken.Required" xml:space="preserve"><value>Refresh token is required.</value></data>
+	<data name="Validation.RefreshToken.Invalid" xml:space="preserve"><value>Invalid refresh token.</value></data>
+	<data name="Validation.Token.Required" xml:space="preserve"><value>Token is required.</value></data>
+	<data name="Validation.Password.Current.Required"><value>Current password is required.</value></data>
+	<data name="Validation.Password.New.Required"><value>New password is required.</value></data>
+	<data name="Validation.Password.Uppercase"><value>New password must contain at least one uppercase letter.</value></data>
+	<data name="Validation.Password.Number"><value>New password must contain at least one number.</value></data>
+	<data name="Validation.Password.MinLength"><value>New password must be at least 8 characters long.</value></data>
+	<data name="Validation.CurrentPassword.Required"><value>Current password is required.</value></data>
+	<data name="Validation.NewPassword.Required"><value>New password is required.</value></data>
+	<data name="Validation.NewPassword.MinLength"><value>New password must be at least 6 characters long.</value></data>
+	<data name="Validation.ProfilePicture.Required"><value>Profile picture file is required.</value></data>
+	<data name="Validation.ProfilePicture.MaxSize"><value>Profile picture size must not exceed 2 MB.</value></data>
+	<data name="Validation.ProfilePicture.InvalidType"><value>Invalid profile picture file type.</value></data>
+	<data name="Validation.FirstName.Required"><value>First name is required.</value></data>
+	<data name="Validation.LastName.Required"><value>Last name is required.</value></data>
+	<data name="Validation.Phone.MaxLength"><value>Phone number must not exceed 20 characters.</value></data>
+	<data name="Validation.Role.Name.Required"><value>Role name is required.</value></data>
+	<data name="Validation.Role.Name.MaxLength"><value>Role name must not exceed 50 characters.</value></data>
+	<data name="Validation.Role.DisplayName.Required"><value>Role display name is required.</value></data>
+	<data name="Validation.Role.DisplayName.MaxLength"><value>Role display name must not exceed 100 characters.</value></data>
+	<data name="Validation.Gender.Required"><value>Gender is required.</value></data>
+	<data name="Validation.Role.Required"><value>At least one role must be selected.</value></data>
+	<data name="Validation.Employee.FirstNameRequired"><value>First name is required.</value></data>
+	<data name="Validation.Employee.LastNameRequired"><value>Last name is required.</value></data>
+	<data name="Validation.InsuranceCompany.Name.Required"><value>Insurance company name is required.</value></data>
+	<data name="Validation.InsuranceCompany.Name.MaxLength"><value>Insurance company name must not exceed 200 characters.</value></data>
+	<data name="Validation.InsuranceCompany.Ik.MaxLength"><value>IK number must not exceed 20 characters.</value></data>
+
+
+
+	<!-- 🧩 AUTHENTICATION / ACCOUNT -->
+	<data name="Auth.InvalidCredentials" xml:space="preserve"><value>Invalid email or password.</value></data>
+	<data name="Auth.LoginSuccessful" xml:space="preserve"><value>Login successful.</value></data>
+	<data name="Auth.CurrentUserInfo" xml:space="preserve"><value>Current user information retrieved successfully.</value></data>
+	<data name="Auth.EmailNotFound" xml:space="preserve"><value>Email address not found.</value></data>
+	<data name="Auth.ResetCodeSent" xml:space="preserve"><value>Password reset code has been sent to your email.</value></data>
+	<data name="Auth.InvalidOrExpiredCode" xml:space="preserve"><value>The verification code is invalid or has expired.</value></data>
+	<data name="Auth.CodeIsValid" xml:space="preserve"><value>Verification code is valid.</value></data>
+	<data name="Auth.InvalidResetRequest" xml:space="preserve"><value>Invalid password reset request.</value></data>
+	<data name="Auth.PasswordResetSuccess" xml:space="preserve"><value>Password has been reset successfully.</value></data>
+	<data name="Auth.TestEmailSent" xml:space="preserve"><value>Test email sent successfully.</value></data>
+
+
+
+
+	<!-- 🔵 USER / PROFILE -->
+	<data name="User.Salutation.Required" xml:space="preserve"><value>Salutation is required.</value></data>
+	<data name="User.Salutation.MaxLength" xml:space="preserve"><value>Salutation cannot exceed 20 characters.</value></data>
+	<data name="User.Title.Required" xml:space="preserve"><value>Title is required.</value></data>
+	<data name="User.Title.MaxLength" xml:space="preserve"><value>Title cannot exceed 50 characters.</value></data>
+	<data name="User.FirstName.Required" xml:space="preserve"><value>First name is required.</value></data>
+	<data name="User.FirstName.MaxLength" xml:space="preserve"><value>First name cannot exceed 128 characters.</value></data>
+	<data name="User.LastName.Required" xml:space="preserve"><value>Last name is required.</value></data>
+	<data name="User.LastName.MaxLength" xml:space="preserve"><value>Last name cannot exceed 128 characters.</value></data>
+	<data name="User.Mobile.Required" xml:space="preserve"><value>Mobile number is required.</value></data>
+	<data name="User.Mobile.Invalid" xml:space="preserve"><value>Invalid mobile number format.</value></data>
+	<data name="User.InvalidCredentials" xml:space="preserve"><value>Invalid credentials.</value></data>
+	<data name="User.Login.Success" xml:space="preserve"><value>Login successful.</value></data>
+	<data name="User.Email.NotFound" xml:space="preserve"><value>Email not found.</value></data>
+	<data name="User.ResetCode.Sent" xml:space="preserve"><value>Reset code sent to email.</value></data>
+	<data name="User.Code.InvalidOrExpired" xml:space="preserve"><value>Invalid or expired verification code.</value></data>
+	<data name="User.Code.Valid" xml:space="preserve"><value>Verification code is valid.</value></data>
+	<data name="User.Passwords.Mismatch" xml:space="preserve"><value>Passwords do not match.</value></data>
+	<data name="User.Reset.InvalidRequest" xml:space="preserve"><value>Invalid password reset request.</value></data>
+	<data name="User.Reset.Success" xml:space="preserve"><value>Password has been reset successfully.</value></data>
+	<data name="User.NotFound" xml:space="preserve"><value>User not found.</value></data>
+	<data name="User.CurrentUserInfo" xml:space="preserve"><value>Current user information retrieved successfully.</value></data>
+	<data name="User.UpdateFailed" xml:space="preserve"><value>Update failed.</value></data>
+	<data name="User.ProfileUpdated" xml:space="preserve"><value>Profile updated successfully.</value></data>
+	<data name="User.InvalidCurrentPassword" xml:space="preserve"><value>The current password is incorrect.</value></data>
+	<data name="User.PasswordChanged" xml:space="preserve"><value>Password changed successfully.</value></data>
+	<data name="User.FileNotSelected" xml:space="preserve"><value>No file selected.</value></data>
+	<data name="User.Updated" xml:space="preserve"><value>User updated successfully.</value></data>
+	<data name="User.AvatarUpdated" xml:space="preserve"><value>Avatar updated successfully.</value></data>
+	<data name="User.Login.Failed"><value>Login failed.</value></data>
+	<data name="User.NotAuthorized"><value>You are not authorized to perform this action.</value></data>
+	<data name="User.RefreshToken.Invalid"><value>Invalid refresh token.</value></data>
+	<data name="User.RefreshToken.Expired"><value>Refresh token has expired.</value></data>
+	<data name="User.Tokens.Generated"><value>Tokens generated successfully.</value></data>
+	<data name="User.ResetCode.Required"><value>Reset code is required.</value></data>
+	<data name="User.ResetCode.Expired"><value>Reset code has expired.</value></data>
+	<data name="User.Password.ResetFailed"><value>Failed to reset password.</value></data>
+	<data name="User.ProfileUpdateFailed"><value>Failed to update profile.</value></data>
+	<data name="User.Profile.NoChanges"><value>No changes were applied to the profile.</value></data>
+	<data name="User.Avatar.UploadFailed"><value>Failed to upload profile picture.</value></data>
+	<data name="User.Avatar.InvalidFormat"><value>Invalid image format.</value></data>
+	<data name="User.Roles.Updated"><value>User roles updated successfully.</value></data>
+	<data name="User.Roles.UpdateFailed"><value>Failed to update user roles.</value></data>
+	<data name="User.Role.Required"><value>At least one role must be selected.</value></data>
+	<data name="User.Created"><value>User created successfully.</value></data>
+	<data name="User.CreateFailed"><value>Failed to create user.</value></data>
+	<data name="User.DeleteFailed"><value>Failed to delete user.</value></data>
+	
+	<!-- 🟣 Role -->
+	<data name="Role.Permissions.Assigned"><value>Permissions assigned successfully.</value></data>
+	<data name="Role.NotFound"><value>Role not found.</value></data>
+	<data name="Role.Delete.AssignedToUsers"><value>This role is assigned to one or more users and cannot be deleted.</value></data>
+	<data name="Role.Delete.Success"><value>Role and related permissions deleted successfully.</value></data>
+	<data name="Role.Created"><value>Role created successfully.</value></data>
+	<data name="Role.Updated"><value>Role updated successfully.</value></data>
+	<data name="Role.Load.ForEdit.Success"><value>Role data loaded successfully.</value></data>
+	<data name="Role.AssignPermissions.Failed"><value>Failed to assign permissions.</value></data>
+	<data name="Role.Create.Failed"><value>Failed to create role.</value></data>
+	<data name="Role.Update.Failed"><value>Failed to update role.</value></data>
+	<data name="Role.Delete.Failed"><value>Failed to delete role.</value></data>
+
+
+	<!-- 🟣 COMPANY -->
+	<data name="Company.Name.Required" xml:space="preserve"><value>Company name is required.</value></data>
+	<data name="Company.Name.MaxLength" xml:space="preserve"><value>Company name cannot exceed 256 characters.</value></data>
+	<data name="Company.Address.Required" xml:space="preserve"><value>Company address is required.</value></data>
+	<data name="Company.Address.MaxLength" xml:space="preserve"><value>Company address cannot exceed 512 characters.</value></data>
+	<data name="Company.Street.Required" xml:space="preserve"><value>Street and house number are required.</value></data>
+	<data name="Company.Street.MaxLength" xml:space="preserve"><value>Street and house number cannot exceed 256 characters.</value></data>
+	<data name="Company.PostalCode.Required" xml:space="preserve"><value>Postal code is required.</value></data>
+	<data name="Company.PostalCode.Invalid" xml:space="preserve"><value>Invalid postal code format.</value></data>
+	<data name="Company.City.Required" xml:space="preserve"><value>City is required.</value></data>
+	<data name="Company.City.MaxLength" xml:space="preserve"><value>City cannot exceed 128 characters.</value></data>
+	<data name="Company.IK.MaxLength" xml:space="preserve"><value>IK number cannot exceed 50 characters.</value></data>
+	<data name="Company.NotFound" xml:space="preserve"><value>Company not found.</value></data>
+	<data name="Company.Created" xml:space="preserve"><value>Company created successfully.</value></data>
+	<data name="Company.Updated" xml:space="preserve"><value>Company updated successfully.</value></data>
+	<data name="Company.Deleted" xml:space="preserve"><value>Company deleted successfully.</value></data>
+	<data name="Company.CompanyId.Required" xml:space="preserve"><value>Company ID is required.</value></data>
+	<data name="Company.File.Required" xml:space="preserve"><value>File is required.</value></data>
+	<data name="Company.File.Empty" xml:space="preserve"><value>File cannot be empty.</value></data>
+	<data name="Company.File.Extension.Invalid" xml:space="preserve"><value>Only jpg, jpeg, and png formats are allowed.</value></data>
+	<data name="Company.File.Type.Invalid" xml:space="preserve"><value>Invalid file type. Allowed values: Logo, Stamp, Signature.</value></data>
+	<data name="Company.File.Uploaded" xml:space="preserve"><value>{0} uploaded successfully.</value></data>
+	<data name="Company.Reset.Success" xml:space="preserve"><value>Company account reset successfully.</value></data>
+	<data name="Company.Reset.Failed" xml:space="preserve"><value>Failed to reset company account.</value></data>
+	<data name="Company.Signature.NotFound" xml:space="preserve"><value>Company signature not found.</value></data>
+	
+	
+	<data name="Company.Settings.NotFound" xml:space="preserve"><value>Company settings not found.</value></data>
+	<data name="Company.Settings.UpdateFailed" xml:space="preserve"><value>Failed to update company settings.</value></data>
+	<data name="Company.Settings.Saved" xml:space="preserve"><value>Company settings have been saved successfully.</value></data>
+	<data name="Company.Settings.Updated" xml:space="preserve"><value>Company settings have been updated successfully.</value></data>
+	<data name="Company.Settings.Created" xml:space="preserve"><value>Company settings have been created successfully.</value></data>
+	<data name="Company.Settings.SaveFailed" xml:space="preserve"><value>Failed to save company settings.</value></data>
+	<data name="Company.Settings.Existed" xml:space="preserve"><value>Company settings Is Existed.</value></data>
+	
+	
+	
+	<!-- 🔴 EMPLOYEE -->
+	<data name="Employee.Required" xml:space="preserve"><value>Employee is required.</value></data>
+	<data name="Employee.NotFound" xml:space="preserve"><value>Employee not found.</value></data>
+	<data name="Employee.Gender.Required"><value>Gender is required.</value></data>
+	<data name="Employee.AlreadyArchived" xml:space="preserve"><value>Employee is already archived.</value></data>
+	<data name="Employee.Updated" xml:space="preserve"><value>Employee information updated successfully.</value></data>
+	<data name="Employee.HourRate.Invalid" xml:space="preserve"><value>Hourly rate must be greater than zero.</value></data>
+	<data name="Employee.FullName.Required" xml:space="preserve"><value>First name and last name are required.</value></data>
+	<data name="Employee.Created" xml:space="preserve"><value>Employee created successfully.</value></data>
+	<data name="Employee.Deleted" xml:space="preserve"><value>Employee deleted successfully.</value></data>
+	<data name="Employee.Schedule.Day.Required" xml:space="preserve"><value>Day of week is required.</value></data>
+	<data name="Employee.Schedule.Start.Required" xml:space="preserve"><value>Start time is required.</value></data>
+	<data name="Employee.Schedule.End.Required" xml:space="preserve"><value>End time is required.</value></data>
+	<data name="Employee.Schedule.EndAfterStart" xml:space="preserve"><value>End time must be after start time.</value></data>
+	<data name="Employee.Schedule.Time.Invalid" xml:space="preserve"><value>Invalid schedule time range.</value></data>
+	<data name="Employee.OffDay.Employee.Required" xml:space="preserve"><value>Employee is required.</value></data>
+	<data name="Employee.OffDay.LeaveType.Required" xml:space="preserve"><value>Leave type is required.</value></data>
+	<data name="Employee.OffDay.StartDate.Required" xml:space="preserve"><value>Start date is required.</value></data>
+	<data name="Employee.OffDay.EndDate.Invalid" xml:space="preserve"><value>End date must be after or equal to start date.</value></data>
+	<data name="Employee.SupportEmployees.Loaded" xml:space="preserve"><value>Support employees loaded successfully.</value></data>
+	<data name="Employee.Settings.Loaded" xml:space="preserve"><value>Employee settings loaded successfully.</value></data>
+	<data name="Employee.Settings.Updated" xml:space="preserve"><value>Employee settings updated successfully.</value></data>
+	<data name="Employee.FirstName.Required" xml:space="preserve"><value>First name is required.</value></data>
+	<data name="Employee.FirstName.MaxLength" xml:space="preserve"><value>First name cannot exceed 100 characters.</value></data>
+	<data name="Employee.LastName.Required" xml:space="preserve"><value>Last name is required.</value></data>
+	<data name="Employee.LastName.MaxLength" xml:space="preserve"><value>Last name cannot exceed 100 characters.</value></data>
+	<data name="Employee.BirthDate.Invalid" xml:space="preserve"><value>Birth date cannot be in the future.</value></data>
+	<data name="Employee.Gender.Invalid" xml:space="preserve"><value>Gender value is invalid.</value></data>
+	<data name="Employee.Email.Invalid" xml:space="preserve"><value>Invalid email address format.</value></data>
+	<data name="Employee.Email.Exists"><value>Email already exists.</value></data>
+	<data name="Employee.Mobile.Invalid" xml:space="preserve"><value>Invalid mobile phone number format.</value></data>
+	<data name="Employee.Phone.Invalid" xml:space="preserve"><value>Invalid phone number format.</value></data>
+	<data name="Employee.Username.Required" xml:space="preserve"><value>Username is required.</value></data>
+	<data name="Employee.Username.MinLength" xml:space="preserve"><value>Username must be at least 3 characters long.</value></data>
+	<data name="Employee.Password.Required" xml:space="preserve"><value>Password is required.</value></data>
+	<data name="Employee.Password.MinLength" xml:space="preserve"><value>Password must be at least 6 characters long.</value></data>
+	<data name="Employee.Document.DeleteSuccessButFileMissing" xml:space="preserve"><value>Document record deleted, but the file was not found on the server.</value></data>
+	<data name="Employee.Signature.Saved" xml:space="preserve"><value>Employee signature saved successfully.</value></data>
+	<data name="Employee.Signature.NotFound" xml:space="preserve"><value>Signature record not found.</value></data>
+	<data name="Employee.Overtime.MonthlyCalculated"><value>Monthly overtime calculated successfully.</value></data>
+	<data name="Employee.Overtime.NotFound"><value>No monthly overtime record found.</value></data>
+	<data name="Employee.Overtime.NotEnough"><value>Not enough overtime available.</value></data>
+	<data name="Employee.Overtime.Applied"><value>Overtime applied successfully.</value></data>
+	<data name="Employee.Overtime.MonthNotFound"><value>No overtime data found for this month.</value></data>
+	<data name="Employee.Restore.AlreadyActive" xml:space="preserve"><value>Employee is already active.</value></data>
+	<data name="Employee.Restored" xml:space="preserve"><value>Employee restored successfully.</value></data>
+	<data name="Employee.Manager.Signature.Saved" xml:space="preserve"><value>Manager signature saved successfully.</value></data>
+
+
+	<data name="Employee.Signature.Deleted"><value>Employee signature removed successfully.</value></data>
+	<data name="Employee.Manager.Signature.NotFound"><value>Manager signature not found.</value></data>
+	<data name="Employee.Manager.Signature.Deleted"><value>Manager signature removed successfully.</value></data>
+	<data name="Employee.Manager.Signature.UsedFromCompany"><value>Company signature applied successfully.</value></data>
+
+	<!-- EmployeeOffDay -->
+	<data name="EmployeeOffDay.Overlap"><value>An overlapping leave request already exists.</value></data>
+	<data name="EmployeeOffDay.Created"><value>Leave request created successfully.</value></data>
+	<data name="EmployeeOffDay.Updated"><value>Leave request updated successfully.</value></data>
+	<data name="EmployeeOffDay.Approved"><value>Leave request approved.</value></data>
+	<data name="EmployeeOffDay.Rejected"><value>Leave request rejected.</value></data>
+	<data name="EmployeeOffDay.Deleted"><value>Leave request deleted.</value></data>
+	<data name="EmployeeOffDay.Cancelled"><value>Leave request cancelled by the employee.</value></data>
+	<data name="EmployeeOffDay.CannotEditApproved"><value>Only pending requests can be edited.</value></data>
+	<data name="EmployeeOffDay.CannotCancelNonPending"><value>Only pending requests can be cancelled.</value></data>
+
+
+
+	<!-- 🟠 MISSION -->
+	<data name="Mission.Customer.Required" xml:space="preserve"><value>Customer is required.</value></data>
+	<data name="Mission.Customer.Invalid" xml:space="preserve"><value>Invalid customer or caregiver identifier.</value></data>
+	<data name="Mission.Employee.Required" xml:space="preserve"><value>Employee is required.</value></data>
+	<data name="Mission.Date.Required" xml:space="preserve"><value>Mission date is required.</value></data>
+	<data name="Mission.Start.Required" xml:space="preserve"><value>Start time is required.</value></data>
+	<data name="Mission.End.Required" xml:space="preserve"><value>End time is required.</value></data>
+	<data name="Mission.EndAfterStart" xml:space="preserve"><value>End time must be after start time.</value></data>
+	<data name="Mission.NotFound" xml:space="preserve"><value>Mission not found.</value></data>
+	<data name="Mission.NotAuthorized" xml:space="preserve"><value>You are not authorized for this mission.</value></data>
+	<data name="Mission.AlreadyStarted" xml:space="preserve"><value>Mission already started.</value></data>
+	<data name="Mission.AlreadyCompleted" xml:space="preserve"><value>Mission has already been completed.</value></data>
+	<data name="Mission.NotToday" xml:space="preserve"><value>Mission is not scheduled for today.</value></data>
+	<data name="Mission.StartOutOfRange" xml:space="preserve"><value>Mission start time is out of allowed range.</value></data>
+	<data name="Mission.LocationOutOfRange" xml:space="preserve"><value>Location is out of allowed range.</value></data>
+	<data name="Mission.Started" xml:space="preserve"><value>Mission started successfully.</value></data>
+	<data name="Mission.Signed" xml:space="preserve"><value>Mission signature saved successfully.</value></data>
+	<data name="Mission.MustBeSignedBeforeEnd" xml:space="preserve"><value>Mission must be signed before completion.</value></data>
+	<data name="Mission.Completed" xml:space="preserve"><value>Mission completed successfully.</value></data>
+	<data name="Mission.EndedManually" xml:space="preserve"><value>Mission ended manually.</value></data>
+	<data name="Mission.Canceled" xml:space="preserve"><value>Mission canceled successfully.</value></data>
+	<data name="Mission.OverlapDetected" xml:space="preserve"><value>Another mission already exists in this time range.</value></data>
+	<data name="Mission.Created" xml:space="preserve"><value>Mission created successfully.</value></data>
+	<data name="Mission.DelayReported" xml:space="preserve"><value>Mission delay reported successfully.</value></data>
+	<data name="Mission.ReportSubmitted" xml:space="preserve"><value>Mission report submitted successfully.</value></data>
+	<data name="Mission.StartTime.Invalid" xml:space="preserve"><value>Mission start time must be before end time.</value></data>
+	<data name="Mission.NotStarted" xml:space="preserve"><value>Mission has not started yet.</value></data>
+	<data name="Mission.Signature.Required" xml:space="preserve"><value>Signature file is required.</value></data>
+	<data name="Mission.DelayedBy" xml:space="preserve"><value>Mission delayed by</value></data>
+	<data name="Mission.NearbyEmployees.Fetched" xml:space="preserve"><value>Nearby employees retrieved successfully.</value></data>
+	<data name="Mission.List.Fetched" xml:space="preserve"><value>Mission list fetched successfully.</value></data>
+	<data name="Mission.CancelReason.Required"><value>Cancel reason is required.</value></data>
+	<data name="Mission.CancelReason.MaxLength"><value>Cancel reason must not exceed 300 characters.</value></data>
+	<data name="Mission.StartTime.Required"><value>Start time is required.</value></data>
+	<data name="Mission.EndTime.Required"><value>End time is required.</value></data>
+	<data name="Mission.EndTime.AfterStart"><value>End time must be after start time.</value></data>
+	<data name="Mission.Comment.MaxLength"><value>Comment must not exceed 500 characters.</value></data>
+	<data name="Mission.CustomSlot.Time.Required"><value>Start and end time are required.</value></data>
+	<data name="Mission.DelayMinutes.Positive"><value>Delay minutes must be greater than zero.</value></data>
+	<data name="Mission.DelayMinutes.MaxLimit"><value>Delay minutes must not exceed 240.</value></data>
+	<data name="Mission.ManualEndReason.Required"><value>Manual end reason is required.</value></data>
+	<data name="Mission.ManualEndReason.MaxLength"><value>Manual end reason must not exceed 300 characters.</value></data>
+	<data name="Mission.DateFilter.Required"><value>Either Year/Month or Date range must be provided.</value></data>
+	<data name="Mission.Report.Required"><value>Mission report is required.</value></data>
+	<data name="Mission.Report.MaxLength"><value>Mission report must not exceed 2000 characters.</value></data>
+	<data name="Mission.Latitude.Required"><value>Latitude is required.</value></data>
+	<data name="Mission.Longitude.Required"><value>Longitude is required.</value></data>
+	<data name="Mission.CustomerId.Required"><value>Customer ID is required.</value></data>
+	<data name="Mission.DocumentTitle.MaxLength"><value>Document title must not exceed 255 characters.</value></data>
+	<data name="Mission.File.Required"><value>File is required.</value></data>
+	<data name="Mission.File.Empty"><value>File cannot be empty.</value></data>
+	<data name="Mission.File.InvalidExtension"><value>Invalid file extension.</value></data>
+
+	<data name="Mission.Id.Required" xml:space="preserve"><value>Mission ID is required.</value></data>
+	<data name="Mission.Date.Required" xml:space="preserve"><value>New mission date is required.</value></data>
+	<data name="Mission.Date.CannotBePast" xml:space="preserve"><value>New date cannot be in the past.</value></data>
+	<data name="Mission.EndAfterStart" xml:space="preserve"><value>End time must be after start time.</value></data>
+	<data name="Mission.Moved.Success" xml:space="preserve"><value>Mission moved successfully.</value></data>
+	<data name="Mission.DaysOfWeek.Required" xml:space="preserve"><value>At least one weekday must be selected.</value></data>
+	<data name="Mission.CustomSlots.Required" xml:space="preserve"><value>The custom schedule list cannot be empty.</value></data>
+	<data name="Mission.CustomSlot.TimeInvalid" xml:space="preserve"><value>The start time must be earlier than the end time.</value></data>
+	<data name="Mission.Time.Invalid" xml:space="preserve"><value>The start time must be earlier than the end time.</value></data>
+	<data name="Mission.Time.StartRequired" xml:space="preserve"><value>Planned start time is required.</value></data>
+	<data name="Mission.Time.EndRequired" xml:space="preserve"><value>Planned end time is required.</value></data>
+	<data name="Mission.Time.StartNotInPast" xml:space="preserve"><value>Planned start time must be today or in the future.</value></data>
+	<data name="Mission.Time.RangeTooLarge" xml:space="preserve"><value>The planned time range is too large (maximum 30 days).</value></data>
+	<data name="Mission.Time.Updated" xml:space="preserve"><value>Mission time updated successfully.</value></data>
+	<data name="Mission.Action.NotAllowed" xml:space="preserve"><value>This action is not allowed for the current mission status.</value></data>
+	<data name="Mission.CannotCompleteWithoutSignature" xml:space="preserve"><value>The mission cannot be completed until it has been signed.</value></data>
+
+	<data name="Mission.AlreadyCompleted" xml:space="preserve"><value>Mission is already completed.</value></data>
+	<data name="Mission.NoEditableMissions" xml:space="preserve"><value>No editable missions in this batch.</value></data>
+	<data name="Mission.NoGenerated" xml:space="preserve"><value>No missions generated.</value></data>
+	<data name="Mission.Updated" xml:space="preserve"><value>Mission updated successfully.</value></data>
+	<data name="Mission.Created" xml:space="preserve"><value>{0} mission(s) created successfully.</value></data>
+	<data name="Mission.Completed" xml:space="preserve"><value>Mission completed successfully.</value></data>
+	<data name="Mission.Deleted" xml:space="preserve"><value>Mission deleted.</value></data>
+	<data name="Mission.MarkedCancelled" xml:space="preserve"><value>Mission marked with status Cancelled.</value></data>
+	<data name="Mission.BatchUpdated" xml:space="preserve"><value>{0} missions updated.</value></data>
+	<data name="Mission.BatchDeleted" xml:space="preserve"><value>{0} missions deleted.</value></data>
+	<data name="Mission.BatchMarkedCancelled" xml:space="preserve"><value>{0} missions marked with status Cancelled.</value></data>
+	<data name="Mission.Time.StartBeforeEnd" xml:space="preserve"><value>Start time must be earlier than end time.</value></data>
+	<data name="Mission.Time.RangeTooLarge" xml:space="preserve"><value>Time range cannot exceed 30 days.</value></data>
+	<data name="Mission.Time.Updated" xml:space="preserve"><value>Mission time updated successfully.</value></data>
+	<data name="Mission.NotEditableStatus" xml:space="preserve"><value>Mission cannot be edited in the current status.</value></data>
+	<data name="Mission.OverlapDetected" xml:space="preserve"><value>Mission time overlaps with another mission.</value></data>
+
+	
+	<!-- 🟢 CUSTOMER -->
+	<data name="Customer.NotFound" xml:space="preserve"><value>Customer not found.</value></data>
+	<data name="Customer.Required"><value>Customer is required.</value></data>
+	<data name="Customer.FirstName.Required" xml:space="preserve"><value>First name is required.</value></data>
+	<data name="Customer.FirstName.MaxLength" xml:space="preserve"><value>First name cannot exceed 100 characters.</value></data>
+	<data name="Customer.LastName.Required" xml:space="preserve"><value>Last name is required.</value></data>
+	<data name="Customer.LastName.MaxLength" xml:space="preserve"><value>Last name cannot exceed 100 characters.</value></data>
+	<data name="Customer.BirthDate.Invalid" xml:space="preserve"><value>Birth date cannot be in the future.</value></data>
+	<data name="Customer.Gender.Invalid" xml:space="preserve"><value>Gender must be M, F, or Other.</value></data>
+	<data name="Customer.Phone.Invalid" xml:space="preserve"><value>Invalid phone number format.</value></data>
+	<data name="Customer.Mobile.Invalid" xml:space="preserve"><value>Invalid mobile number format.</value></data>
+	<data name="Customer.Email.Invalid" xml:space="preserve"><value>Invalid email address format.</value></data>
+	<data name="Customer.Address.MaxLength" xml:space="preserve"><value>Address cannot exceed 250 characters.</value></data>
+	<data name="Customer.PostCode.Invalid" xml:space="preserve"><value>Invalid postal code format.</value></data>
+	<data name="Customer.CareGrade.OutOfRange" xml:space="preserve"><value>Care grade must be between 1 and 5.</value></data>
+	<data name="Customer.CareSince.Invalid" xml:space="preserve"><value>Care start date cannot be in the future.</value></data>
+	<data name="Customer.UpdateFailed" xml:space="preserve"><value>Failed to update customer information.</value></data>
+	<data name="Customer.Id.Required" xml:space="preserve"><value>Customer ID is required.</value></data>
+	<data name="Customer.GenderPreference.Invalid" xml:space="preserve"><value>Gender preference must be Male, Female, or Any.</value></data>
+	<data name="Customer.Budget.Required" xml:space="preserve"><value>At least one budget selection is required.</value></data>
+	<data name="Customer.Budget.MinCount" xml:space="preserve"><value>You must select at least one budget.</value></data>
+	<data name="Customer.Schedule.WeekDay.Invalid" xml:space="preserve"><value>Invalid weekday value.</value></data>
+	<data name="Customer.Schedule.Time.Invalid" xml:space="preserve"><value>Start time must be before end time.</value></data>>
+	<data name="Customer.Schedule.CustomDate.Required"><value>Effective until date is required for custom schedule.</value></data>
+	<data name="Customer.Schedule.TimeRanges.Required"><value>At least one time range is required when not a whole day.</value></data>
+	<data name="Customer.Relative.Name.Required" xml:space="preserve"><value>Relative name is required.</value></data>
+	<data name="Customer.Relative.Name.MaxLength" xml:space="preserve"><value>Relative name cannot exceed 100 characters.</value></data>
+	<data name="Customer.Relative.Relation.Required" xml:space="preserve"><value>Relative relation is required.</value></data>
+	<data name="Customer.Relative.NotFound" xml:space="preserve"><value>Relative contact not found.</value></data>
+	<data name="Customer.Relative.Created" xml:space="preserve"><value>Relative contact created successfully.</value></data>
+	<data name="Customer.Relative.Updated" xml:space="preserve"><value>Relative contact updated successfully.</value></data>
+	<data name="Customer.Relative.Deleted" xml:space="preserve"><value>Relative contact deleted successfully.</value></data>
+	<data name="Customer.Notes.MaxLength" xml:space="preserve"><value>Notes cannot exceed 1000 characters.</value></data>
+	<data name="Customer.FullName.Required" xml:space="preserve"><value>First name and last name are required.</value></data>
+    <data name="Customer.Created" xml:space="preserve"><value>Customer created successfully.</value></data>
+    <data name="Customer.Updated" xml:space="preserve"><value>Customer updated successfully.</value></data>
+    <data name="Customer.Deleted" xml:space="preserve"><value>Customer deleted successfully.</value></data>
+    <data name="Customer.Document.NotFound" xml:space="preserve"><value>Customer document not found.</value></data>
+    <data name="Customer.Document.FileNotFound" xml:space="preserve"><value>File not found on the server.</value></data>
+    <data name="Customer.Document.UploadSuccess" xml:space="preserve"><value>File uploaded successfully.</value></data>
+    <data name="Customer.Document.DeleteSuccess" xml:space="preserve"><value>Document deleted successfully.</value></data>
+    <data name="Customer.Document.NoFileSent" xml:space="preserve"><value>No file was sent.</value></data>
+	<data name="Customer.Document.DeleteSuccessButFileMissing" xml:space="preserve"><value>Document record deleted, but the file was not found on the server.</value></data>
+	<data name="Customer.Restore.AlreadyActive" xml:space="preserve"><value>Customer is already active.</value></data>
+	<data name="Customer.Restored" xml:space="preserve"><value>Customer restored successfully.</value></data>
+	<data name="Customer.NotFoundOrLocationMissing"><value>Customer not found or missing location coordinates.</value></data>
+
+
+    <!-- 🟣 REGISTRATION / SIGN-UP -->
+	<data name="Registration.EmailAlreadyRegistered" xml:space="preserve"><value>Email is already registered.</value></data>
+	<data name="Registration.EmailSent" xml:space="preserve"><value>Verification email sent successfully.</value></data>
+	<data name="Registration.InvalidVerificationToken" xml:space="preserve"><value>Invalid or expired verification token.</value></data>
+	<data name="Registration.EmailVerified" xml:space="preserve"><value>Email verified successfully.</value></data>
+	<data name="Registration.NotFound" xml:space="preserve"><value>Pre-registration not found.</value></data>
+	<data name="Registration.Completed" xml:space="preserve"><value>Pre-registration completed successfully.</value></data>
+	<data name="Registration.AlreadyProcessed" xml:space="preserve"><value>Pre-registration has already been processed.</value></data>
+	<data name="Registration.Rejected" xml:space="preserve"><value>Pre-registration was rejected.</value></data>
+	<data name="Registration.Approved" xml:space="preserve"><value>Pre-registration approved successfully.</value></data>
+    <data name="Registration.TeamSize.Required" xml:space="preserve"><value>Team size is required.</value></data>
+
+
+	<!-- 🟤 MESSAGE -->
+	<data name="Message.Subject.MaxLength" xml:space="preserve"><value>Subject must not exceed 200 characters.</value></data>
+	<data name="Message.Body.Required" xml:space="preserve"><value>Message body is required.</value></data>
+	<data name="Message.Body.TooShort" xml:space="preserve"><value>Message body must be at least 5 characters long.</value></data>
+	<data name="Message.Parent.Invalid" xml:space="preserve"><value>Invalid parent message ID.</value></data>
+	<data name="Message.NotFound"><value>Message not found.</value></data>
+	<data name="Message.AccessDenied"><value>You do not have permission to perform this action.</value></data>
+	<data name="Message.AlreadyRead"><value>Message already marked as read.</value></data>
+	<data name="Message.MarkedAsRead"><value>Message marked as read.</value></data>
+	<data name="Message.Deleted"><value>Message deleted successfully.</value></data>
+	<data name="Message.Send.Success"><value>Message sent successfully.</value></data>
+	
+	<!-- ⚪ DEVICE -->
+	<data name="Device.Id.Required" xml:space="preserve"><value>Device ID is required.</value></data>
+	<data name="Device.Id.MaxLength" xml:space="preserve"><value>Device ID must not exceed 100 characters.</value></data>
+	<data name="Device.Token.Required" xml:space="preserve"><value>Push token is required.</value></data>
+	<data name="Device.Token.MaxLength" xml:space="preserve"><value>Push token must not exceed 500 characters.</value></data>
+	<data name="Device.Type.Invalid" xml:space="preserve"><value>Device type must be Android, iOS, or Web.</value></data>
+
+  <!-- ⚫ PAGINATION / FILTER -->
+	<data name="Pagination.Page.Positive" xml:space="preserve"><value>Page number must be greater than zero.</value></data>
+	<data name="Pagination.PageSize.OutOfRange" xml:space="preserve"><value>Page size must be between 1 and 200.</value></data>
+	<data name="Filter.Date.Required" xml:space="preserve"><value>Either Month/Year or Date Range filter is required.</value></data>
+	<data name="Filter.Date.InvalidRange" xml:space="preserve"><value>End date must be greater than or equal to start date.</value></data>
+
+	<!-- ⚙️ SETTINGS -->
+	<data name="Settings.Loaded" xml:space="preserve"><value>Settings loaded successfully.</value></data>
+	<data name="Settings.Updated" xml:space="preserve"><value>Settings updated successfully.</value></data>
+  
+	<!-- 📁 File -->
+	<data name="File.Upload.Required" xml:space="preserve"><value>No file was uploaded.</value></data>
+	
+	
+	<!-- 💵 Budget -->
+	
+	<data name="Budget.RechargeAmount.Positive" xml:space="preserve"><value>Recharge amount must be greater than zero.</value></data>
+	<data name="Budget.ConsumePriority.Required" xml:space="preserve"><value>Consume priority is required.</value></data>
+	<data name="Budget.YearlyCap.Positive" xml:space="preserve"><value>Yearly limit must be greater than zero.</value></data>
+	<data name="Budget.MonthlyCap.Positive" xml:space="preserve"><value>Monthly limit must be greater than zero.</value></data>
+	<data name="Budget.Type.Required" xml:space="preserve"><value>Budget type is required.</value></data>
+	<data name="Budget.Amount.MustBePositive" xml:space="preserve"><value>Amount must be greater than zero.</value></data>
+	<data name="Budget.Comment.MaxLength" xml:space="preserve"><value>Comment must not exceed 500 characters.</value></data>
+	<data name="Budget.InitialBalance.Invalid" xml:space="preserve"><value>Initial balance cannot be negative.</value></data>
+	<data name="Budget.InvalidParameters" xml:space="preserve"><value>Invalid budget parameters.</value></data>
+	<data name="Budget.AddedSuccessfully" xml:space="preserve"><value>Budget added successfully.</value></data>
+	<data name="Budget.CreditApplied" xml:space="preserve"><value>Credit applied successfully.</value></data>
+	
+	<data name="Budget.CustomerBudget.NotFound" xml:space="preserve"><value>Customer budget not found.</value></data>
+	<data name="Budget.CustomerBudget.Updated.Success" xml:space="preserve"><value>Customer budget updated successfully.</value></data>
+	<data name="Budget.CustomerBudget.Recharged.Success" xml:space="preserve"><value>Budget recharged successfully.</value></data>
+	
+	<data name="Budget.BudgetDefinition.NotFound" xml:space="preserve"><value>Budget definition not found.</value></data>
+	<data name="Budget.BudgetDefinition.LoadError" xml:space="preserve"><value>Error loading budget definitions.</value></data>
+	<data name="Budget.BudgetDefinition.DetailsError" xml:space="preserve"><value>Error retrieving budget definition.</value></data>
+	
+	<data name="Budget.BudgetTransaction.NotFound" xml:space="preserve"><value>Budget transaction not found.</value></data>
+	<data name="Budget.BudgetTransaction.LoadError" xml:space="preserve"><value>Error loading budget transactions.</value></data>
+	<data name="Budget.BudgetTransaction.FilterError" xml:space="preserve"><value>Error filtering transaction history.</value></data>
+	
+	<data name="Budget.Pflegegrad.InvalidPercentage" xml:space="preserve"><value>Service percentage must be between 0 and 100.</value></data>
+	<data name="Budget.Pflegegrad.CalculationError" xml:space="preserve"><value>Error calculating care allowance.</value></data>
+
+	<data name="Budget.InitialRecharge.Creation" xml:space="preserve"><value>Initial recharge at customer creation.</value></data>
+	<data name="Budget.InitialRecharge.Update" xml:space="preserve"><value>Initial recharge added during customer update.</value></data>
+	<data name="Budget.LoadSummary.Failed" xml:space="preserve"><value>Failed to load budget summary.</value></data>
+	<data name="Budget.Transactions.LoadFailed" xml:space="preserve"><value>Failed to load budget transactions.</value></data>
+
+	<data name="Budget.Recharge.Success"><value>Budget recharged successfully.</value></data>
+	<data name="Budget.Recharge.InitialCreated"><value>Budget created successfully. Initial balance: {0}</value></data>
+	<data name="Budget.Recharge.ZeroCreated"><value>Budget created successfully with zero initial balance.</value></data>
+	<data name="Budget.Add.Failed"><value>Failed to add budget.</value></data>
+	<data name="Budget.Sync.Success"><value>Budget balances synchronized successfully. {0} record(s) updated.</value></data>
+	<data name="Budget.Sync.Failed"><value>Failed to synchronize budget balances.</value></data>
+	<data name="Budget.AutoRecharge.Success"><value>Auto-recharge executed successfully.</value></data>
+	<data name="Budget.AutoRecharge.Failed"><value>Error executing auto-recharge.</value></data>
+
+	<data name="Budget.Debit.Total" xml:space="preserve"><value>Total debit: {0}</value></data>
+	<data name="Budget.Debit.Remaining" xml:space="preserve"><value>Remaining balance: {0}</value></data>
+	<data name="Budget.Debit.UsedBudgets" xml:space="preserve"><value>Used budgets: {0}</value></data>
+
+	<!--  Subscription -->
+	<data name="Subscription.Plans.Fetched" xml:space="preserve"><value>Subscription plans retrieved successfully.</value></data>
+	<data name="Subscription.Plan.NotFound" xml:space="preserve"><value>Requested subscription plan was not found.</value></data>
+	<data name="Subscription.Plan.Fetched" xml:space="preserve"><value>Subscription plan fetched successfully.</value></data>
+	<data name="Subscription.Plan.Change.Success" xml:space="preserve"><value>Plan changed successfully.</value></data>
+	<data name="Subscription.Plan.Change.Failed" xml:space="preserve"><value>Failed to change the plan.</value></data>
+	<data name="Subscription.Plan.Id.Required"><value>Plan ID is required and must be greater than zero.</value></data>
+	<data name="Subscription.Company.NotFound" xml:space="preserve"><value>Company not found.</value></data>
+	<data name="Subscription.Company.Current.Fetched" xml:space="preserve"><value>Current subscription retrieved successfully.</value></data>
+	<data name="Subscription.Company.Current.NotFound" xml:space="preserve"><value>No active subscription found.</value></data>
+	<data name="Subscription.Company.Assign.Success" xml:space="preserve"><value>Subscription assigned successfully.</value></data>
+	<data name="Subscription.Company.Assign.Failed" xml:space="preserve"><value>Failed to assign subscription to company.</value></data>
+	<data name="Subscription.Current.NotFound" xml:space="preserve"><value>Current subscription not found.</value></data>
+	<data name="Subscription.Current.Fetched" xml:space="preserve"><value>Current subscription retrieved successfully.</value></data>
+	<data name="Subscription.Cancel.Success" xml:space="preserve"><value>Subscription cancelled successfully.</value></data>
+	<data name="Subscription.Cancel.Failed" xml:space="preserve"><value>Failed to cancel subscription.</value></data>
+	<data name="Subscription.PaymentMethod.Fetched" xml:space="preserve"><value>Payment method retrieved successfully.</value></data>
+	<data name="Subscription.PaymentMethod.Updated" xml:space="preserve"><value>Payment method updated successfully.</value></data>
+	<data name="Subscription.PaymentMethod.UpdateFailed" xml:space="preserve"><value>Failed to update payment method.</value></data>
+	<data name="Subscription.PaymentPeriod.Required"><value>Payment period is required.</value></data>
+	<data name="Subscription.PaymentPeriod.Invalid"><value>Payment period must be either Monthly or Yearly.</value></data>
+	
+	<data name="Subscription.Payment.Added" xml:space="preserve"><value>Payment added successfully.</value></data>
+	<data name="Subscription.Payment.Failed" xml:space="preserve"><value>Failed to record payment.</value></data>
+	<data name="Subscription.Payments.Fetched" xml:space="preserve"><value>Subscription payments retrieved successfully.</value></data>
+	<data name="Subscription.Payment.SubscriptionId.Required"><value>Subscription ID is required and must be greater than zero.</value></data>
+	<data name="Subscription.Payment.Amount.Positive"><value>Payment amount must be greater than zero.</value></data>
+	<data name="Subscription.Payment.Method.Required"><value>Payment method is required.</value></data>
+	<data name="Subscription.Payment.Method.MaxLength"><value>Payment method must not exceed 50 characters.</value></data>
+	<data name="Subscription.Payment.TransactionId.Required"><value>Transaction ID is required.</value></data>
+	<data name="Subscription.Payment.TransactionId.MaxLength"><value>Transaction ID must not exceed 100 characters.</value></data>
+
+
+	<!--  Todo -->
+	<data name="Todo.Category.NotFound" xml:space="preserve"><value>Category not found.</value></data>
+	<data name="Todo.Category.Created" xml:space="preserve"><value>Category created successfully.</value></data>
+	<data name="Todo.Category.Updated" xml:space="preserve"><value>Category updated successfully.</value></data>
+	<data name="Todo.Category.Deleted" xml:space="preserve"><value>Category deleted successfully.</value></data>
+	
+	<data name="Todo.MarkedDone" xml:space="preserve"><value>Todo marked as done.</value></data>
+	<data name="Todo.StatusChanged" xml:space="preserve"><value>Status changed successfully.</value></data>
+	<data name="Todo.Title.Required"><value>Title is required.</value></data>
+	<data name="Todo.Title.MaxLength"><value>Title must not exceed 200 characters.</value></data>
+	<data name="Todo.Description.MaxLength"><value>Description must not exceed 2000 characters.</value></data>
+	<data name="Todo.DueDate.NotInPast"><value>Due date cannot be in the past.</value></data>
+	<data name="Todo.AssignedEmployee.Invalid"><value>Assigned employee ID is invalid.</value></data>
+	<data name="Todo.Category.Required"><value>Category is required.</value></data>
+	<data name="Todo.Status.Invalid"><value>Invalid status value.</value></data>
+
+
+</root>

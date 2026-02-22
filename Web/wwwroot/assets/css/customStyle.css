@@ -1,0 +1,129 @@
+.dashboard-watermark {
+    position: fixed;
+    top: 55%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+    /* کلیک‌پذیر نباشه */
+}
+
+.dashboard-watermark img {
+    /* max-width: 320px; */
+    opacity: 0.5;
+    /* حس واترمارک */
+    /* filter: grayscale(100%); */
+}
+
+.dashboard-watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+    /* کلیک‌پذیر نباشه */
+}
+
+.dashboard-watermark img {
+    max-width: 320px;
+    opacity: 0.6;
+    /* حس واترمارک */
+    filter: grayscale(100%);
+}
+
+
+/************************************/
+/*********** استایل داشبورد ********/
+/************************************/
+.dashboard-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card {
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    opacity: 0.8;
+}
+
+.progress-thin {
+    height: 6px;
+    border-radius: 3px;
+}
+
+.quick-action-btn {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.quick-action-btn:hover {
+    transform: scale(1.05);
+}
+
+.activity-timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.activity-timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #dee2e6, transparent);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #007bff;
+    border: 3px solid white;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+.welcome-card {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}

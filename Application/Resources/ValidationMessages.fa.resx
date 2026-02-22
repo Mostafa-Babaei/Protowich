@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	
+	<!-- 🟢 مشترک -->
+<data name="Common.Operation.Success" xml:space="preserve"><value>عملیات با موفقیت انجام شد.</value></data>
+<data name="Common.Operation.Failed" xml:space="preserve"><value>عملیات با خطا مواجه شد.</value></data>
+<data name="Common.AccessDenied" xml:space="preserve"><value>دسترسی غیرمجاز است.</value></data>
+<data name="Common.NotFound" xml:space="preserve"><value>موردی یافت نشد.</value></data>
+<data name="Common.Company.NotFound" xml:space="preserve"><value>شرکت یافت نشد.</value></data>
+<data name="Common.Minutes" xml:space="preserve"><value>دقیقه</value></data>
+
+<!-- 🟡 اعتبارسنجی / احراز هویت -->
+<data name="Validation.Email.Required" xml:space="preserve"><value>ایمیل الزامی است.</value></data>
+<data name="Validation.Email.Invalid" xml:space="preserve"><value>فرمت ایمیل نامعتبر است.</value></data>
+<data name="Validation.Email.MaxLength" xml:space="preserve"><value>ایمیل نباید بیش از ۲۵۶ کاراکتر باشد.</value></data>
+<data name="Validation.Password.Required" xml:space="preserve"><value>رمز عبور الزامی است.</value></data>
+<data name="Validation.Password.MinLength" xml:space="preserve"><value>رمز عبور باید حداقل ۶ کاراکتر باشد.</value></data>
+<data name="Validation.Password.MaxLength" xml:space="preserve"><value>رمز عبور نباید بیش از ۶۴ کاراکتر باشد.</value></data>
+<data name="Validation.Password.Mismatch" xml:space="preserve"><value>رمزهای عبور مطابقت ندارند.</value></data>
+<data name="Validation.Password.ConfirmRequired" xml:space="preserve"><value>تأیید رمز عبور الزامی است.</value></data>
+<data name="Validation.Password.Complexity" xml:space="preserve"><value>رمز عبور باید شامل حروف بزرگ، کوچک و عدد باشد.</value></data>
+<data name="Validation.Code.Required" xml:space="preserve"><value>کد تأیید الزامی است.</value></data>
+<data name="Validation.Code.Invalid" xml:space="preserve"><value>کد تأیید باید ۶ رقم باشد.</value></data>
+<data name="Validation.RefreshToken.Required" xml:space="preserve"><value>توکن رفرش الزامی است.</value></data>
+<data name="Validation.RefreshToken.Invalid" xml:space="preserve"><value>توکن رفرش نامعتبر است.</value></data>
+<data name="Validation.Token.Required" xml:space="preserve"><value>توکن الزامی است.</value></data>
+
+<!-- 🧩 احراز هویت / حساب کاربری -->
+<data name="Auth.InvalidCredentials" xml:space="preserve"><value>ایمیل یا رمز عبور نادرست است.</value></data>
+<data name="Auth.LoginSuccessful" xml:space="preserve"><value>ورود با موفقیت انجام شد.</value></data>
+<data name="Auth.CurrentUserInfo" xml:space="preserve"><value>اطلاعات کاربر با موفقیت دریافت شد.</value></data>
+<data name="Auth.EmailNotFound" xml:space="preserve"><value>ایمیل یافت نشد.</value></data>
+<data name="Auth.ResetCodeSent" xml:space="preserve"><value>کد بازیابی رمز عبور به ایمیل ارسال شد.</value></data>
+<data name="Auth.InvalidOrExpiredCode" xml:space="preserve"><value>کد تأیید نامعتبر یا منقضی شده است.</value></data>
+<data name="Auth.CodeIsValid" xml:space="preserve"><value>کد تأیید معتبر است.</value></data>
+<data name="Auth.InvalidResetRequest" xml:space="preserve"><value>درخواست بازنشانی رمز عبور نامعتبر است.</value></data>
+<data name="Auth.PasswordResetSuccess" xml:space="preserve"><value>رمز عبور با موفقیت بازنشانی شد.</value></data>
+<data name="Auth.TestEmailSent" xml:space="preserve"><value>ایمیل آزمایشی با موفقیت ارسال شد.</value></data>
+
+
+<!-- 🔵 کاربر / پروفایل -->
+<data name="User.Salutation.Required" xml:space="preserve"><value>عنوان خطاب الزامی است.</value></data>
+<data name="User.Salutation.MaxLength" xml:space="preserve"><value>عنوان خطاب نباید بیش از ۲۰ کاراکتر باشد.</value></data>
+<data name="User.Title.Required" xml:space="preserve"><value>عنوان الزامی است.</value></data>
+<data name="User.Title.MaxLength" xml:space="preserve"><value>عنوان نباید بیش از ۵۰ کاراکتر باشد.</value></data>
+<data name="User.FirstName.Required" xml:space="preserve"><value>نام الزامی است.</value></data>
+<data name="User.FirstName.MaxLength" xml:space="preserve"><value>نام نباید بیش از ۱۲۸ کاراکتر باشد.</value></data>
+<data name="User.LastName.Required" xml:space="preserve"><value>نام خانوادگی الزامی است.</value></data>
+<data name="User.LastName.MaxLength" xml:space="preserve"><value>نام خانوادگی نباید بیش از ۱۲۸ کاراکتر باشد.</value></data>
+<data name="User.Mobile.Required" xml:space="preserve"><value>شماره موبایل الزامی است.</value></data>
+<data name="User.Mobile.Invalid" xml:space="preserve"><value>فرمت شماره موبایل نادرست است.</value></data>
+<data name="User.InvalidCredentials" xml:space="preserve"><value>اطلاعات ورود نامعتبر است.</value></data>
+<data name="User.Login.Success" xml:space="preserve"><value>ورود با موفقیت انجام شد.</value></data>
+<data name="User.Email.NotFound" xml:space="preserve"><value>ایمیل کاربر یافت نشد.</value></data>
+<data name="User.ResetCode.Sent" xml:space="preserve"><value>کد تأیید به ایمیل ارسال شد.</value></data>
+<data name="User.Code.InvalidOrExpired" xml:space="preserve"><value>کد تأیید نامعتبر یا منقضی شده است.</value></data>
+<data name="User.Code.Valid" xml:space="preserve"><value>کد تأیید معتبر است.</value></data>
+<data name="User.Passwords.Mismatch" xml:space="preserve"><value>رمزهای عبور مطابقت ندارند.</value></data>
+<data name="User.Reset.InvalidRequest" xml:space="preserve"><value>درخواست بازنشانی رمز عبور نامعتبر است.</value></data>
+<data name="User.Reset.Success" xml:space="preserve"><value>رمز عبور با موفقیت بازنشانی شد.</value></data>
+<data name="User.NotFound" xml:space="preserve"><value>کاربر یافت نشد.</value></data>
+<data name="User.Updated" xml:space="preserve"><value>اطلاعات کاربر با موفقیت به‌روزرسانی شد.</value></data>
+
+<!-- 🟣 شرکت -->
+<data name="Company.Name.Required" xml:space="preserve"><value>نام شرکت الزامی است.</value></data>
+<data name="Company.Name.MaxLength" xml:space="preserve"><value>نام شرکت نباید بیش از ۲۵۶ کاراکتر باشد.</value></data>
+<data name="Company.Address.Required" xml:space="preserve"><value>آدرس شرکت الزامی است.</value></data>
+<data name="Company.Address.MaxLength" xml:space="preserve"><value>آدرس شرکت نباید بیش از ۵۱۲ کاراکتر باشد.</value></data>
+<data name="Company.Street.Required" xml:space="preserve"><value>خیابان و شماره پلاک الزامی است.</value></data>
+<data name="Company.Street.MaxLength" xml:space="preserve"><value>خیابان و شماره پلاک نباید بیش از ۲۵۶ کاراکتر باشد.</value></data>
+<data name="Company.PostalCode.Required" xml:space="preserve"><value>کد پستی الزامی است.</value></data>
+<data name="Company.PostalCode.Invalid" xml:space="preserve"><value>فرمت کد پستی نامعتبر است.</value></data>
+<data name="Company.City.Required" xml:space="preserve"><value>شهر الزامی است.</value></data>
+<data name="Company.City.MaxLength" xml:space="preserve"><value>نام شهر نباید بیش از ۱۲۸ کاراکتر باشد.</value></data>
+<data name="Company.IK.MaxLength" xml:space="preserve"><value>شماره IK نباید بیش از ۵۰ کاراکتر باشد.</value></data>
+<data name="Company.NotFound" xml:space="preserve"><value>شرکت یافت نشد.</value></data>
+<data name="Company.Created" xml:space="preserve"><value>شرکت با موفقیت ایجاد شد.</value></data>
+<data name="Company.Updated" xml:space="preserve"><value>اطلاعات شرکت با موفقیت به‌روزرسانی شد.</value></data>
+<data name="Company.Deleted" xml:space="preserve"><value>شرکت با موفقیت حذف شد.</value></data>
+
+<!-- 🔴 کارمند -->
+<data name="Employee.Required" xml:space="preserve"><value>کارمند الزامی است.</value></data>
+<data name="Employee.NotFound" xml:space="preserve"><value>کارمند یافت نشد.</value></data>
+<data name="Employee.Updated" xml:space="preserve"><value>اطلاعات کارمند با موفقیت به‌روزرسانی شد.</value></data>
+<data name="Employee.HourRate.Invalid" xml:space="preserve"><value>نرخ ساعتی باید بیشتر از صفر باشد.</value></data>
+<data name="Employee.FullName.Required" xml:space="preserve"><value>نام و نام خانوادگی الزامی است.</value></data>
+<data name="Employee.Created" xml:space="preserve"><value>کارمند با موفقیت ایجاد شد.</value></data>
+<data name="Employee.Deleted" xml:space="preserve"><value>کارمند با موفقیت حذف شد.</value></data>
+<data name="Employee.Schedule.Day.Required" xml:space="preserve"><value>روز هفته الزامی است.</value></data>
+<data name="Employee.Schedule.Start.Required" xml:space="preserve"><value>ساعت شروع الزامی است.</value></data>
+<data name="Employee.Schedule.End.Required" xml:space="preserve"><value>ساعت پایان الزامی است.</value></data>
+<data name="Employee.Schedule.EndAfterStart" xml:space="preserve"><value>ساعت پایان باید بعد از ساعت شروع باشد.</value></data>
+<data name="Employee.Schedule.Time.Invalid" xml:space="preserve"><value>بازه زمانی زمان‌بندی نامعتبر است.</value></data>
+<data name="Employee.OffDay.Employee.Required" xml:space="preserve"><value>کارمند الزامی است.</value></data>
+<data name="Employee.OffDay.LeaveType.Required" xml:space="preserve"><value>نوع مرخصی الزامی است.</value></data>
+<data name="Employee.OffDay.StartDate.Required" xml:space="preserve"><value>تاریخ شروع الزامی است.</value></data>
+<data name="Employee.OffDay.EndDate.Invalid" xml:space="preserve"><value>تاریخ پایان باید بعد از یا مساوی با تاریخ شروع باشد.</value></data>
+<data name="Employee.SupportEmployees.Loaded" xml:space="preserve"><value>کارمندان پشتیبان با موفقیت بارگذاری شدند.</value></data>
+<data name="Employee.Settings.Loaded" xml:space="preserve"><value>تنظیمات کارمند با موفقیت بارگذاری شد.</value></data>
+<data name="Employee.Settings.Updated" xml:space="preserve"><value>تنظیمات کارمند با موفقیت به‌روزرسانی شد.</value></data>
+<data name="Employee.FirstName.Required" xml:space="preserve"><value>نام الزامی است.</value></data>
+<data name="Employee.FirstName.MaxLength" xml:space="preserve"><value>نام نباید بیش از ۱۰۰ کاراکتر باشد.</value></data>
+<data name="Employee.LastName.Required" xml:space="preserve"><value>نام خانوادگی الزامی است.</value></data>
+<data name="Employee.LastName.MaxLength" xml:space="preserve"><value>نام خانوادگی نباید بیش از ۱۰۰ کاراکتر باشد.</value></data>
+<data name="Employee.BirthDate.Invalid" xml:space="preserve"><value>تاریخ تولد نمی‌تواند در آینده باشد.</value></data>
+<data name="Employee.Gender.Invalid" xml:space="preserve"><value>مقدار جنسیت نامعتبر است.</value></data>
+<data name="Employee.Email.Invalid" xml:space="preserve"><value>فرمت ایمیل نامعتبر است.</value></data>
+<data name="Employee.Mobile.Invalid" xml:space="preserve"><value>فرمت شماره موبایل نادرست است.</value></data>
+<data name="Employee.Phone.Invalid" xml:space="preserve"><value>فرمت شماره تلفن نادرست است.</value></data>
+<data name="Employee.Username.Required" xml:space="preserve"><value>نام کاربری الزامی است.</value></data>
+<data name="Employee.Username.MinLength" xml:space="preserve"><value>نام کاربری باید حداقل ۳ کاراکتر باشد.</value></data>
+<data name="Employee.Password.Required" xml:space="preserve"><value>رمز عبور الزامی است.</value></data>
+<data name="Employee.Password.MinLength" xml:space="preserve"><value>رمز عبور باید حداقل ۶ کاراکتر باشد.</value></data>
+
+<!-- 🟠 مأموریت -->
+<data name="Mission.Customer.Required" xml:space="preserve"><value>بیمار الزامی است.</value></data>
+<data name="Mission.Customer.Invalid" xml:space="preserve"><value>شناسه بیمار یا مراقب معتبر نیست.</value></data>
+<data name="Mission.Employee.Required" xml:space="preserve"><value>کارمند الزامی است.</value></data>
+<data name="Mission.Date.Required" xml:space="preserve"><value>تاریخ مأموریت الزامی است.</value></data>
+<data name="Mission.Start.Required" xml:space="preserve"><value>ساعت شروع الزامی است.</value></data>
+<data name="Mission.End.Required" xml:space="preserve"><value>ساعت پایان الزامی است.</value></data>
+<data name="Mission.EndAfterStart" xml:space="preserve"><value>ساعت پایان باید بعد از ساعت شروع باشد.</value></data>
+<data name="Mission.NotFound" xml:space="preserve"><value>مأموریت یافت نشد.</value></data>
+<data name="Mission.NotAuthorized" xml:space="preserve"><value>شما مجوز انجام این مأموریت را ندارید.</value></data>
+<data name="Mission.AlreadyStarted" xml:space="preserve"><value>مأموریت از قبل آغاز شده است.</value></data>
+<data name="Mission.AlreadyCompleted" xml:space="preserve"><value>مأموریت قبلاً تکمیل شده است.</value></data>
+<data name="Mission.NotToday" xml:space="preserve"><value>این مأموریت برای امروز برنامه‌ریزی نشده است.</value></data>
+<data name="Mission.StartOutOfRange" xml:space="preserve"><value>زمان شروع مأموریت خارج از محدوده مجاز است.</value></data>
+<data name="Mission.LocationOutOfRange" xml:space="preserve"><value>موقعیت مکانی خارج از محدوده مجاز است.</value></data>
+<data name="Mission.Started" xml:space="preserve"><value>مأموریت با موفقیت آغاز شد.</value></data>
+<data name="Mission.Signed" xml:space="preserve"><value>امضای مأموریت با موفقیت ثبت شد.</value></data>
+<data name="Mission.MustBeSignedBeforeEnd" xml:space="preserve"><value>مأموریت باید قبل از اتمام امضا شود.</value></data>
+<data name="Mission.Completed" xml:space="preserve"><value>مأموریت با موفقیت تکمیل شد.</value></data>
+<data name="Mission.EndedManually" xml:space="preserve"><value>مأموریت به‌صورت دستی خاتمه یافت.</value></data>
+<data name="Mission.Canceled" xml:space="preserve"><value>مأموریت با موفقیت لغو شد.</value></data>
+<data name="Mission.OverlapDetected" xml:space="preserve"><value>در این بازه زمانی مأموریت دیگری وجود دارد.</value></data>
+<data name="Mission.Created" xml:space="preserve"><value>مأموریت با موفقیت ایجاد شد.</value></data>
+<data name="Mission.DelayReported" xml:space="preserve"><value>تاخیر مأموریت ثبت شد.</value></data>
+<data name="Mission.ReportSubmitted" xml:space="preserve"><value>گزارش مأموریت با موفقیت ارسال شد.</value></data>
+<data name="Mission.StartTime.Invalid" xml:space="preserve"><value>زمان شروع باید قبل از زمان پایان باشد.</value></data>
+<data name="Mission.NotStarted" xml:space="preserve"><value>مأموریت هنوز شروع نشده است.</value></data>
+<data name="Mission.Signature.Required" xml:space="preserve"><value>فایل امضا الزامی است.</value></data>
+<data name="Mission.DelayedBy" xml:space="preserve"><value>مأموریت با تأخیر</value></data>
+<data name="Mission.List.Fetched" xml:space="preserve"><value>فهرست مأموریت‌ها با موفقیت بارگذاری شد.</value></data>
+
+<!-- 🟢 مشتری -->
+<data name="Customer.NotFound" xml:space="preserve"><value>بیمار یافت نشد.</value></data>
+<data name="Customer.FirstName.Required" xml:space="preserve"><value>نام الزامی است.</value></data>
+<data name="Customer.FirstName.MaxLength" xml:space="preserve"><value>نام نباید بیش از ۱۰۰ کاراکتر باشد.</value></data>
+<data name="Customer.LastName.Required" xml:space="preserve"><value>نام خانوادگی الزامی است.</value></data>
+<data name="Customer.LastName.MaxLength" xml:space="preserve"><value>نام خانوادگی نباید بیش از ۱۰۰ کاراکتر باشد.</value></data>
+<data name="Customer.BirthDate.Invalid" xml:space="preserve"><value>تاریخ تولد نمی‌تواند در آینده باشد.</value></data>
+<data name="Customer.Gender.Invalid" xml:space="preserve"><value>مقدار جنسیت باید مرد، زن یا سایر باشد.</value></data>
+<data name="Customer.Phone.Invalid" xml:space="preserve"><value>فرمت شماره تلفن نامعتبر است.</value></data>
+<data name="Customer.Mobile.Invalid" xml:space="preserve"><value>فرمت شماره موبایل نامعتبر است.</value></data>
+<data name="Customer.Email.Invalid" xml:space="preserve"><value>فرمت ایمیل نادرست است.</value></data>
+<data name="Customer.Address.MaxLength" xml:space="preserve"><value>آدرس نباید بیش از ۲۵۰ کاراکتر باشد.</value></data>
+<data name="Customer.PostCode.Invalid" xml:space="preserve"><value>فرمت کد پستی نامعتبر است.</value></data>
+<data name="Customer.CareGrade.OutOfRange" xml:space="preserve"><value>سطح مراقبت باید بین ۱ تا ۵ باشد.</value></data>
+<data name="Customer.CareSince.Invalid" xml:space="preserve"><value>تاریخ شروع مراقبت نمی‌تواند در آینده باشد.</value></data>
+<data name="Customer.GenderPreference.Invalid" xml:space="preserve"><value>ترجیح جنسیتی باید مرد، زن یا فرقی ندارد باشد.</value></data>
+<data name="Customer.Budget.Required" xml:space="preserve"><value>انتخاب حداقل یک بودجه الزامی است.</value></data>
+<data name="Customer.Budget.MinCount" xml:space="preserve"><value>باید حداقل یک بودجه انتخاب شود.</value></data>
+<data name="Customer.Schedule.WeekDay.Invalid" xml:space="preserve"><value>مقدار روز هفته نامعتبر است.</value></data>
+<data name="Customer.Schedule.Time.Invalid" xml:space="preserve"><value>ساعت شروع باید قبل از ساعت پایان باشد.</value></data>
+<data name="Customer.Relative.Name.Required" xml:space="preserve"><value>نام بستگان الزامی است.</value></data>
+<data name="Customer.Relative.Name.MaxLength" xml:space="preserve"><value>نام بستگان نباید بیش از ۱۰۰ کاراکتر باشد.</value></data>
+<data name="Customer.Relative.Relation.Required" xml:space="preserve"><value>نوع رابطه بستگان الزامی است.</value></data>
+<data name="Customer.Notes.MaxLength" xml:space="preserve"><value>یادداشت‌ها نباید بیش از ۱۰۰۰ کاراکتر باشند.</value></data>
+<data name="Customer.FullName.Required" xml:space="preserve"><value>نام و نام خانوادگی الزامی است.</value></data>
+<data name="Customer.Created" xml:space="preserve"><value>مشتری با موفقیت ایجاد شد.</value></data>
+<data name="Customer.Updated" xml:space="preserve"><value>اطلاعات مشتری با موفقیت به‌روزرسانی شد.</value></data>
+<data name="Customer.Deleted" xml:space="preserve"><value>مشتری با موفقیت حذف شد.</value></data>
+<data name="Customer.Document.NotFound" xml:space="preserve"><value>مدرک مشتری یافت نشد.</value></data>
+<data name="Customer.Document.FileNotFound" xml:space="preserve"><value>فایل روی سرور یافت نشد.</value></data>
+<data name="Customer.Document.UploadSuccess" xml:space="preserve"><value>فایل با موفقیت بارگذاری شد.</value></data>
+<data name="Customer.Document.DeleteSuccess" xml:space="preserve"><value>مدرک با موفقیت حذف شد.</value></data>
+<data name="Customer.Document.NoFileSent" xml:space="preserve"><value>هیچ فایلی ارسال نشده است.</value></data>
+
+
+<!-- 🟣 ثبت‌نام -->
+<data name="Registration.EmailAlreadyRegistered" xml:space="preserve"><value>ایمیل قبلاً ثبت شده است.</value></data>
+<data name="Registration.EmailSent" xml:space="preserve"><value>ایمیل تأیید با موفقیت ارسال شد.</value></data>
+<data name="Registration.InvalidVerificationToken" xml:space="preserve"><value>توکن تأیید نامعتبر یا منقضی شده است.</value></data>
+<data name="Registration.EmailVerified" xml:space="preserve"><value>ایمیل با موفقیت تأیید شد.</value></data>
+<data name="Registration.NotFound" xml:space="preserve"><value>پیش‌ثبت‌نام یافت نشد.</value></data>
+<data name="Registration.Completed" xml:space="preserve"><value>پیش‌ثبت‌نام با موفقیت تکمیل شد.</value></data>
+<data name="Registration.AlreadyProcessed" xml:space="preserve"><value>پیش‌ثبت‌نام قبلاً پردازش شده است.</value></data>
+<data name="Registration.Rejected" xml:space="preserve"><value>پیش‌ثبت‌نام رد شد.</value></data>
+<data name="Registration.Approved" xml:space="preserve"><value>پیش‌ثبت‌نام با موفقیت تأیید شد.</value></data>
+<data name="Registration.TeamSize.Required" xml:space="preserve"><value>تعداد اعضای تیم الزامی است.</value></data>
+
+<!-- 🟤 پیام -->
+<data name="Message.Subject.MaxLength" xml:space="preserve"><value>عنوان پیام نباید بیش از ۲۰۰ کاراکتر باشد.</value></data>
+<data name="Message.Body.Required" xml:space="preserve"><value>متن پیام الزامی است.</value></data>
+<data name="Message.Body.TooShort" xml:space="preserve"><value>متن پیام باید حداقل ۵ کاراکتر داشته باشد.</value></data>
+<data name="Message.Parent.Invalid" xml:space="preserve"><value>شناسه پیام والد نامعتبر است.</value></data>
+
+<!-- ⚪ دستگاه -->
+<data name="Device.Id.Required" xml:space="preserve"><value>شناسه دستگاه الزامی است.</value></data>
+<data name="Device.Id.MaxLength" xml:space="preserve"><value>شناسه دستگاه نباید بیش از ۱۰۰ کاراکتر باشد.</value></data>
+<data name="Device.Token.Required" xml:space="preserve"><value>توکن پوش الزامی است.</value></data>
+<data name="Device.Token.MaxLength" xml:space="preserve"><value>توکن پوش نباید بیش از ۵۰۰ کاراکتر باشد.</value></data>
+<data name="Device.Type.Invalid" xml:space="preserve"><value>نوع دستگاه باید Android، iOS یا Web باشد.</value></data>
+
+<!-- ⚫ صفحه‌بندی / فیلتر -->
+<data name="Pagination.Page.Positive" xml:space="preserve"><value>شماره صفحه باید بزرگ‌تر از صفر باشد.</value></data>
+<data name="Pagination.PageSize.OutOfRange" xml:space="preserve"><value>اندازه صفحه باید بین ۱ تا ۲۰۰ باشد.</value></data>
+<data name="Filter.Date.Required" xml:space="preserve"><value>فیلتر ماه/سال یا بازه تاریخ الزامی است.</value></data>
+<data name="Filter.Date.InvalidRange" xml:space="preserve"><value>تاریخ پایان باید بعد از یا مساوی تاریخ شروع باشد.</value></data>
+
+<!-- ⚙️ تنظیمات -->
+<data name="Settings.Loaded" xml:space="preserve"><value>تنظیمات با موفقیت بارگذاری شد.</value></data>
+<data name="Settings.Updated" xml:space="preserve"><value>تنظیمات با موفقیت به‌روزرسانی شد.</value></data>
+
+<!-- 📁 فایل -->
+<data name="File.Upload.Required" xml:space="preserve"><value>هیچ فایلی بارگذاری نشده است.</value></data>
+
+	
+</root>
