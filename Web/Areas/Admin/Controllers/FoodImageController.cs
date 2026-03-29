@@ -14,12 +14,18 @@ namespace Web.Areas.Admin.Controllers
             _svc = svc;
         }
 
-        public async Task<IActionResult> Index(int foodItemId, CancellationToken ct)
+        public async Task<IActionResult> Index(int? foodItemId, CancellationToken ct)
         {
-            var res = await _svc.GetItemImagesAsync(foodItemId, ct);
+            if (!foodItemId.HasValue || foodItemId.Value <= 0)
+            {
+                TempData["err"] = "ابتدا یک آیتم غذا انتخاب کنید.";
+                return RedirectToAction("Index", "FoodItems", new { area = "Admin" });
+            }
+
+            var res = await _svc.GetItemImagesAsync(foodItemId.Value, ct);
             if (!res.IsSuccess) TempData["err"] = res.Message;
 
-            ViewBag.FoodItemId = foodItemId;
+            ViewBag.FoodItemId = foodItemId.Value;
             return View(res.Data ?? new List<FoodImageListItemDto>());
         }
 

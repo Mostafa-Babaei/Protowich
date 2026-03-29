@@ -49,13 +49,21 @@ namespace Infrastructure.Repositories
         // 🔹 متد کمکی تولید JWT
         private string GenerateJwtToken(User user)
         {
+            var jwtKey = _config["Jwt:Key"];
+            if (string.IsNullOrWhiteSpace(jwtKey))
+                throw new InvalidOperationException("JWT Key is missing. Configure Jwt:Key in appsettings.");
+
+            var issuer = _config["Jwt:Issuer"] ?? "Protowich";
+            var audience = _config["Jwt:Audience"] ?? "ProtowichClients";
+            if (!int.TryParse(_config["Jwt:AccessTokenExpirationMinutes"], out int accessTokenExpirationMinutes) || accessTokenExpirationMinutes <= 0)
+                accessTokenExpirationMinutes = 60;
 
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName.ToString()),
-                new Claim("display_name", user.FirstName),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
+                new Claim("display_name", user.FirstName ?? string.Empty),
+                new Claim(ClaimTypes.Email, user.Email ?? string.Empty)
             };
             var permissions = (
                 from ur in _context.UserRoles
@@ -67,13 +75,11 @@ namespace Infrastructure.Repositories
 
             claims.AddRange(permissions.Select(code => new Claim("Permission", code)));
 
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            int.TryParse(_config["Jwt:AccessTokenExpirationMinutes"], out int accessTokenExpirationMinutes);
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
+                issuer: issuer,
+                audience: audience,
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(accessTokenExpirationMinutes),
                 signingCredentials: creds
@@ -142,6 +148,10 @@ namespace Infrastructure.Repositories
         }
         private string GenerateOtpToken(User user)
         {
+            var jwtKey = _config["Jwt:Key"];
+            if (string.IsNullOrWhiteSpace(jwtKey))
+                throw new InvalidOperationException("JWT Key is missing. Configure Jwt:Key in appsettings.");
+
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -149,12 +159,12 @@ namespace Infrastructure.Repositories
             };
 
             var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_config["Jwt:Key"]!)
+                Encoding.UTF8.GetBytes(jwtKey)
             );
 
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
+                issuer: _config["Jwt:Issuer"] ?? "Protowich",
+                audience: _config["Jwt:Audience"] ?? "ProtowichClients",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)

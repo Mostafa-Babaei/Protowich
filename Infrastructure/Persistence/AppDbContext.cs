@@ -48,6 +48,11 @@ namespace Infrastructure.Persistence
             modelBuilder.Permissions();
             modelBuilder.Companies();
 
+            modelBuilder.Entity<FoodItem>(entity =>
+            {
+                entity.Property(x => x.Price).HasPrecision(18, 2);
+            });
+
             modelBuilder.Entity<MenuRole>(entity =>
             {
                 entity.HasKey(x => x.Id);

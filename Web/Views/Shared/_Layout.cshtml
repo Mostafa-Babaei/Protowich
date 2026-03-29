@@ -1,466 +1,70 @@
 <!DOCTYPE html>
-<html lang="fa">
-
+<html lang="fa" dir="rtl">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>
-		??? ??????
-	</title>
-
-	<!-- Styles -->
-	<link rel="stylesheet" href="~/assets/plugins/fontawesome-free/css/all.min.css">
-	<link rel="stylesheet" href="~/assets/dist/css/adminlte.min.css">
-	<link rel="stylesheet" href="~/assets/dist/css/rtl.css">
-	<link rel="stylesheet" href="~/assets/css/customStyle.css">
-	<link rel="stylesheet" href="~/assets/plugins/select2/css/select2.min.css">
-	<link rel="stylesheet" href="~/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-	<link rel="stylesheet" href="~/assets/dist/css/persian-datepicker.min.css">
-	<link rel="stylesheet" href="~/assets/js/sweetalert.css">
-	<link rel="stylesheet" href="~/css/toastr.min.css">
-	<link rel="stylesheet" href="~/css/site.css">
-	<script src="~/assets/plugins/jquery/jquery.min.js"></script>
-	<link rel="stylesheet" href="~/css/flatpickr.min.css">
-
-
-	<script>
-		window.APP_CONFIG = {
-			apiBaseUrl: '@ViewBag.ApiBaseUrl'
-		};
-	</script>
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(ViewData["Title"] ?? "Protowich")</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-
-<body class="hold-transition sidebar-mini layout-fixed" dir="rtl">
-	<div id="globalLoader" style="display:none">
-		<div class="gl-backdrop"></div>
-		<div class="gl-box">
-			<div class="spinner-border" role="status" aria-hidden="true"></div>
-			<div class="mt-2 small">?? ??? ??????...</div>
-		</div>
-	</div>
-	<div class="wrapper">
-
-		<!-- Navbar -->
-		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
-
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-				</li>
-				<li class="nav-item d-none d-sm-inline-block">
-					<a href="index.php" class="nav-link">???????</a>
-				</li>
-			</ul>
-
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item mr-3">
-					<span class="nav-link">
-						<i class="fas fa-user-circle"></i>
-						<span id="uiUserName">
-							<?= htmlspecialchars($userName ?? '') ?>
-						</span>
-					</span>
-				</li>
-
-				<li class="nav-item mr-3">
-					<span class="nav-link">
-						<span class="badge badge-info p-2" id="uiRoleTitle">
-							<?= htmlspecialchars($roleTitle ?? '') ?>
-						</span>
-
-					</span>
-				</li>
-
-				<li class="nav-item">
-					<a href="javascript:void(0)" id="btnLogout" class="nav-link text-danger">
-						<i class="fas fa-sign-out-alt"></i> ????
-					</a>
-				</li>
-			</ul>
-
-		</nav>
-
-		<!-- Sidebar -->
-		<aside class="main-sidebar sidebar-dark-primary elevation-4">
-
-			<a href="/" class="brand-link">
-				<span class="brand-text font-weight-light">??????</span>
-			</a>
-
-			<div class="sidebar">
-				<nav class="mt-2">
-					<!-- <ul class="nav nav-pills nav-sidebar flex-column"> -->
-					<ul id="sideMenu"
-						class="nav nav-pills nav-sidebar flex-column"
-						data-widget="treeview"
-						role="menu"
-						data-accordion="false">
-					</ul>
-
-					@* 	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-						data-accordion="false">
-						<li class="nav-item">
-							<a href="/" class="nav-link">
-								<i class="nav-icon fas fa-home"></i>
-								<p>???????</p>
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a href="/Visitor" class="nav-link">
-								<i class="nav-icon fas fa-users"></i>
-								<p>???????</p>
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a href="/user" class="nav-link">
-								<i class="nav-icon fas fa-user-cog"></i>
-								<p>?????? ???????</p>
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a href="/Import" class="nav-link">
-								<i class="nav-icon fas fa-upload"></i>
-								<p>???? ???????</p>
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a href="/Export" class="nav-link">
-								<i class="nav-icon fas fa-file-excel"></i>
-								<p>????? ???? ???????</p>
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a href="/LogHistory" class="nav-link">
-								<i class="nav-icon fas fa-history"></i>
-								<p>??????? ?????? ??</p>
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a href="/Personel" class="nav-link">
-								<i class="nav-icon fas fa-user-clock"></i>
-								<p>?????? ?????</p>
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a href="/Roles" class="nav-link">
-								<i class="nav-icon fas fa-user-shield"></i>
-								<p>?????? ??? ??</p>
-							</a>
-						</li>
-
-						<li class="nav-item has-treeview">
-							<a href="#" class="nav-link">
-								<i class="nav-icon fas fa-calendar-check"></i>
-								<p>
-									?????? ?????
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-
-							<ul class="nav nav-treeview">
-
-								<li class="nav-item">
-									<a href="/" class="nav-link">
-										<i class="far fa-clock nav-icon"></i>
-										<p>????? ? ???????? ?????</p>
-									</a>
-								</li>
-
-								<li class="nav-item">
-									<a href="/" class="nav-link">
-										<i class="far fa-calendar-plus nav-icon"></i>
-										<p>??? ???? ??????</p>
-									</a>
-								</li>
-
-							</ul>
-						</li>
-
-
-					</ul> *@
-				</nav>
-			</div>
-
-		</aside>
-
-		<!-- Content -->
-		<div class="content-wrapper p-3">
-			@RenderBody()
-		</div>
-
-		<footer class="main-footer text-center">
-			<strong>
-				�
-				????? ?????? ??? ???? ????? ?????
-			</strong>
-		</footer>
-
-	</div>
-
-
-	<script src="~/js/toastr.min.js"></script>
-	<script src="~/js/SweetAlert2.min.js"></script>
-	<script src="~/js/toast.js"></script>
-	<script src="~/js/Public/api.js"></script>
-	<script src="~/assets/plugins/jquery/jquery.min.js"></script>
-	<script src="~/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="~/assets/dist/js/adminlte.min.js"></script>
-	<script src="~/assets/plugins/select2/js/select2.full.min.js"></script>
-
-	<script src="~/js/flatpickr.min.js"></script>
-	<script src="~/js/flatpickr.fa.js"></script>
-
-	<script src="~/assets/dist/js/persian-date.min.js"></script>
-	<script src="~/assets/dist/js/persian-datepicker.min.js"></script>
-	<script src="~/assets/js/sweetalert.min.js"></script>
-	<script src="~/js/public/visitors/js/jalali.js"></script>
-	<script src="~/js/Public/perm.js"></script>
-
-
-	<script>
-		(function () {
-			const AUTH_CTX_KEY = "auth_context_v1";
-
-			async function logout() {
-				try {
-					// ???????? API ???????
-					await apiRequest('POST', '/api/auth/logout');
-
-				} catch (err) {
-					// ??? ??? ??? ????? ????? ???? ??????? ???
-					console.warn("Logout API failed:", err);
-				} finally {
-					// ???????? ???? ?????
-					sessionStorage.removeItem(AUTH_CTX_KEY);
-					sessionStorage.removeItem("api_token");
-					sessionStorage.removeItem("perm_map_v1");
-					try {
-						delete window.PERM;
-					} catch (e) {
-						window.PERM = null;
-					}
-					// ????????
-					window.location.href = '/Login';
-				}
-			}
-
-			document.addEventListener("DOMContentLoaded", function () {
-				const btn = document.getElementById("btnLogout");
-				if (!btn) return;
-
-				btn.addEventListener("click", function (e) {
-					e.preventDefault();
-					logout();
-				});
-			});
-		})();
-	</script>
-
-	<script>
-		(function () {
-			const CACHE_KEY = "auth_context_v1";
-			const CACHE_PERM_KEY = "perm_map_v1";
-
-			function getCached() {
-				try {
-					return JSON.parse(sessionStorage.getItem(CACHE_KEY) || "null");
-				} catch {
-					return null;
-				}
-			}
-
-			function clearCached() {
-				sessionStorage.removeItem(CACHE_KEY);
-				sessionStorage.removeItem(CACHE_PERM_KEY);
-				sessionStorage.removeItem("api_token"); // ??? ???? ?? ?? ????? ??? ???????
-
-				// ??? PERM ?? ?????? ??? ?????
-				try {
-					delete window.PERM;
-				} catch (e) {
-					window.PERM = null;
-				}
-			}
-
-			function normalizeUrl(item) {
-				return item?.url || item?.route || item?.href || "#";
-			}
-
-			function getVal(obj, ...keys) {
-				for (const k of keys) {
-					if (obj && obj[k] !== undefined && obj[k] !== null) return obj[k];
-				}
-				return null;
-			}
-
-			function renderUser(ctx) {
-				const name = ctx?.user?.displayName || ctx?.user?.username || "";
-				const role = ctx?.primaryRoleTitle || "";
-
-				const $name = $("#uiUserName");
-				const $role = $("#uiRoleTitle");
-
-				if ($name.length) $name.text(name);
-				if ($role.length) $role.text(role);
-			}
-
-			// --- ???? ???? ?? ???? ParentId ---
-			function buildTreeByParentId(menu) {
-				// ??? ???? ??????? children ?? ????? ?????? ??? ?? ??? ???????
-				const flat = [];
-				(menu || []).forEach(m => {
-					flat.push(m);
-					const ch = getVal(m, "children", "Children");
-					if (Array.isArray(ch) && ch.length) flat.push(...ch);
-				});
-
-				// ????? ?? ????? ? map ???????
-				const map = new Map();
-				flat.forEach(raw => {
-					const id = getVal(raw, "id", "Id");
-					if (id == null) return;
-
-					// ??? ???? ? children ????
-					const node = map.get(id) || {
-						...raw
-					};
-					node.__id = id;
-					node.__parentId = getVal(raw, "parentId", "ParentId");
-					node.__order = getVal(raw, "displayOrder", "DisplayOrder") ?? 0;
-					node.__title = getVal(raw, "title", "Title") ?? "";
-					node.__icon = getVal(raw, "icon", "Icon") ?? "far fa-circle";
-					node.__children = node.__children || [];
-					map.set(id, node);
-				});
-
-				// ??? ???? ??????? ?? ????
-				const roots = [];
-				map.forEach(node => {
-					const pid = node.__parentId;
-
-					// ????: ParentId null/undefined/0/"0"
-					const isRoot = pid == null || pid === 0 || pid === "0";
-					if (isRoot) {
-						roots.push(node);
-					} else {
-						const parent = map.get(pid);
-						if (parent) parent.__children.push(node);
-						else roots.push(node); // ??? ???? ???? ???? ???? ???? ?? ?? ???
-					}
-				});
-
-				// ???? ???????
-				function sortRec(list) {
-					list.sort((a, b) => (a.__order ?? 0) - (b.__order ?? 0));
-					list.forEach(n => sortRec(n.__children));
-				}
-				sortRec(roots);
-
-				return roots;
-			}
-
-			// --- ???? ???? ---
-			function renderMenuByParentId(menu) {
-				const $ul = $("#sideMenu");
-				if (!$ul.length) return;
-
-				const roots = buildTreeByParentId(menu);
-				$ul.empty();
-
-				roots.forEach(item => {
-					const title = item.__title;
-					const icon = item.__icon;
-					const children = item.__children;
-
-					if (children && children.length) {
-						const parentId = "m_" + item.__id; // ???? ? ???? ?????
-						const $li = $(`
-			<li class="nav-item has-treeview">
-			  <a href="#" class="nav-link">
-				<i class="nav-icon ${icon}"></i>
-				<p>
-				  ${title}
-				  <i class="right fas fa-angle-left"></i>
-				</p>
-			  </a>
-			  <ul class="nav nav-treeview" id="${parentId}"></ul>
-			</li>
-		  `);
-
-						$ul.append($li);
-						const $childUl = $("#" + parentId);
-
-						children.forEach(ch => {
-							const chTitle = ch.__title;
-							const chIcon = ch.__icon || "far fa-circle";
-							const chUrl = normalizeUrl(ch);
-
-							// ??? ??? ???? ??????? ?????? ???????? recurse ????.
-							const $chLi = $(`
-			  <li class="nav-item">
-				<a href="${chUrl}" class="nav-link">
-				  <i class="${chIcon} nav-icon"></i>
-				  <p>${chTitle}</p>
-				</a>
-			  </li>
-			`);
-
-							$childUl.append($chLi);
-						});
-
-					} else {
-						const url = normalizeUrl(item);
-						const $li = $(`
-			<li class="nav-item">
-			  <a href="${url}" class="nav-link">
-				<i class="nav-icon ${icon}"></i>
-				<p>${title}</p>
-			  </a>
-			</li>
-		  `);
-						$ul.append($li);
-					}
-				});
-			}
-
-			// ---- init ----
-			const ctx = getCached();
-			if (!ctx) {
-                return;
-            }
-
-			renderUser(ctx);
-			renderMenuByParentId(ctx.menu);
-
-			// $(document).ajaxError(function (event, xhr) {
-			// 	if (xhr && xhr.status === 401) {
-			// 		clearCached();
-			// 		window.location.href = "/Login";
-			// 	}
-			// });
-		})();
-	</script>
-
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			if (window.Perm) Perm.apply(document);
-		});
-	</script>
-
-	@await RenderSectionAsync("Scripts", required: false)
-
+<body class="bg-light">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm mb-4">
+            <div class="container">
+                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">Protowich</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">خانه</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Menu" asp-action="Index">منوی عمومی</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">داشبورد</a>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-area="" asp-controller="Login" asp-action="Logout" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-link nav-link text-danger">خروج</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-primary btn-sm mt-1 mt-lg-0" asp-area="" asp-controller="Login" asp-action="Index">ورود مدیر</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container pb-4">
+        @RenderBody()
+    </main>
+
+    <footer class="border-top bg-white text-muted py-3">
+        <div class="container small text-center">
+            Protowich
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
-
-
-
 </html>
-
-

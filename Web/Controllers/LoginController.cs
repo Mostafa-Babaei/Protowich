@@ -53,8 +53,10 @@ namespace Panel.Controllers
 
             if (result.Data is JsonElement je && je.ValueKind == JsonValueKind.Object)
             {
-                if (je.TryGetProperty("access_token", out var at)) accessToken = at.GetString();
-                if (je.TryGetProperty("refresh_token", out var rt)) refreshToken = rt.GetString();
+                if (je.TryGetProperty("access_token", out var at) || je.TryGetProperty("accessToken", out at))
+                    accessToken = at.GetString();
+                if (je.TryGetProperty("refresh_token", out var rt) || je.TryGetProperty("refreshToken", out rt))
+                    refreshToken = rt.GetString();
             }
             else
             {
@@ -63,8 +65,10 @@ namespace Panel.Controllers
                 using var doc = JsonDocument.Parse(json);
                 var root = doc.RootElement;
 
-                if (root.TryGetProperty("access_token", out var at)) accessToken = at.GetString();
-                if (root.TryGetProperty("refresh_token", out var rt)) refreshToken = rt.GetString();
+                if (root.TryGetProperty("access_token", out var at) || root.TryGetProperty("accessToken", out at))
+                    accessToken = at.GetString();
+                if (root.TryGetProperty("refresh_token", out var rt) || root.TryGetProperty("refreshToken", out rt))
+                    refreshToken = rt.GetString();
             }
 
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -111,7 +115,7 @@ namespace Panel.Controllers
             if (!string.IsNullOrWhiteSpace(vm.ReturnUrl) && Url.IsLocalUrl(vm.ReturnUrl))
                 return Redirect(vm.ReturnUrl);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
         }
 
         [Authorize]

@@ -72,6 +72,15 @@
                                         <a class="btn btn-sm btn-info" asp-area="Admin" asp-controller="FoodCategories" asp-action="Edit" asp-route-id="@x.Id">
                                             <i class="fas fa-edit ml-1"></i> ویرایش
                                         </a>
+                                        <form asp-area="Admin" asp-controller="FoodCategories" asp-action="SetActive" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@x.Id" />
+                                            <input type="hidden" name="isActive" value="@(!x.IsActive)" />
+                                            <button type="submit" class="btn btn-sm @(x.IsActive ? "btn-warning" : "btn-success")">
+                                                <i class="fas @(x.IsActive ? "fa-ban" : "fa-check") ml-1"></i>
+                                                @(x.IsActive ? "غیرفعال" : "فعال")
+                                            </button>
+                                        </form>
                                         <a class="btn btn-sm btn-danger" asp-area="Admin" asp-controller="FoodCategories" asp-action="Delete" asp-route-id="@x.Id">
                                             <i class="fas fa-trash ml-1"></i> حذف
                                         </a>

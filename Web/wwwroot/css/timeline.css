@@ -1,0 +1,257 @@
+﻿
+<style >
+.timeline-wrapper {
+    max-height: 72vh;
+    overflow: auto;
+    padding: 10px 6px;
+    border-radius: 14px;
+    background: #f7f8fa;
+}
+
+.timeline {
+    position: relative;
+    padding: 10px 10px 10px 32px;
+}
+
+    /* خط عمودی تایم‌لاین */
+    .timeline::before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        bottom: 8px;
+        left: 14px;
+        width: 3px;
+        background: #e1e5ea;
+        border-radius: 10px;
+    }
+
+/* هر آیتم */
+.timeline-item {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+    /* دایره (نقطه) کنار هر آیتم */
+    .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 18px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 3px solid #c7ced6;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        z-index: 2;
+    }
+
+/* جعبه محتوا */
+.timeline-content {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 14px 14px 12px 14px;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+    transition: transform .15s ease, box-shadow .15s ease;
+    border-right: 6px solid #c7ced6;
+    /* پیشفرض */
+}
+
+    .timeline-content:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(16, 24, 40, 0.10);
+    }
+
+/* ===== Header / Body / Footer ===== */
+.item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.item-title {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+
+.item-date {
+    font-size: 12px;
+    color: #6b7280;
+    background: #f3f4f6;
+    padding: 5px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.item-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.item-description {
+    flex: 1 1 100%;
+    color: #374151;
+    line-height: 1.9;
+    background: #fafafa;
+    border: 1px dashed #e5e7eb;
+    padding: 10px 12px;
+    border-radius: 12px;
+    margin-top: 6px;
+    white-space: pre-line;
+}
+
+.item-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-top: 1px solid #eef1f4;
+    padding-top: 10px;
+}
+
+/* ===== Badge ===== */
+.timeline-content .badge {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    color: #374151;
+}
+
+/* ===== Actions ===== */
+.item-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-action {
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background .15s ease, transform .12s ease, border-color .15s ease;
+    color: #374151;
+}
+
+    .btn-action:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+        transform: translateY(-1px);
+    }
+
+    .btn-action:active {
+        transform: translateY(0px);
+    }
+
+/* ===== Status Colors (based on item.status) ===== */
+
+/* عددی: 1 در حال درمان */
+.timeline-item.status-1::before {
+    border-color: #3b82f6;
+    /* blue */
+}
+
+.timeline-content.status-1 {
+    border-right-color: #3b82f6;
+}
+
+/* عددی: 2 تکمیل شده */
+.timeline-item.status-2::before {
+    border-color: #22c55e;
+    /* green */
+}
+
+.timeline-content.status-2 {
+    border-right-color: #22c55e;
+}
+
+/* عددی: 3 لغو شده */
+.timeline-item.status-3::before {
+    border-color: #f97316;
+    /* orange */
+}
+
+.timeline-content.status-3 {
+    border-right-color: #f97316;
+}
+
+/* عددی: 4 عدم مراجعه */
+.timeline-item.status-4::before {
+    border-color: #ef4444;
+    /* red */
+}
+
+.timeline-content.status-4 {
+    border-right-color: #ef4444;
+}
+
+/* اگر status شما string شد (اختیاری) */
+.timeline-item.status-in_treatment::before {
+    border-color: #3b82f6;
+}
+
+.timeline-content.status-in_treatment {
+    border-right-color: #3b82f6;
+}
+
+.timeline-item.status-completed::before {
+    border-color: #22c55e;
+}
+
+.timeline-content.status-completed {
+    border-right-color: #22c55e;
+}
+
+.timeline-item.status-cancelled::before {
+    border-color: #f97316;
+}
+
+.timeline-content.status-cancelled {
+    border-right-color: #f97316;
+}
+
+.timeline-item.status-no_show::before {
+    border-color: #ef4444;
+}
+
+.timeline-content.status-no_show {
+    border-right-color: #ef4444;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .timeline-wrapper {
+        max-height: 65vh;
+    }
+
+    .timeline {
+        padding-left: 26px;
+    }
+
+        .timeline::before {
+            left: 12px;
+        }
+
+    .timeline-item::before {
+        left: 6px;
+    }
+
+    .item-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+</style >

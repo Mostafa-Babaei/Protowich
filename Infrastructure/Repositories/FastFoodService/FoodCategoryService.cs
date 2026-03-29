@@ -73,7 +73,9 @@ namespace Infrastructure.Repositories
                     Title = dto.Title.Trim(),
                     Description = dto.Description?.Trim(),
                     DisplayOrder = dto.DisplayOrder,
-                    IsActive = dto.IsActive
+                    IsActive = dto.IsActive,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
                 };
 
                 _db.FoodCategories.Add(entity);
@@ -101,6 +103,7 @@ namespace Infrastructure.Repositories
                 entity.Description = dto.Description?.Trim();
                 entity.DisplayOrder = dto.DisplayOrder;
                 entity.IsActive = dto.IsActive;
+                entity.UpdatedAt = DateTime.Now;
 
                 await _db.SaveChangesAsync(ct);
                 return ApiResult<string>.Success("ویرایش دسته‌بندی انجام شد.");
@@ -127,6 +130,26 @@ namespace Infrastructure.Repositories
                 await _db.SaveChangesAsync(ct);
 
                 return ApiResult<string>.Success("حذف دسته‌بندی انجام شد.");
+            }
+            catch (Exception ex)
+            {
+                return ApiResult<string>.Error("خطای سرور", developerMessage: ex.Message);
+            }
+        }
+
+        public async Task<ApiResult<string>> SetCategoryActiveAsync(int id, bool isActive, CancellationToken ct = default)
+        {
+            try
+            {
+                if (id <= 0) return ApiResult<string>.Error("شناسه نامعتبر است.");
+
+                var entity = await _db.FoodCategories.FirstOrDefaultAsync(x => x.Id == id, ct);
+                if (entity == null) return ApiResult<string>.Error("دسته‌بندی یافت نشد.");
+
+                entity.IsActive = isActive;
+                await _db.SaveChangesAsync(ct);
+
+                return ApiResult<string>.Success(isActive ? "دسته‌بندی فعال شد." : "دسته‌بندی غیرفعال شد.");
             }
             catch (Exception ex)
             {
