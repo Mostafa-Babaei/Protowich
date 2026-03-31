@@ -27,7 +27,7 @@
         }
         else
         {
-            <form asp-area="Admin" asp-controller="SystemSettings" asp-action="BulkUpdate" method="post">
+            <form asp-area="Admin" asp-controller="SystemSettings" asp-action="BulkUpdate" method="post" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="category" value="@Model.Category" />
 
@@ -52,13 +52,30 @@
                                     @for (var i = 0; i < Model.Items.Count; i++)
                                     {
                                         var item = Model.Items[i];
+                                        var isImageSetting =
+                                            string.Equals(item.ValueType, "image", StringComparison.OrdinalIgnoreCase) ||
+                                            item.Key.EndsWith("ImageUrl", StringComparison.OrdinalIgnoreCase);
                                         <tr>
                                             <td class="align-middle">
                                                 <div class="font-weight-bold">@item.Key</div>
                                                 <input type="hidden" name="items[@i].Id" value="@item.Id" />
                                             </td>
                                             <td>
-                                                <textarea class="form-control form-control-sm" name="items[@i].Value" rows="2">@item.Value</textarea>
+                                                @if (isImageSetting)
+                                                {
+                                                    <input type="text" class="form-control form-control-sm mb-1" name="items[@i].Value" value="@item.Value" dir="ltr" />
+                                                    <input type="file" class="form-control form-control-sm" name="items[@i].UploadFile" accept=".jpg,.jpeg,.png,.webp,.gif,image/*" />
+                                                    @if (!string.IsNullOrWhiteSpace(item.Value))
+                                                    {
+                                                        <div class="mt-1">
+                                                            <img src="@item.Value" alt="@item.Key" style="max-height:54px;border:1px solid #ddd;border-radius:6px;padding:2px;background:#fff;" />
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <textarea class="form-control form-control-sm" name="items[@i].Value" rows="2">@item.Value</textarea>
+                                                }
                                             </td>
                                             <td class="align-middle">
                                                 <span class="badge badge-info">@(string.IsNullOrWhiteSpace(item.ValueType) ? "-" : item.ValueType)</span>

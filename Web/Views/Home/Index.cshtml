@@ -22,20 +22,32 @@
     var telegramUrl = S("Social.TelegramUrl", "https://t.me/protovitch_support");
     var whatsappUrl = S("Social.WhatsappUrl", "https://wa.me/989120000000");
     var email = S("Social.Email", "info@protovitch.com");
+    var neshanApiKey = S("Map.NeshanApiKey", "web.8c1ffcb224e247a099dcaedde3b5f48f");
+    var neshanPlaceKey = S("Map.NeshanPlaceKey", "_b1O9SVJC2GE");
+    var neshanZoomText = S("Map.NeshanZoom", "19");
+    var neshanZoom = int.TryParse(neshanZoomText, out var zoomParsed) && zoomParsed > 0 ? zoomParsed : 19;
 
-    var branchLatJs = double.TryParse(latText, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var latParsed)
-        ? latParsed.ToString(System.Globalization.CultureInfo.InvariantCulture)
-        : "35.7749";
+    var branchLat = double.TryParse(latText, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var latParsed)
+        ? latParsed
+        : 35.7749;
+    var branchLng = double.TryParse(lngText, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var lngParsed)
+        ? lngParsed
+        : 51.4180;
 
-    var branchLngJs = double.TryParse(lngText, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var lngParsed)
-        ? lngParsed.ToString(System.Globalization.CultureInfo.InvariantCulture)
-        : "51.4180";
+    var branchLatText = branchLat.ToString(System.Globalization.CultureInfo.InvariantCulture);
+    var branchLngText = branchLng.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+    var neshanEmbedUrl = $"https://neshan.org/maps/iframe/places/{neshanPlaceKey}#c{branchLatText}-{branchLngText}-{neshanZoom}z-0p/{branchLatText}/{branchLngText}";
+    var neshanRouteUrl = $"https://neshan.org/maps/?c={branchLatText},{branchLngText},15z";
+
+    var branchLatJs = branchLatText;
+    var branchLngJs = branchLngText;
 }
 
-@* <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" /> *@
+<link rel="stylesheet" href="https://static.neshan.org/sdk/mapboxgl/v1.13.2/neshan-sdk/v1.1.3/index.css" />
 
 <style>
-    .landing-root { font-family: 'Vazir', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fef8ef; background-image: radial-gradient(circle at 10% 20%, rgba(255, 245, 225, 0.4) 0%, rgba(248, 237, 215, 0.2) 90%); color: #2d3e2b; line-height: 1.5; margin: -1.5rem -0.75rem 0; padding-bottom: 2rem; }
+    .landing-root { font-family: 'IranSansDN', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fef8ef; background-image: radial-gradient(circle at 10% 20%, rgba(255, 245, 225, 0.4) 0%, rgba(248, 237, 215, 0.2) 90%); color: #2d3e2b; line-height: 1.5; margin: -1.5rem -0.75rem 0; padding-bottom: 2rem; }
     .hero { background: linear-gradient(135deg, #1e3a2f 0%, #2a5a44 100%); color: #fff7e8; padding: 2rem 1rem; position: relative; overflow: hidden; }
     .hero::before { content: ""; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: rgba(255, 179, 71, 0.1); border-radius: 50%; pointer-events: none; }
     .hero-content { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem; position: relative; z-index: 2; }
@@ -63,7 +75,7 @@
     .btn-submit { background: #e67e22; color: #fff; border: none; padding: 12px 25px; border-radius: 40px; font-weight: 700; cursor: pointer; width: 100%; font-size: 1rem; }
     .btn-submit:hover { background: #c95f0f; }
     .map-container { margin-top: 1rem; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    #map { height: 300px; width: 100%; z-index: 1; }
+    #map { height: 420px; width: 100%; z-index: 1; }
     .location-note { font-size: 0.75rem; color: #7f8c6d; margin-top: 0.5rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .contact-info { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
     .contact-item { text-align: center; background: #fff; padding: 0.9rem 1.2rem; border-radius: 50px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
@@ -157,11 +169,14 @@
             <h3 style="color:#2b5e3b; margin-bottom: 1rem;"><i class="fas fa-location-dot"></i> آدرس شعبه مرکزی</h3>
             <p>@contactAddress</p>
             <div class="map-container" style="margin-top: 1rem;">
-                <div id="staticMap" style="height: 220px; background: #e9e0d2; border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap:10px;">
-                    <i class="fas fa-map-marked-alt" style="font-size:2.5rem; color:#e67e22;"></i>
-                    <p class="mb-0">برای مسیر‌یابی، دکمه زیر را بزنید</p>
-                    <button id="directionBtn" class="btn-submit" style="width:auto; padding:8px 20px;">مسیر‌یابی به شعبه</button>
-                </div>
+                <iframe title="map-iframe"
+                        src="@neshanEmbedUrl"
+                        style="width:100%; height:360px; border:0; border-radius:16px;"
+                        allowfullscreen
+                        loading="lazy"></iframe>
+            </div>
+            <div class="mt-2">
+                <button id="directionBtn" class="btn-submit" style="width:auto; padding:8px 20px;">مسیر‌یابی با نشان</button>
             </div>
         </div>
     </div>
@@ -170,42 +185,51 @@
 </div>
 
 @section Scripts {
-    @* <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> *@
+    <script src="https://static.neshan.org/sdk/mapboxgl/v1.13.2/neshan-sdk/v1.1.3/index.js"></script>
     <script>
         (function () {
             let map;
             let marker;
+            const neshanKey = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(neshanApiKey));
 
             function initLocationPicker() {
                 const mapEl = document.getElementById('map');
-                if (!mapEl || typeof L === 'undefined') return;
+                if (!mapEl) return;
+                if (!neshanKey || typeof nmp_mapboxgl === 'undefined') {
+                    mapEl.innerHTML = '<div style="padding:1rem;color:#8a5a2b;background:#fff6ea;border:1px solid #f3d9b1;border-radius:12px;">کلید API نقشه نشان تنظیم نشده است.</div>';
+                    return;
+                }
 
-                map = L.map('map').setView([35.6892, 51.3890], 13);
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
+                map = new nmp_mapboxgl.Map({
+                    mapType: 'neshan',
+                    container: 'map',
+                    key: neshanKey,
+                    center: [51.3890, 35.6892],
+                    zoom: 13,
+                    poi: true,
+                    traffic: false
+                });
 
                 map.on('click', function (e) {
-                    if (marker) map.removeLayer(marker);
-                    marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-                    document.getElementById('lat').value = String(e.latlng.lat);
-                    document.getElementById('lng').value = String(e.latlng.lng);
-                    document.getElementById('selectedCoord').textContent = `📍 ${e.latlng.lat.toFixed(5)} , ${e.latlng.lng.toFixed(5)}`;
+                    const lat = e.lngLat.lat;
+                    const lng = e.lngLat.lng;
+
+                    if (marker) marker.remove();
+                    marker = new nmp_mapboxgl.Marker({ color: '#e67e22' })
+                        .setLngLat([lng, lat])
+                        .addTo(map);
+
+                    document.getElementById('lat').value = String(lat);
+                    document.getElementById('lng').value = String(lng);
+                    document.getElementById('selectedCoord').textContent = `📍 ${lat.toFixed(5)} , ${lng.toFixed(5)}`;
                 });
             }
 
             setTimeout(initLocationPicker, 300);
 
-            const branchLat = @Html.Raw(branchLatJs);
-            const branchLng = @Html.Raw(branchLngJs);
+            const neshanRouteUrl = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(neshanRouteUrl));
             document.getElementById('directionBtn')?.addEventListener('click', function () {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function (position) {
-                        window.open(`https://www.google.com/maps/dir/${position.coords.latitude},${position.coords.longitude}/${branchLat},${branchLng}`, '_blank');
-                    }, function () {
-                        window.open(`https://www.google.com/maps/dir//${branchLat},${branchLng}`, '_blank');
-                    });
-                } else {
-                    window.open(`https://www.google.com/maps/dir//${branchLat},${branchLng}`, '_blank');
-                }
+                window.open(neshanRouteUrl, '_blank');
             });
 
             const form = document.getElementById('subscriptionForm');
@@ -247,7 +271,7 @@
 
                     msg.innerHTML = `<span style="color:#2b5e3b;">✅ ${payload.message || 'ثبت اشتراک با موفقیت انجام شد.'}</span>`;
                     form.reset();
-                    if (marker && map) map.removeLayer(marker);
+                    if (marker) marker.remove();
                     marker = null;
                     document.getElementById('selectedCoord').textContent = '';
                 } catch {
@@ -257,3 +281,4 @@
         })();
     </script>
 }
+
