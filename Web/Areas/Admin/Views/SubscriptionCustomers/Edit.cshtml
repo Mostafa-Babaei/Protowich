@@ -1,0 +1,73 @@
+﻿@model Web.Areas.Admin.Models.SubscriptionCustomerFormVm
+@{
+    Layout = "_AdminLayout"; ViewData["Title"] = "ویرایش مشترک";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <h1 class="m-0">@ViewData["Title"]</h1>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @await Html.PartialAsync("_Alerts")
+
+        <div class="card">
+            <div class="card-body">
+                <form asp-area="Admin" asp-controller="SubscriptionCustomers" asp-action="Edit" asp-route-id="@Model.Id" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label asp-for="Dto.FirstName">نام</label>
+                            <input class="form-control" asp-for="Dto.FirstName" />
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label asp-for="Dto.LastName">نام خانوادگی</label>
+                            <input class="form-control" asp-for="Dto.LastName" />
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label>شناسه اشتراک</label>
+                            <input class="form-control" value="@Model.Dto.SubscriptionCode" readonly />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label asp-for="Dto.Mobile">موبایل</label>
+                            <input class="form-control" asp-for="Dto.Mobile" />
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label asp-for="Dto.Phone">تلفن</label>
+                            <input class="form-control" asp-for="Dto.Phone" />
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label asp-for="Dto.IsActive">فعال</label>
+                            <select class="form-control" asp-for="Dto.IsActive">
+                                <option value="true">بله</option>
+                                <option value="false">خیر</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Dto.Address">آدرس</label>
+                        <textarea class="form-control" rows="3" asp-for="Dto.Address"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Dto.Description">توضیحات</label>
+                        <textarea class="form-control" rows="4" asp-for="Dto.Description"></textarea>
+                    </div>
+
+                    <button class="btn btn-success" type="submit">
+                        <i class="fas fa-save ml-1"></i> ذخیره
+                    </button>
+                    <a class="btn btn-secondary" asp-area="Admin" asp-controller="SubscriptionCustomers" asp-action="Index">بازگشت</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

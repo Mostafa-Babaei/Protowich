@@ -38,6 +38,7 @@ namespace Infrastructure.Persistence
         public DbSet<FoodCategory> FoodCategories { get; set; }
         public DbSet<FoodItem> FoodItems { get; set; }
         public DbSet<FoodImage> FoodImages { get; set; }
+        public DbSet<SubscriptionCustomer> SubscriptionCustomers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,6 +52,11 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<FoodItem>(entity =>
             {
                 entity.Property(x => x.Price).HasPrecision(18, 2);
+            });
+
+            modelBuilder.Entity<SubscriptionCustomer>(entity =>
+            {
+                entity.HasIndex(x => x.SubscriptionCode).IsUnique();
             });
 
             modelBuilder.Entity<MenuRole>(entity =>

@@ -1,0 +1,185 @@
+﻿@model Web.Areas.Admin.Models.SubscriptionCustomerIndexVm
+@{
+    Layout = "_AdminLayout"; ViewData["Title"] = "مدیریت اشتراک مشتریان";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="m-0">اشتراک مشتریان</h1>
+            <a class="btn btn-primary" asp-area="Admin" asp-controller="SubscriptionCustomers" asp-action="Create">
+                <i class="fas fa-plus ml-1"></i> افزودن مشترک
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @await Html.PartialAsync("_Alerts")
+
+        <div class="card">
+            <div class="card-header">
+                <form method="get" class="row">
+                    <div class="col-md-4">
+                        <input class="form-control" name="Keyword" value="@Model.Keyword" placeholder="جستجو (نام/نام‌خانوادگی/موبایل/شناسه)">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-secondary w-100" type="submit">
+                            <i class="fas fa-search ml-1"></i> جستجو
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>نام و نام‌خانوادگی</th>
+                            <th>موبایل</th>
+                            <th>تلفن</th>
+                            <th>شناسه اشتراک</th>
+                            <th>فعال</th>
+                            <th style="width:240px;">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Data?.Items == null || !Model.Data.Items.Any())
+                        {
+                            <tr><td colspan="7" class="text-center text-muted p-4">موردی یافت نشد</td></tr>
+                        }
+                        else
+                        {
+                            foreach (var x in Model.Data.Items)
+                            {
+                                <tr>
+                                    <td>@x.Id</td>
+                                    <td>@x.FirstName @x.LastName</td>
+                                    <td>@x.Mobile</td>
+                                    <td>@(string.IsNullOrWhiteSpace(x.Phone) ? "-" : x.Phone)</td>
+                                    <td><span class="badge badge-info">@x.SubscriptionCode</span></td>
+                                    <td>
+                                        @if (x.IsActive)
+                                        {
+                                            <span class="badge badge-success">فعال</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-secondary">غیرفعال</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <button type="button"
+                                                class="btn btn-sm btn-secondary js-subscription-info"
+                                                data-toggle="modal"
+                                                data-target="#subscriptionInfoModal"
+                                                data-fullname="@($"{x.FirstName} {x.LastName}")"
+                                                data-mobile="@x.Mobile"
+                                                data-phone="@x.Phone"
+                                                data-code="@x.SubscriptionCode"
+                                                data-address="@x.Address"
+                                                data-description="@x.Description"
+                                                data-status="@(x.IsActive ? "فعال" : "غیرفعال")">
+                                            <i class="fas fa-info-circle ml-1"></i> جزییات
+                                        </button>
+                                        <a class="btn btn-sm btn-info" asp-area="Admin" asp-controller="SubscriptionCustomers" asp-action="Edit" asp-route-id="@x.Id">
+                                            <i class="fas fa-edit ml-1"></i> ویرایش
+                                        </a>
+                                        <form asp-area="Admin" asp-controller="SubscriptionCustomers" asp-action="SetActive" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@x.Id" />
+                                            <input type="hidden" name="isActive" value="@(x.IsActive ? "false" : "true")" />
+                                            <button type="submit" class="btn btn-sm @(x.IsActive ? "btn-warning" : "btn-success")">
+                                                @(x.IsActive ? "غیرفعال" : "فعال")
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer">
+                @{
+                    var page = Model.Data?.Page ?? 1;
+                    var pageSize = Model.Data?.PageSize ?? 20;
+                    var total = Model.Data?.TotalCount ?? 0;
+                    var totalPages = (int)Math.Ceiling(total / (double)pageSize);
+                }
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-muted">کل: @total</div>
+                    <div>
+                        @for (int p = 1; p <= Math.Max(1, totalPages); p++)
+                        {
+                            <a class="btn btn-sm @(p == page ? "btn-primary" : "btn-outline-primary")"
+                               href="@Url.Action("Index", new { Page = p, PageSize = pageSize, Keyword = Model.Keyword })">@p</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="subscriptionInfoModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="subscriptionInfoModalLabel">اطلاعات مشترک</h5>
+                <button type="button" class="close ml-0 mr-auto" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-2">
+                    <div class="col-md-6"><strong>نام و نام‌خانوادگی:</strong> <span id="infoFullName">-</span></div>
+                    <div class="col-md-6"><strong>شناسه اشتراک:</strong> <span id="infoCode">-</span></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6"><strong>موبایل:</strong> <span id="infoMobile">-</span></div>
+                    <div class="col-md-6"><strong>تلفن:</strong> <span id="infoPhone">-</span></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6"><strong>وضعیت:</strong> <span id="infoStatus">-</span></div>
+                </div>
+                <div class="mb-2">
+                    <strong>آدرس:</strong>
+                    <div id="infoAddress" class="text-muted">-</div>
+                </div>
+                <div>
+                    <strong>توضیحات:</strong>
+                    <div id="infoDescription" class="text-muted">-</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            function setText(id, value) {
+                document.getElementById(id).textContent = value && value.trim() ? value : "-";
+            }
+
+            document.querySelectorAll(".js-subscription-info").forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    setText("infoFullName", btn.dataset.fullname || "");
+                    setText("infoMobile", btn.dataset.mobile || "");
+                    setText("infoPhone", btn.dataset.phone || "");
+                    setText("infoCode", btn.dataset.code || "");
+                    setText("infoAddress", btn.dataset.address || "");
+                    setText("infoDescription", btn.dataset.description || "");
+                    setText("infoStatus", btn.dataset.status || "");
+                });
+            });
+        })();
+    </script>
+}

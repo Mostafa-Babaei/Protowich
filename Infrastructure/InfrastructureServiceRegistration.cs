@@ -48,6 +48,7 @@ namespace Infrastructure
             services.AddScoped<IFoodCategoryService, FoodCategoryService>();
             services.AddScoped<IFoodItemService, FoodItemService>();
             services.AddScoped<IFoodImageService, FoodImageService>();
+            services.AddScoped<ISubscriptionCustomerService, SubscriptionCustomerService>();
             services.AddScoped<IMenuPublicService, MenuPublicService>();
 
 
