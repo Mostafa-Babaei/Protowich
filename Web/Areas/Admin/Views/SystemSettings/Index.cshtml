@@ -1,0 +1,94 @@
+﻿@model Web.Areas.Admin.Models.SystemSettingIndexVm
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "مدیریت تنظیمات";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="m-0">@ViewData["Title"]</h1>
+            <form method="get" class="form-inline">
+                <label class="ml-2">دسته‌بندی</label>
+                <input class="form-control form-control-sm ml-2" name="category" value="@Model.Category" />
+                <button class="btn btn-sm btn-secondary" type="submit">نمایش</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @await Html.PartialAsync("_Alerts")
+
+        @if (Model.Items == null || !Model.Items.Any())
+        {
+            <div class="alert alert-info">موردی یافت نشد.</div>
+        }
+        else
+        {
+            <form asp-area="Admin" asp-controller="SystemSettings" asp-action="BulkUpdate" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="category" value="@Model.Category" />
+
+                <div class="card card-outline card-primary">
+                    <div class="card-header py-2 d-flex justify-content-between align-items-center">
+                        <strong>ویرایش اینلاین تنظیمات (@Model.Category)</strong>
+                        <button type="submit" class="btn btn-sm btn-success">ذخیره کلی</button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 18%;">کلید</th>
+                                        <th style="width: 45%;">مقدار</th>
+                                        <th style="width: 12%;">نوع</th>
+                                        <th style="width: 10%;">فعال</th>
+                                        <th style="width: 15%;">توضیحات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (var i = 0; i < Model.Items.Count; i++)
+                                    {
+                                        var item = Model.Items[i];
+                                        <tr>
+                                            <td class="align-middle">
+                                                <div class="font-weight-bold">@item.Key</div>
+                                                <input type="hidden" name="items[@i].Id" value="@item.Id" />
+                                            </td>
+                                            <td>
+                                                <textarea class="form-control form-control-sm" name="items[@i].Value" rows="2">@item.Value</textarea>
+                                            </td>
+                                            <td class="align-middle">
+                                                <span class="badge badge-info">@(string.IsNullOrWhiteSpace(item.ValueType) ? "-" : item.ValueType)</span>
+                                            </td>
+                                            <td class="align-middle">
+                                                <select class="form-control form-control-sm" name="items[@i].IsActive">
+                                                    @if (item.IsActive)
+                                                    {
+                                                        <option value="true" selected>بله</option>
+                                                        <option value="false">خیر</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="true">بله</option>
+                                                        <option value="false" selected>خیر</option>
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td class="align-middle text-muted small">@(string.IsNullOrWhiteSpace(item.Description) ? "-" : item.Description)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer text-left">
+                        <button type="submit" class="btn btn-success">ذخیره کلی</button>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+</section>

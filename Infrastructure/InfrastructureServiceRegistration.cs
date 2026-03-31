@@ -51,6 +51,7 @@ namespace Infrastructure
             services.AddScoped<ISubscriptionCustomerService, SubscriptionCustomerService>();
             services.AddScoped<IMenuPublicService, MenuPublicService>();
             services.AddScoped<IMenuThemeService, MenuThemeService>();
+            services.AddScoped<ISystemSettingService, SystemSettingService>();
 
 
             return services;

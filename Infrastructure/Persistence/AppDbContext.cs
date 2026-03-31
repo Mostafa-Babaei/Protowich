@@ -33,6 +33,7 @@ namespace Infrastructure.Persistence
         public DbSet<MenuPermission> MenuPermissions { get; set; }
         public DbSet<PermissionCategory> PermissionCategories { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<SystemSetting> SystemSettings { get; set; }
 
 
         public DbSet<FoodCategory> FoodCategories { get; set; }
@@ -49,6 +50,7 @@ namespace Infrastructure.Persistence
             modelBuilder.Menus();
             modelBuilder.Permissions();
             modelBuilder.Companies();
+            modelBuilder.SystemSettings();
 
             modelBuilder.Entity<FoodItem>(entity =>
             {
@@ -76,6 +78,11 @@ namespace Infrastructure.Persistence
                       .WithMany(m => m.MenuRoles)
                       .HasForeignKey(x => x.MenuItemId)
                       .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<SystemSetting>(entity =>
+            {
+                entity.HasIndex(x => new { x.Category, x.Key }).IsUnique();
             });
 
         }

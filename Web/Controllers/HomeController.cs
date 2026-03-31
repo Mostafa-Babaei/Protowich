@@ -1,27 +1,39 @@
+﻿using Application.Features.FastFood.Dtos;
+using Application.Interfaces.FastFoodInterface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Application.Interfaces.FastFoodInterface;
-using Application.Features.FastFood.Dtos;
 using Web.Models;
 
 namespace Web.Controllers
 {
-
     [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly IMenuPublicService _menuSvc;
         private readonly ISubscriptionCustomerService _subscriptionSvc;
+        private readonly ISystemSettingService _settingSvc;
 
-        public HomeController(IMenuPublicService menuSvc, ISubscriptionCustomerService subscriptionSvc)
+        public HomeController(
+            IMenuPublicService menuSvc,
+            ISubscriptionCustomerService subscriptionSvc,
+            ISystemSettingService settingSvc)
         {
             _menuSvc = menuSvc;
             _subscriptionSvc = subscriptionSvc;
+            _settingSvc = settingSvc;
         }
 
         public async Task<IActionResult> Index(CancellationToken ct)
         {
             var vm = new PublicHomeVm();
+
+            var settingsRes = await _settingSvc.GetByCategoryAsync("Landing", ct);
+            if (settingsRes.IsSuccess && settingsRes.Data != null)
+            {
+                vm.LandingSettings = settingsRes.Data
+                    .Where(x => x.IsActive)
+                    .ToDictionary(x => x.Key, x => x.Value ?? string.Empty);
+            }
 
             var res = await _menuSvc.GetPublicMenuAsync(ct);
             if (res.IsSuccess && res.Data != null)
@@ -100,6 +112,5 @@ namespace Web.Controllers
             var res = await _subscriptionSvc.CreateAsync(dto, ct);
             return Json(new { isSuccess = res.IsSuccess, message = res.Message });
         }
-
     }
 }

@@ -11,5 +11,6 @@ namespace Web.Models
 
         public List<PublicMenuCategoryDto> Categories { get; set; } = new();
         public List<PublicMenuFoodItemDto> FeaturedItems { get; set; } = new();
+        public Dictionary<string, string> LandingSettings { get; set; } = new();
     }
 }
