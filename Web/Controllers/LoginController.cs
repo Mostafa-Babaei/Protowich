@@ -1,26 +1,24 @@
 ﻿using Application.Features.Auth.DTOs;
-using Application.Interfaces.AuthenticationInterface;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Panel.Controllers
 {
     [AllowAnonymous]
     public class LoginController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
-        private readonly IUserRepository _auth;
+        private readonly AppDbContext _db;
 
-        public LoginController(IUserRepository auth)
+        public LoginController(AppDbContext db)
         {
-            _auth = auth;
+            _db = db;
         }
 
         [HttpGet]
@@ -36,59 +34,36 @@ namespace Panel.Controllers
             if (!ModelState.IsValid)
                 return View(vm);
 
-            // اگر companyId برای ادمین مهم نیست، بهتره GenerateJwtToken هم companyId خالی رو هندل کنه
-            // فعلاً همون Guid.Empty که گفتی:
-            var result = await _auth.LoginAsync(vm.Username, vm.Password);
+            var username = (vm.Username ?? string.Empty).Trim();
+            var password = vm.Password ?? string.Empty;
 
-            if (result == null || !result.IsSuccess)
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                ModelState.AddModelError("", result?.Message ?? "Login failed.");
+                ModelState.AddModelError(string.Empty, "نام کاربری و رمز عبور الزامی است.");
                 return View(vm);
             }
 
-            // result.Data => object (anonymous) { access_token, refresh_token }
-            // با JsonElement / Dictionary می‌کشیم بیرون
-            string? accessToken = null;
-            string? refreshToken = null;
+            var inputHash = Convert.ToBase64String(
+                SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(password)));
 
-            if (result.Data is JsonElement je && je.ValueKind == JsonValueKind.Object)
-            {
-                if (je.TryGetProperty("access_token", out var at) || je.TryGetProperty("accessToken", out at))
-                    accessToken = at.GetString();
-                if (je.TryGetProperty("refresh_token", out var rt) || je.TryGetProperty("refreshToken", out rt))
-                    refreshToken = rt.GetString();
-            }
-            else
-            {
-                // fallback: serialize/deserialize
-                var json = JsonSerializer.Serialize(result.Data);
-                using var doc = JsonDocument.Parse(json);
-                var root = doc.RootElement;
+            var user = await _db.Users.FirstOrDefaultAsync(
+                x => !x.IsDeleted && x.IsActive && (x.UserName == username || x.Email == username),
+                HttpContext.RequestAborted);
 
-                if (root.TryGetProperty("access_token", out var at) || root.TryGetProperty("accessToken", out at))
-                    accessToken = at.GetString();
-                if (root.TryGetProperty("refresh_token", out var rt) || root.TryGetProperty("refreshToken", out rt))
-                    refreshToken = rt.GetString();
-            }
-
-            if (string.IsNullOrWhiteSpace(accessToken))
+            if (user == null || user.Password != inputHash)
             {
-                ModelState.AddModelError("", "Token generation failed.");
+                ModelState.AddModelError(string.Empty, "نام کاربری یا رمز عبور اشتباه است.");
                 return View(vm);
             }
 
-            // ✅ اگر دوست داری از روی JWT claim ها رو بخونی:
-            // var handler = new JwtSecurityTokenHandler();
-            // var jwt = handler.ReadJwtToken(accessToken);
-            // var userId = jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            user.LastLogin = DateTime.Now;
+            await _db.SaveChangesAsync(HttpContext.RequestAborted);
 
-            // فعلاً چون می‌خوای فقط Owner وارد بشه، یک Claim Owner می‌گذاریم
-            // (اگر userId/email رو هم می‌خوای، بهتره LoginInternalAsync علاوه بر token، user info هم برگردونه)
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, vm.Username),
-                new Claim("IsOwner", "true"),
-                new Claim("access_token", accessToken) // اختیاری (بهتره تو Session ذخیره بشه نه Claim)
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName ?? username),
+                new Claim("IsOwner", "true")
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -99,18 +74,8 @@ namespace Panel.Controllers
                 principal,
                 new AuthenticationProperties
                 {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(12)
+                    IsPersistent = false
                 });
-
-            // ✅ ذخیره توکن‌ها (پیشنهادی: Session)
-            // لازمه AddSession() و UseSession() رو در Program.cs فعال کرده باشی
-            HttpContext.Session.SetString("access_token", accessToken);
-            if (!string.IsNullOrWhiteSpace(refreshToken))
-                HttpContext.Session.SetString("refresh_token", refreshToken);
-
-            // یا اگر Session نداری، می‌تونی Cookie HttpOnly بذاری:
-            // Response.Cookies.Append("access_token", accessToken, new CookieOptions { HttpOnly = true, Secure = true, SameSite = SameSiteMode.Lax });
 
             if (!string.IsNullOrWhiteSpace(vm.ReturnUrl) && Url.IsLocalUrl(vm.ReturnUrl))
                 return Redirect(vm.ReturnUrl);

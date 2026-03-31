@@ -3,6 +3,7 @@ using Application.Interfaces.FastFoodInterface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using System.Globalization;
+using System.Text.Json;
 using Web.Areas.Admin.Models;
 
 namespace Web.Areas.Admin.Controllers
@@ -373,6 +374,88 @@ namespace Web.Areas.Admin.Controllers
             return Json(new { isSuccess = true, message = "ترتیب نمایش آیتم‌ها بروزرسانی شد." });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddCategoryItemsBulk([FromForm] int categoryId, [FromForm] string? itemsJson, CancellationToken ct)
+        {
+            if (categoryId <= 0 || string.IsNullOrWhiteSpace(itemsJson))
+                return Json(new { isSuccess = false, message = "پارامترهای درخواست نامعتبر است." });
+
+            var category = await _svc.GetByIdAsync(categoryId);
+            if (category == null)
+                return Json(new { isSuccess = false, message = "دسته‌بندی یافت نشد." });
+
+            List<BulkFoodItemInput>? rows;
+            try
+            {
+                rows = JsonSerializer.Deserialize<List<BulkFoodItemInput>>(itemsJson, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+            }
+            catch
+            {
+                return Json(new { isSuccess = false, message = "فرمت لیست آیتم‌ها نامعتبر است." });
+            }
+
+            if (rows == null || rows.Count == 0)
+                return Json(new { isSuccess = false, message = "آیتمی برای ثبت ارسال نشده است." });
+
+            var validRows = rows
+                .Where(x => x != null)
+                .Select(x => new
+                {
+                    Title = (x!.Title ?? string.Empty).Trim(),
+                    Price = x.Price
+                })
+                .Where(x => !string.IsNullOrWhiteSpace(x.Title) && x.Price.HasValue && x.Price.Value >= 0)
+                .ToList();
+
+            if (validRows.Count == 0)
+                return Json(new { isSuccess = false, message = "حداقل یک ردیف معتبر (نام + قیمت) وارد کنید." });
+
+            var listRes = await _itemSvc.GetPagedItemsAsync(1, 2000, categoryId, null, ct);
+            if (!listRes.IsSuccess)
+                return Json(new { isSuccess = false, message = listRes.Message });
+
+            var nextDisplayOrder = (listRes.Data?.Items?.Any() == true)
+                ? listRes.Data.Items.Max(x => x.DisplayOrder) + 1
+                : 1;
+
+            var successCount = 0;
+            var failCount = 0;
+            string? firstError = null;
+
+            foreach (var row in validRows)
+            {
+                var createRes = await _itemSvc.CreateItemAsync(new FoodItemUpsertDto
+                {
+                    FoodCategoryId = categoryId,
+                    Title = row.Title,
+                    Price = row.Price!.Value,
+                    Description = null,
+                    IsAvailable = true,
+                    DisplayOrder = nextDisplayOrder++
+                }, ct);
+
+                if (createRes.IsSuccess) successCount++;
+                else
+                {
+                    failCount++;
+                    firstError ??= createRes.Message;
+                }
+            }
+
+            if (successCount == 0)
+                return Json(new { isSuccess = false, message = firstError ?? "خطا در ثبت گروهی آیتم‌ها." });
+
+            var message = failCount == 0
+                ? $"{successCount} آیتم با موفقیت ثبت شد."
+                : $"{successCount} آیتم ثبت شد و {failCount} آیتم خطا داشت.";
+
+            return Json(new { isSuccess = true, message });
+        }
+
         private async Task<(bool IsSuccess, string? Path, string Message)> SaveUploadedCategoryImageAsync(IFormFile file, CancellationToken ct)
         {
             var extension = Path.GetExtension(file.FileName)?.ToLowerInvariant();
@@ -403,6 +486,12 @@ namespace Web.Areas.Admin.Controllers
             var physicalPath = Path.Combine(_env.WebRootPath, relativePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
             if (System.IO.File.Exists(physicalPath))
                 System.IO.File.Delete(physicalPath);
+        }
+
+        private sealed class BulkFoodItemInput
+        {
+            public string? Title { get; set; }
+            public decimal? Price { get; set; }
         }
     }
 }

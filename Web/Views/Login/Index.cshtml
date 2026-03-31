@@ -1,7 +1,7 @@
 @model Application.Features.Auth.DTOs.LoginViewModel
 
 @{
-	ViewData["Title"] = "Login";
+	ViewData["Title"] = "ورود به پنل";
 	Layout = "_AuthLayout";
 }
 
@@ -9,14 +9,14 @@
 <div class="login-box">
 	<div class="login-logo">
 		<div class="logo-icon"><i class="fas fa-user-shield"></i></div>
-		<h1>Admin Panel</h1>
-		<p>Sign in with your owner account</p>
+		<h1>پنل مدیریت</h1>
+		<p>با حساب مدیر وارد شوید</p>
 	</div>
 
 	<div class="card login-card">
 		<div class="card-header">
-			<h3><i class="fas fa-sign-in-alt"></i> Sign In</h3>
-			<p>Please enter your credentials</p>
+			<h3><i class="fas fa-sign-in-alt"></i> ورود</h3>
+			<p>اطلاعات ورود را وارد کنید</p>
 		</div>
 
 		<div class="card-body login-card-body">
@@ -37,7 +37,7 @@
 					<span class="input-group-text"><i class="fas fa-envelope"></i></span>
 					<input asp-for="Username"
 						   class="form-control"
-						   placeholder="Email"
+						   placeholder="نام کاربری"
 						   autocomplete="username"
 						   required />
 				</div>
@@ -47,7 +47,7 @@
 					<input asp-for="Password"
 						   type="password"
 						   class="form-control"
-						   placeholder="Password"
+						   placeholder="رمز عبور"
 						   autocomplete="current-password"
 						   required />
 					<span class="input-group-text" style="cursor:pointer" onclick="togglePasswordVisibility()">
@@ -56,7 +56,7 @@
 				</div>
 
 				<button type="submit" class="btn btn-primary btn-block w-100 mt-3" id="loginBtn">
-					<i class="fas fa-sign-in-alt"></i> Sign In
+					<i class="fas fa-sign-in-alt"></i> ورود به پنل
 				</button>
 			</form>
 

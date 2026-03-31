@@ -87,6 +87,12 @@
                                                 data-category-title="@x.Title">
                                             <i class="fas fa-list ml-1"></i> آیتم‌ها
                                         </button>
+                                        <button type="button"
+                                                class="btn btn-sm btn-primary js-open-bulk-add-items"
+                                                data-category-id="@x.Id"
+                                                data-category-title="@x.Title">
+                                            <i class="fas fa-layer-group ml-1"></i> افزودن گروهی
+                                        </button>
                                         <a class="btn btn-sm btn-danger" asp-area="Admin" asp-controller="FoodCategories" asp-action="Delete" asp-route-id="@x.Id">
                                             <i class="fas fa-trash ml-1"></i> حذف
                                         </a>
@@ -141,6 +147,47 @@
     </div>
 </div>
 
+<div class="modal fade" id="bulkAddItemsModal" tabindex="-1" role="dialog" aria-labelledby="bulkAddItemsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bulkAddItemsModalLabel">افزودن گروهی آیتم‌ها</h5>
+                <button type="button" class="close ml-0 mr-auto" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <small class="text-muted">برای هر ردیف نام و قیمت را وارد کنید.</small>
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="btn-add-bulk-row">
+                        <i class="fas fa-plus ml-1"></i> ردیف جدید
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered mb-0">
+                        <thead>
+                            <tr>
+                                <th style="width:60px;">#</th>
+                                <th>نام آیتم</th>
+                                <th style="width:220px;">قیمت (تومان)</th>
+                                <th style="width:100px;">حذف</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bulk-items-tbody"></tbody>
+                    </table>
+                </div>
+                <div id="bulkAddItemsMessage" class="small mt-2"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-success" id="btn-save-bulk-items">
+                    <i class="fas fa-save ml-1"></i> ذخیره همه
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
         (function () {
@@ -148,11 +195,17 @@
             const updatePricesBulkEndpoint = '@Url.Action("UpdateCategoryItemsPrices", "FoodCategories", new { area = "Admin" })';
             const toggleAvailabilityEndpoint = '@Url.Action("ToggleCategoryItemAvailability", "FoodCategories", new { area = "Admin" })';
             const updateOrderEndpoint = '@Url.Action("UpdateCategoryItemsOrder", "FoodCategories", new { area = "Admin" })';
+            const addBulkItemsEndpoint = '@Url.Action("AddCategoryItemsBulk", "FoodCategories", new { area = "Admin" })';
             const modal = $('#categoryItemsModal');
             const modalTitle = $('#categoryItemsModalLabel');
             const modalBody = $('#categoryItemsModalBody');
+            const bulkModal = $('#bulkAddItemsModal');
+            const bulkModalTitle = $('#bulkAddItemsModalLabel');
+            const bulkTbody = $('#bulk-items-tbody');
+            const bulkMessage = $('#bulkAddItemsMessage');
             const antiForgeryToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
             let currentCategoryId = 0;
+            let currentBulkCategoryId = 0;
             let draggedRow = null;
 
             function escapeHtml(input) {
@@ -211,6 +264,35 @@
                 html += '</tbody></table></div>';
                 modalBody.html(html);
                 wireRowDragAndDrop();
+            }
+
+            function addBulkRow(title, price) {
+                const index = bulkTbody.find('tr').length + 1;
+                const safeTitle = escapeHtml(title || '');
+                const safePrice = Number.isFinite(Number(price)) ? String(price) : '';
+
+                const rowHtml = `
+                    <tr>
+                        <td class="align-middle text-center js-row-index">${index}</td>
+                        <td><input type="text" class="form-control form-control-sm js-bulk-title" value="${safeTitle}" placeholder="مثال: ساندویچ مرغ" /></td>
+                        <td><input type="number" min="0" step="1000" class="form-control form-control-sm js-bulk-price" value="${safePrice}" placeholder="مثال: 180000" /></td>
+                        <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger js-remove-bulk-row"><i class="fas fa-times"></i></button></td>
+                    </tr>`;
+                bulkTbody.append(rowHtml);
+            }
+
+            function refreshBulkRowIndexes() {
+                bulkTbody.find('.js-row-index').each(function (i) {
+                    $(this).text(i + 1);
+                });
+            }
+
+            function resetBulkModalRows() {
+                bulkTbody.empty();
+                addBulkRow('', '');
+                addBulkRow('', '');
+                addBulkRow('', '');
+                bulkMessage.removeClass('text-danger text-success').text('');
             }
 
             function getOrderedIds() {
@@ -305,6 +387,81 @@
                 } catch {
                     modalBody.html('<div class="text-danger">خطا در ارتباط با سرور.</div>');
                 }
+            });
+
+            $(document).on('click', '.js-open-bulk-add-items', function () {
+                const categoryId = Number($(this).data('category-id') || 0);
+                const categoryTitle = $(this).data('category-title') || '';
+                currentBulkCategoryId = categoryId;
+
+                bulkModalTitle.text(`افزودن گروهی آیتم‌ها: ${categoryTitle}`);
+                resetBulkModalRows();
+                bulkModal.modal('show');
+            });
+
+            $(document).on('click', '#btn-add-bulk-row', function () {
+                addBulkRow('', '');
+                refreshBulkRowIndexes();
+            });
+
+            $(document).on('click', '.js-remove-bulk-row', function () {
+                $(this).closest('tr').remove();
+                if (bulkTbody.find('tr').length === 0) {
+                    addBulkRow('', '');
+                }
+                refreshBulkRowIndexes();
+            });
+
+            $(document).on('click', '#btn-save-bulk-items', async function () {
+                if (currentBulkCategoryId <= 0) {
+                    bulkMessage.removeClass('text-success').addClass('text-danger').text('دسته‌بندی نامعتبر است.');
+                    return;
+                }
+
+                const items = [];
+                let hasInvalid = false;
+
+                bulkTbody.find('tr').each(function () {
+                    const title = String($(this).find('.js-bulk-title').val() || '').trim();
+                    const priceText = String($(this).find('.js-bulk-price').val() || '').trim();
+
+                    if (!title && !priceText) return;
+
+                    const price = Number(priceText);
+                    if (!title || Number.isNaN(price) || price < 0) {
+                        hasInvalid = true;
+                        return false;
+                    }
+
+                    items.push({ title: title, price: price });
+                });
+
+                if (hasInvalid) {
+                    bulkMessage.removeClass('text-success').addClass('text-danger').text('حداقل یک ردیف نامعتبر است. نام و قیمت معتبر وارد کنید.');
+                    return;
+                }
+
+                if (!items.length) {
+                    bulkMessage.removeClass('text-success').addClass('text-danger').text('حداقل یک آیتم برای ثبت وارد کنید.');
+                    return;
+                }
+
+                const payload = await postForm(addBulkItemsEndpoint, {
+                    categoryId: String(currentBulkCategoryId),
+                    itemsJson: JSON.stringify(items),
+                    __RequestVerificationToken: antiForgeryToken
+                });
+
+                if (!payload.isSuccess) {
+                    bulkMessage.removeClass('text-success').addClass('text-danger').text(payload.message || 'خطا در ثبت گروهی آیتم‌ها.');
+                    return;
+                }
+
+                bulkMessage.removeClass('text-danger').addClass('text-success').text(payload.message || 'ثبت گروهی با موفقیت انجام شد.');
+                setTimeout(function () {
+                    bulkModal.modal('hide');
+                    location.reload();
+                }, 600);
             });
 
             $(document).on('click', '#btn-save-all-prices', async function () {

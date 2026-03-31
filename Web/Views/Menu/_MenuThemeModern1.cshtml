@@ -205,6 +205,8 @@
         border-top: 1px solid #ecd9c2;
     }
 
+    .menu-theme-modern1 .category-section.is-hidden { display: none; }
+
     @@media (max-width: 480px) {
         .menu-theme-modern1 .card-img { width: 95px; }
         .menu-theme-modern1 .food-title { font-size: 0.9rem; }
@@ -277,7 +279,10 @@
                                     <div class="card-content">
                                         <div>
                                             <div class="food-title">@item.Title</div>
-                                            <div class="food-desc">@(!string.IsNullOrWhiteSpace(item.Description) ? item.Description : "بدون توضیحات")</div>
+                                            @if (!string.IsNullOrWhiteSpace(item.Description))
+                                            {
+                                                <div class="food-desc">@item.Description</div>
+                                            }
                                         </div>
                                         <div class="price">@item.Price.ToString("N0") تومان</div>
                                     </div>
@@ -295,47 +300,36 @@
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        (function () {
-            var root = document.getElementById("modernThemeRoot");
-            if (!root) return;
+<script>
+    (function () {
+        var root = document.getElementById("modernThemeRoot");
+        if (!root) return;
 
-            var tabs = root.querySelectorAll(".cat-btn");
-            var sections = root.querySelectorAll(".category-section");
-            if (!tabs.length || !sections.length) return;
+        var tabs = root.querySelectorAll(".cat-btn");
+        var sections = root.querySelectorAll(".category-section");
+        if (!tabs.length || !sections.length) return;
 
-            function setActive(catId) {
-                tabs.forEach(function (btn) {
-                    var id = parseInt(btn.getAttribute("data-cat-id"));
-                    if (id === catId) btn.classList.add("active");
-                    else btn.classList.remove("active");
-                });
-            }
-
-            tabs.forEach(function (btn, idx) {
-                if (idx === 0) btn.classList.add("active");
-                btn.addEventListener("click", function () {
-                    var catId = parseInt(btn.getAttribute("data-cat-id"));
-                    var target = root.querySelector('.category-section[data-cat-id="' + catId + '"]');
-                    if (!target) return;
-
-                    var offset = 88;
-                    var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                    window.scrollTo({ top: top, behavior: "smooth" });
-                    setActive(catId);
-                });
+        function activate(catId) {
+            tabs.forEach(function (btn) {
+                var id = parseInt(btn.getAttribute("data-cat-id"));
+                btn.classList.toggle("active", id === catId);
             });
 
-            var observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (!entry.isIntersecting) return;
-                    var id = parseInt(entry.target.getAttribute("data-cat-id"));
-                    setActive(id);
-                });
-            }, { rootMargin: "-80px 0px -60% 0px", threshold: 0.3 });
+            sections.forEach(function (section) {
+                var id = parseInt(section.getAttribute("data-cat-id"));
+                section.classList.toggle("is-hidden", id !== catId);
+            });
+        }
 
-            sections.forEach(function (section) { observer.observe(section); });
-        })();
-    </script>
-}
+        var firstId = parseInt(tabs[0].getAttribute("data-cat-id"));
+        activate(firstId);
+
+        tabs.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                var catId = parseInt(btn.getAttribute("data-cat-id"));
+                if (!catId) return;
+                activate(catId);
+            });
+        });
+    })();
+</script>
