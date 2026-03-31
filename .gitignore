@@ -1,3 +1,5 @@
 .vs/
 **/bin/
 **/obj/
+/_temp_build_web/
+/_tmp_build_web/

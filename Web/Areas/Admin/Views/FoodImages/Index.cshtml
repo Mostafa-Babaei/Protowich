@@ -1,5 +1,89 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@model List<Application.Features.FastFood.Dtos.FoodImageListItemDto>
 @{
+    Layout = "_AdminLayout"; ViewData["Title"] = "تصاویر آیتم";
+    var foodItemId = (int)(ViewBag.FoodItemId ?? 0);
 }
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="m-0">تصاویر آیتم غذا</h1>
+            <div>
+                <a class="btn btn-primary"
+                   asp-area="Admin" asp-controller="FoodImages" asp-action="Create"
+                   asp-route-foodItemId="@foodItemId">
+                    <i class="fas fa-plus ml-1"></i> افزودن تصویر
+                </a>
+                <a class="btn btn-secondary"
+                   asp-area="Admin" asp-controller="FoodItems" asp-action="Edit"
+                   asp-route-id="@foodItemId">
+                    بازگشت به آیتم
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @await Html.PartialAsync("_Alerts")
+
+        <div class="row">
+            @if (Model == null || !Model.Any())
+            {
+                <div class="col-12">
+                    <div class="alert alert-light text-center text-muted mb-0">تصویری ثبت نشده است</div>
+                </div>
+            }
+            else
+            {
+                foreach (var x in Model)
+                {
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-3">
+                        <div class="card h-100 mb-0">
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2 text-center"
+                                     style="height:220px;display:flex;align-items:center;justify-content:center;background:#f8f9fa;border:1px solid #e9ecef;border-radius:10px;overflow:hidden;">
+                                    <img src="@x.ImageUrl" alt="img-@x.Id"
+                                         style="width:100%;height:100%;object-fit:cover;" />
+                                </div>
+
+                                <div class="small text-muted mb-1">ID: @x.Id</div>
+                                <div class="mb-1">
+                                    @if (x.IsMain)
+                                    {
+                                        <span class="badge badge-success">تصویر اصلی</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-secondary">تصویر عادی</span>
+                                    }
+                                </div>
+                                <div class="small text-muted mb-3">ترتیب: @x.DisplayOrder</div>
+
+                                <div class="mt-auto d-flex" style="gap:6px;flex-wrap:wrap;">
+                                    @if (!x.IsMain)
+                                    {
+                                        <form method="post" asp-area="Admin" asp-controller="FoodImages" asp-action="SetMain" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="imageId" value="@x.Id" />
+                                            <input type="hidden" name="foodItemId" value="@foodItemId" />
+                                            <button class="btn btn-sm btn-warning" type="submit">
+                                                <i class="fas fa-star ml-1"></i> اصلی کن
+                                            </button>
+                                        </form>
+                                    }
+                                    <a class="btn btn-sm btn-danger"
+                                       asp-area="Admin" asp-controller="FoodImages" asp-action="Delete"
+                                       asp-route-id="@x.Id" asp-route-foodItemId="@foodItemId">
+                                        <i class="fas fa-trash ml-1"></i> حذف
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>

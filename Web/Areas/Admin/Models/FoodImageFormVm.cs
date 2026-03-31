@@ -1,6 +1,7 @@
 ﻿
 
 using Application.Features.FastFood.Dtos;
+using Microsoft.AspNetCore.Http;
 
 namespace Web.Areas.Admin.Models
 {
@@ -8,6 +9,7 @@ namespace Web.Areas.Admin.Models
     {
         public int FoodItemId { get; set; }
         public FoodImageUpsertDto Dto { get; set; } = new();
+        public IFormFile? UploadFile { get; set; }
     }
 
 }

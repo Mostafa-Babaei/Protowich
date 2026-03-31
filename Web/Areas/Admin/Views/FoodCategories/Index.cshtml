@@ -41,7 +41,7 @@
                             <th>ترتیب</th>
                             <th>فعال</th>
                             <th>تعداد آیتم</th>
-                            <th style="width:220px;">عملیات</th>
+                            <th style="width:320px;">عملیات</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,12 +75,18 @@
                                         <form asp-area="Admin" asp-controller="FoodCategories" asp-action="SetActive" method="post" class="d-inline">
                                             @Html.AntiForgeryToken()
                                             <input type="hidden" name="id" value="@x.Id" />
-                                            <input type="hidden" name="isActive" value="@(!x.IsActive)" />
+                                            <input type="hidden" name="isActive" value="@(x.IsActive ? "false" : "true")" />
                                             <button type="submit" class="btn btn-sm @(x.IsActive ? "btn-warning" : "btn-success")">
                                                 <i class="fas @(x.IsActive ? "fa-ban" : "fa-check") ml-1"></i>
                                                 @(x.IsActive ? "غیرفعال" : "فعال")
                                             </button>
                                         </form>
+                                        <button type="button"
+                                                class="btn btn-sm btn-secondary js-show-category-items"
+                                                data-category-id="@x.Id"
+                                                data-category-title="@x.Title">
+                                            <i class="fas fa-list ml-1"></i> آیتم‌ها
+                                        </button>
                                         <a class="btn btn-sm btn-danger" asp-area="Admin" asp-controller="FoodCategories" asp-action="Delete" asp-route-id="@x.Id">
                                             <i class="fas fa-trash ml-1"></i> حذف
                                         </a>
@@ -114,3 +120,265 @@
         </div>
     </div>
 </section>
+
+@Html.AntiForgeryToken()
+
+<div class="modal fade" id="categoryItemsModal" tabindex="-1" role="dialog" aria-labelledby="categoryItemsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="categoryItemsModalLabel">آیتم‌های دسته‌بندی</h5>
+                <button type="button" class="close ml-0 mr-auto" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="categoryItemsModalBody" class="p-1">
+                    <div class="text-muted">در حال بارگذاری...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const endpointBase = '@Url.Action("GetCategoryItems", "FoodCategories", new { area = "Admin" })';
+            const updatePriceEndpoint = '@Url.Action("UpdateCategoryItemPrice", "FoodCategories", new { area = "Admin" })';
+            const toggleAvailabilityEndpoint = '@Url.Action("ToggleCategoryItemAvailability", "FoodCategories", new { area = "Admin" })';
+            const updateOrderEndpoint = '@Url.Action("UpdateCategoryItemsOrder", "FoodCategories", new { area = "Admin" })';
+            const modal = $('#categoryItemsModal');
+            const modalTitle = $('#categoryItemsModalLabel');
+            const modalBody = $('#categoryItemsModalBody');
+            const antiForgeryToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+            let currentCategoryId = 0;
+            let draggedRow = null;
+
+            function escapeHtml(input) {
+                return String(input ?? '')
+                    .split('&').join('&amp;')
+                    .split('<').join('&lt;')
+                    .split('>').join('&gt;')
+                    .split('"').join('&quot;')
+                    .split("'").join('&#39;');
+            }
+
+            function formatPrice(value) {
+                const number = Number(value ?? 0);
+                return number.toLocaleString('fa-IR');
+            }
+
+            function renderItems(items) {
+                if (!items || items.length === 0) {
+                    modalBody.html('<div class="text-muted">برای این دسته‌بندی آیتمی ثبت نشده است.</div>');
+                    return;
+                }
+
+                let html = '<div class="d-flex justify-content-between align-items-center mb-2">';
+                html += '<small class="text-muted">ردیف‌ها را بکشید و رها کنید، سپس ذخیره ترتیب را بزنید.</small>';
+                html += '<button type="button" id="btn-save-items-order" class="btn btn-sm btn-primary">ذخیره ترتیب</button>';
+                html += '</div>';
+
+                html += '<div class="table-responsive"><table class="table table-sm table-bordered mb-0">';
+                html += '<thead><tr><th style="width:54px;">ترتیب</th><th style="width:70px;">#</th><th>عنوان</th><th style="width:210px;">قیمت</th><th style="width:130px;">وضعیت</th><th style="width:150px;">عملیات</th></tr></thead><tbody id="category-items-tbody">';
+
+                for (const item of items) {
+                    const statusBadge = item.isAvailable
+                        ? '<span class="badge badge-success">موجود</span>'
+                        : '<span class="badge badge-secondary">ناموجود</span>';
+
+                    html += '<tr>';
+                    html += `<td class="text-center align-middle" title="Drag & Drop" style="cursor:grab;" draggable="true"><i class="fas fa-grip-vertical text-muted"></i></td>`;
+                    html += `<td class="align-middle" data-item-id="${item.id}">${item.id}</td>`;
+                    html += `<td>${escapeHtml(item.title)}</td>`;
+                    html += '<td>';
+                    html += `<div class="input-group input-group-sm">`;
+                    html += `<input type="number" min="0" step="1000" class="form-control js-price-input" value="${item.price}" data-item-id="${item.id}" />`;
+                    html += `<div class="input-group-append">`;
+                    html += `<button class="btn btn-outline-primary js-save-price" type="button" data-item-id="${item.id}">ثبت قیمت</button>`;
+                    html += `</div></div>`;
+                    html += '</td>';
+                    html += `<td class="align-middle"><span class="js-status-badge" data-item-id="${item.id}">${statusBadge}</span></td>`;
+                    html += '<td class="align-middle">';
+                    html += `<button type="button" class="btn btn-sm ${item.isAvailable ? 'btn-warning' : 'btn-success'} js-toggle-availability" data-item-id="${item.id}" data-is-available="${item.isAvailable ? 'true' : 'false'}">${item.isAvailable ? 'غیرفعال' : 'فعال'}</button>`;
+                    html += '</td>';
+                    html += '</tr>';
+                }
+
+                html += '</tbody></table></div>';
+                modalBody.html(html);
+                wireRowDragAndDrop();
+            }
+
+            function getOrderedIds() {
+                return $('#category-items-tbody tr')
+                    .map(function () { return $(this).find('[data-item-id]').data('item-id'); })
+                    .get()
+                    .filter(x => !!x);
+            }
+
+            function wireRowDragAndDrop() {
+                const tbody = document.getElementById('category-items-tbody');
+                if (!tbody) return;
+
+                tbody.querySelectorAll('tr').forEach(row => {
+                    row.draggable = true;
+
+                    row.addEventListener('dragstart', function () {
+                        draggedRow = row;
+                        row.style.opacity = '0.5';
+                    });
+
+                    row.addEventListener('dragend', function () {
+                        row.style.opacity = '1';
+                        draggedRow = null;
+                    });
+
+                    row.addEventListener('dragover', function (e) {
+                        e.preventDefault();
+                    });
+
+                    row.addEventListener('drop', function (e) {
+                        e.preventDefault();
+                        if (!draggedRow || draggedRow === row) return;
+
+                        const rect = row.getBoundingClientRect();
+                        const dropBelow = (e.clientY - rect.top) > (rect.height / 2);
+
+                        if (dropBelow) {
+                            row.after(draggedRow);
+                        } else {
+                            row.before(draggedRow);
+                        }
+                    });
+                });
+            }
+
+            async function postForm(url, data) {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                        'RequestVerificationToken': antiForgeryToken
+                    },
+                    body: new URLSearchParams(data)
+                });
+
+                if (!response.ok) {
+                    return { isSuccess: false, message: 'خطا در ارتباط با سرور.' };
+                }
+
+                return response.json();
+            }
+
+            $(document).on('click', '.js-show-category-items', async function () {
+                const categoryId = $(this).data('category-id');
+                const categoryTitle = $(this).data('category-title');
+                currentCategoryId = Number(categoryId || 0);
+
+                modalTitle.text(`آیتم‌های دسته‌بندی: ${categoryTitle}`);
+                modalBody.html('<div class="text-muted">در حال بارگذاری...</div>');
+                modal.modal('show');
+
+                try {
+                    const response = await fetch(`${endpointBase}?id=${encodeURIComponent(categoryId)}`, {
+                        method: 'GET',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    });
+
+                    if (!response.ok) {
+                        modalBody.html('<div class="text-danger">خطا در دریافت اطلاعات.</div>');
+                        return;
+                    }
+
+                    const payload = await response.json();
+                    if (!payload.isSuccess) {
+                        const message = payload.message || 'خطا در دریافت اطلاعات.';
+                        modalBody.html(`<div class="text-danger">${escapeHtml(message)}</div>`);
+                        return;
+                    }
+
+                    renderItems(payload.items);
+                } catch {
+                    modalBody.html('<div class="text-danger">خطا در ارتباط با سرور.</div>');
+                }
+            });
+
+            $(document).on('click', '.js-save-price', async function () {
+                const itemId = Number($(this).data('item-id') || 0);
+                const input = $(`.js-price-input[data-item-id="${itemId}"]`);
+                const price = Number(input.val());
+
+                if (itemId <= 0 || Number.isNaN(price) || price < 0) {
+                    alert('قیمت وارد شده معتبر نیست.');
+                    return;
+                }
+
+                const payload = await postForm(updatePriceEndpoint, {
+                    id: String(itemId),
+                    price: String(price),
+                    __RequestVerificationToken: antiForgeryToken
+                });
+
+                if (!payload.isSuccess) {
+                    alert(payload.message || 'خطا در ثبت قیمت.');
+                    return;
+                }
+            });
+
+            $(document).on('click', '.js-toggle-availability', async function () {
+                const button = $(this);
+                const itemId = Number(button.data('item-id') || 0);
+                const current = String(button.data('is-available')) === 'true';
+                const next = !current;
+
+                const payload = await postForm(toggleAvailabilityEndpoint, {
+                    id: String(itemId),
+                    isAvailable: String(next),
+                    __RequestVerificationToken: antiForgeryToken
+                });
+
+                if (!payload.isSuccess) {
+                    alert(payload.message || 'خطا در تغییر وضعیت.');
+                    return;
+                }
+
+                button.data('is-available', String(next));
+                button
+                    .toggleClass('btn-success', !next)
+                    .toggleClass('btn-warning', next)
+                    .text(next ? 'غیرفعال' : 'فعال');
+
+                const badge = $(`.js-status-badge[data-item-id="${itemId}"]`);
+                badge.html(next
+                    ? '<span class="badge badge-success">موجود</span>'
+                    : '<span class="badge badge-secondary">ناموجود</span>');
+            });
+
+            $(document).on('click', '#btn-save-items-order', async function () {
+                if (currentCategoryId <= 0) {
+                    alert('دسته‌بندی نامعتبر است.');
+                    return;
+                }
+
+                const orderedIds = getOrderedIds();
+                if (!orderedIds.length) {
+                    alert('لیست آیتم‌ها خالی است.');
+                    return;
+                }
+
+                const payload = await postForm(updateOrderEndpoint, {
+                    categoryId: String(currentCategoryId),
+                    orderedIds: orderedIds.join(','),
+                    __RequestVerificationToken: antiForgeryToken
+                });
+
+                if (!payload.isSuccess) {
+                    alert(payload.message || 'خطا در ذخیره ترتیب.');
+                    return;
+                }
+            });
+        })();
+    </script>
+}

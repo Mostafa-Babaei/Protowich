@@ -1,4 +1,4 @@
-@{
+﻿@{
     var userName = ViewBag.UserName as string ?? "";
     var roleTitle = ViewBag.RoleTitle as string ?? "";
     var ctrl = (ViewContext.RouteData.Values["controller"]?.ToString() ?? "").ToLowerInvariant();
@@ -6,19 +6,7 @@
 
     bool IsAdminArea() => area == "admin";
 
-    bool InGroup(params string[] names)
-    {
-        for (var i = 0; i < names.Length; i++)
-        {
-            if (string.Equals(names[i], ctrl, StringComparison.OrdinalIgnoreCase))
-                return true;
-        }
-        return false;
-    }
-
     string Active(string controller) => IsAdminArea() && string.Equals(ctrl, controller, StringComparison.OrdinalIgnoreCase) ? "active" : "";
-    string GroupOpen(params string[] controllers) => IsAdminArea() && InGroup(controllers) ? "menu-open" : "";
-    string GroupActive(params string[] controllers) => IsAdminArea() && InGroup(controllers) ? "active" : "";
 }
 
 <!DOCTYPE html>
@@ -100,7 +88,7 @@
             </a>
 
             <div class="sidebar">
-                <nav class="mt-2">
+                                <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-link @Active("dashboard")">
@@ -110,40 +98,17 @@
                         </li>
 
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="ManageMenu" asp-action="Index" class="nav-link @Active("managemenu")">
-                                <i class="nav-icon fas fa-sitemap"></i>
-                                <p>مدیریت ساختار منو</p>
+                            <a asp-area="Admin" asp-controller="FoodCategories" asp-action="Index" class="nav-link @Active("foodcategories")">
+                                <i class="nav-icon fas fa-folder-open"></i>
+                                <p>دسته‌بندی منو</p>
                             </a>
                         </li>
 
-                        <li class="nav-item has-treeview @GroupOpen("foodcategories", "fooditems", "foodimages")">
-                            <a href="#" class="nav-link @GroupActive("foodcategories", "fooditems", "foodimages")">
-                                <i class="nav-icon fas fa-utensils"></i>
-                                <p>
-                                    مدیریت رستوران
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                        <li class="nav-item">
+                            <a asp-area="Admin" asp-controller="FoodItems" asp-action="Index" class="nav-link @Active("fooditems")">
+                                <i class="nav-icon fas fa-hamburger"></i>
+                                <p>آیتم‌های منو</p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="FoodCategories" asp-action="Index" class="nav-link @Active("foodcategories")">
-                                        <i class="nav-icon fas fa-folder-open"></i>
-                                        <p>دسته‌بندی غذاها</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="FoodItems" asp-action="Index" class="nav-link @Active("fooditems")">
-                                        <i class="nav-icon fas fa-hamburger"></i>
-                                        <p>آیتم‌های غذا</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="FoodImages" asp-action="Index" class="nav-link @Active("foodimages")">
-                                        <i class="nav-icon fas fa-images"></i>
-                                        <p>تصاویر غذا</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                 </nav>
@@ -155,7 +120,7 @@
         </div>
 
         <footer class="main-footer text-center">
-            <strong>© سیستم مدیریت پروتوویچ</strong>
+            <strong>© سیستم مدیریت پروتویچ</strong>
         </footer>
     </div>
 
@@ -175,3 +140,5 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+

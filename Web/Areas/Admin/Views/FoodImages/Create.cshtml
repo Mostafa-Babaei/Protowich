@@ -10,14 +10,15 @@
         <div class="card">
             <div class="card-header"><h3 class="card-title">افزودن تصویر</h3></div>
             <div class="card-body">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     @Html.AntiForgeryToken()
 
                     <input type="hidden" asp-for="FoodItemId" />
 
                     <div class="form-group">
-                        <label>Image Url</label>
-                        <input class="form-control" asp-for="Dto.ImageUrl" placeholder="https://..." />
+                        <label>انتخاب تصویر</label>
+                        <input class="form-control" type="file" asp-for="UploadFile" accept="image/*" />
+                        <small class="form-text text-muted">فرمت‌های مجاز: jpg, jpeg, png, webp, gif</small>
                     </div>
 
                     <div class="row">

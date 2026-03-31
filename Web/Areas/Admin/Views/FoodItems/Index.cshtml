@@ -96,7 +96,7 @@
                                         <form method="post" asp-area="Admin" asp-controller="FoodItems" asp-action="SetAvailability" class="d-inline">
                                             @Html.AntiForgeryToken()
                                             <input type="hidden" name="id" value="@x.Id" />
-                                            <input type="hidden" name="isAvailable" value="@(!x.IsAvailable)" />
+                                            <input type="hidden" name="isAvailable" value="@(x.IsAvailable ? "false" : "true")" />
                                             <button class="btn btn-sm @(x.IsAvailable ? "btn-warning" : "btn-success")" type="submit">
                                                 @(x.IsAvailable ? "عدم موجودی" : "موجود شد")
                                             </button>

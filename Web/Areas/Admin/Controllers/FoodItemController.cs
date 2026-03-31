@@ -112,9 +112,15 @@ namespace Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SetAvailability(int id, bool isAvailable, CancellationToken ct)
+        public async Task<IActionResult> SetAvailability([FromForm] int id, [FromForm] bool? isAvailable, CancellationToken ct)
         {
-            var res = await _svc.SetAvailabilityAsync(id, isAvailable, ct);
+            if (id <= 0 || isAvailable is null)
+            {
+                TempData["err"] = "پارامترهای درخواست نامعتبر است.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var res = await _svc.SetAvailabilityAsync(id, isAvailable.Value, ct);
             TempData[res.IsSuccess ? "ok" : "err"] = res.Message;
             return RedirectToAction(nameof(Index));
         }

@@ -1,4 +1,4 @@
-@model Web.Areas.Admin.Models.FoodCategoryFormVm
+@model Application.Features.FastFood.Dtos.FoodCategoryUpsertDto
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "افزودن دسته‌بندی";
@@ -21,27 +21,27 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                     <div class="form-group">
-                        <label asp-for="Dto.Title">عنوان</label>
-                        <input class="form-control" asp-for="Dto.Title" />
-                        <span asp-validation-for="Dto.Title" class="text-danger"></span>
+                        <label asp-for="Title">عنوان</label>
+                        <input class="form-control" asp-for="Title" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="Dto.Description">توضیح</label>
-                        <textarea class="form-control" rows="3" asp-for="Dto.Description"></textarea>
+                        <label asp-for="Description">توضیح</label>
+                        <textarea class="form-control" rows="3" asp-for="Description"></textarea>
                     </div>
 
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label asp-for="Dto.DisplayOrder">ترتیب نمایش</label>
-                                <input class="form-control" type="number" asp-for="Dto.DisplayOrder" />
+                                <label asp-for="DisplayOrder">ترتیب نمایش</label>
+                                <input class="form-control" type="number" asp-for="DisplayOrder" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label asp-for="Dto.IsActive">فعال</label>
-                                <select class="form-control" asp-for="Dto.IsActive">
+                                <label asp-for="IsActive">فعال</label>
+                                <select class="form-control" asp-for="IsActive">
                                     <option value="true">بله</option>
                                     <option value="false">خیر</option>
                                 </select>

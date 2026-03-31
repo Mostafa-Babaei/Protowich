@@ -1,16 +1,95 @@
+﻿@model Web.Models.PublicHomeVm
 @{
-    ViewData["Title"] = "Protowich";
+    ViewData["Title"] = "پروتویچ";
 }
 
-<div class="container py-5">
-    <div class="text-center">
-        <h1 class="display-5 mb-3">Protowich</h1>
-        <p class="text-muted mb-4">صفحه اصلی عمومی</p>
-        <a asp-area="" asp-controller="Menu" asp-action="Index" class="btn btn-outline-secondary me-2">
-            منوی عمومی
-        </a>
-        <a asp-area="" asp-controller="Login" asp-action="Index" class="btn btn-primary">
-            ورود مدیر
-        </a>
+<section class="home-hero p-4 p-md-5 mb-4">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <div class="hero-kicker mb-2">Protowich</div>
+            <h1 class="display-6 fw-bold mb-3">اطلاعات پروتویچ</h1>
+            <p class="lead mb-4">
+                پروتویچ یک تجربه سریع و باکیفیت برای سفارش غذاست؛ دسته‌بندی‌های واضح، آیتم‌های به‌روز و تصاویر واقعی.
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+                <a asp-area="" asp-controller="Menu" asp-action="Index" class="btn btn-primary px-4">
+                    مشاهده منوی کامل
+                </a>
+                <a asp-area="" asp-controller="Login" asp-action="Index" class="btn btn-outline-dark px-4">
+                    ورود مدیر
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="home-stats row g-2">
+                <div class="col-4">
+                    <div class="stat-box text-center">
+                        <div class="stat-num">@Model.CategoriesCount</div>
+                        <div class="stat-label">دسته‌بندی</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="stat-box text-center">
+                        <div class="stat-num">@Model.ItemsCount</div>
+                        <div class="stat-label">آیتم</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="stat-box text-center">
+                        <div class="stat-num">@Model.ImagesCount</div>
+                        <div class="stat-label">تصویر</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+@if (!string.IsNullOrWhiteSpace(Model.Error))
+{
+    <div class="alert alert-warning">@Model.Error</div>
+}
+
+<section class="mb-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="h4 m-0">آیتم‌های منتخب</h2>
+        <a asp-area="" asp-controller="Menu" asp-action="Index" class="small text-decoration-none">نمایش همه</a>
+    </div>
+
+    @if (Model.FeaturedItems == null || !Model.FeaturedItems.Any())
+    {
+        <div class="alert alert-light border">فعلا آیتمی برای نمایش وجود ندارد.</div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var item in Model.FeaturedItems)
+            {
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="home-food-card h-100">
+                        <div class="home-food-image-wrap">
+                            @if (!string.IsNullOrWhiteSpace(item.MainImageUrl))
+                            {
+                                <img src="@item.MainImageUrl" alt="@item.Title" class="home-food-image" />
+                            }
+                            else
+                            {
+                                <div class="home-food-placeholder">بدون تصویر</div>
+                            }
+                        </div>
+                        <div class="p-3">
+                            <div class="d-flex justify-content-between align-items-start gap-2">
+                                <h3 class="h6 mb-1">@item.Title</h3>
+                                <span class="badge bg-success">@item.Price.ToString("N0") تومان</span>
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(item.Description))
+                            {
+                                <p class="small text-muted mb-0">@item.Description</p>
+                            }
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+    }
+</section>
