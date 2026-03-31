@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces.FastFoodInterface;
+using Application.Features.FastFood.Dtos;
 using Web.Models;
 
 namespace Web.Controllers
@@ -10,10 +11,12 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
         private readonly IMenuPublicService _menuSvc;
+        private readonly ISubscriptionCustomerService _subscriptionSvc;
 
-        public HomeController(IMenuPublicService menuSvc)
+        public HomeController(IMenuPublicService menuSvc, ISubscriptionCustomerService subscriptionSvc)
         {
             _menuSvc = menuSvc;
+            _subscriptionSvc = subscriptionSvc;
         }
 
         public async Task<IActionResult> Index(CancellationToken ct)
@@ -42,6 +45,60 @@ namespace Web.Controllers
             }
 
             return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterSubscription(
+            [FromForm] string? fullName,
+            [FromForm] string? mobile,
+            [FromForm] string? address,
+            [FromForm] string? phone,
+            [FromForm] string? description,
+            [FromForm] double? lat,
+            [FromForm] double? lng,
+            CancellationToken ct)
+        {
+            fullName = (fullName ?? string.Empty).Trim();
+            mobile = (mobile ?? string.Empty).Trim();
+            address = (address ?? string.Empty).Trim();
+            phone = (phone ?? string.Empty).Trim();
+            description = (description ?? string.Empty).Trim();
+
+            if (string.IsNullOrWhiteSpace(fullName))
+                return Json(new { isSuccess = false, message = "نام و نام خانوادگی الزامی است." });
+            if (string.IsNullOrWhiteSpace(mobile))
+                return Json(new { isSuccess = false, message = "موبایل الزامی است." });
+
+            var parts = fullName
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Trim())
+                .Where(x => x.Length > 0)
+                .ToList();
+
+            var firstName = parts.Count > 0 ? parts[0] : fullName;
+            var lastName = parts.Count > 1 ? string.Join(' ', parts.Skip(1)) : firstName;
+
+            var finalDescription = description;
+            if (lat.HasValue && lng.HasValue)
+            {
+                var loc = $"لوکیشن: {lat.Value:F6}, {lng.Value:F6}";
+                finalDescription = string.IsNullOrWhiteSpace(finalDescription) ? loc : $"{finalDescription} | {loc}";
+            }
+
+            var dto = new SubscriptionCustomerUpsertDto
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Mobile = mobile,
+                Phone = string.IsNullOrWhiteSpace(phone) ? null : phone,
+                Address = string.IsNullOrWhiteSpace(address) ? "ثبت نشده" : address,
+                Description = string.IsNullOrWhiteSpace(finalDescription) ? null : finalDescription,
+                IsActive = true
+            };
+
+            var res = await _subscriptionSvc.CreateAsync(dto, ct);
+            return Json(new { isSuccess = res.IsSuccess, message = res.Message });
         }
 
     }

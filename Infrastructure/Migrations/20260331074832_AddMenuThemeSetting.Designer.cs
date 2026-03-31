@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260331074832_AddMenuThemeSetting")]
+    partial class AddMenuThemeSetting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,21 +261,21 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             Code = "1",
-                            CreatedAt = new DateTime(2026, 3, 31, 12, 0, 29, 645, DateTimeKind.Local).AddTicks(3497),
+                            CreatedAt = new DateTime(2026, 3, 31, 11, 18, 31, 884, DateTimeKind.Local).AddTicks(9126),
                             IsActive = true,
                             IsDeleted = false,
                             Title = "مطب دکتر روشنی",
-                            UpdatedAt = new DateTime(2026, 3, 31, 12, 0, 29, 645, DateTimeKind.Local).AddTicks(3516)
+                            UpdatedAt = new DateTime(2026, 3, 31, 11, 18, 31, 884, DateTimeKind.Local).AddTicks(9138)
                         },
                         new
                         {
                             Id = 2,
                             Code = "2",
-                            CreatedAt = new DateTime(2026, 3, 31, 12, 0, 29, 645, DateTimeKind.Local).AddTicks(3520),
+                            CreatedAt = new DateTime(2026, 3, 31, 11, 18, 31, 884, DateTimeKind.Local).AddTicks(9139),
                             IsActive = true,
                             IsDeleted = false,
                             Title = "کلینیک ترک اعتیاد",
-                            UpdatedAt = new DateTime(2026, 3, 31, 12, 0, 29, 645, DateTimeKind.Local).AddTicks(3522)
+                            UpdatedAt = new DateTime(2026, 3, 31, 11, 18, 31, 884, DateTimeKind.Local).AddTicks(9140)
                         });
                 });
 
@@ -296,10 +299,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
-
-                    b.Property<string>("ImageUrl")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");

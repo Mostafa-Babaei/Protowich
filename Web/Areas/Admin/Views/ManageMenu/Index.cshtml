@@ -1,3 +1,4 @@
+﻿@model Web.Areas.Admin.Models.MenuThemeSelectionVm
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "مدیریت منو";
@@ -11,12 +12,14 @@
 
 <section class="content">
     <div class="container-fluid">
+        @await Html.PartialAsync("_Alerts")
+
         <div class="row">
             <div class="col-md-4">
                 <div class="card card-outline card-primary">
-                    <div class="card-header"><h3 class="card-title m-0">دسته بندی ها</h3></div>
+                    <div class="card-header"><h3 class="card-title m-0">دسته‌بندی‌ها</h3></div>
                     <div class="card-body">
-                        <p class="text-muted">ایجاد، ویرایش و حذف دسته بندی های منو.</p>
+                        <p class="text-muted">ایجاد، ویرایش و حذف دسته‌بندی‌های منو.</p>
                         <a class="btn btn-primary btn-sm" asp-area="Admin" asp-controller="FoodCategories" asp-action="Index">مشاهده</a>
                         <a class="btn btn-outline-primary btn-sm" asp-area="Admin" asp-controller="FoodCategories" asp-action="Create">افزودن</a>
                     </div>
@@ -25,7 +28,7 @@
 
             <div class="col-md-4">
                 <div class="card card-outline card-success">
-                    <div class="card-header"><h3 class="card-title m-0">آیتم های منو</h3></div>
+                    <div class="card-header"><h3 class="card-title m-0">آیتم‌های منو</h3></div>
                     <div class="card-body">
                         <p class="text-muted">مدیریت غذاها، قیمت، وضعیت نمایش و تصاویر.</p>
                         <a class="btn btn-success btn-sm" asp-area="Admin" asp-controller="FoodItems" asp-action="Index">مشاهده</a>
@@ -38,9 +41,48 @@
                 <div class="card card-outline card-info">
                     <div class="card-header"><h3 class="card-title m-0">نمایش منوی عمومی</h3></div>
                     <div class="card-body">
-                        <p class="text-muted">پیش نمایش همان صفحه ای که کاربر عمومی می بیند.</p>
+                        <p class="text-muted">پیش‌نمایش همان صفحه‌ای که کاربر عمومی می‌بیند.</p>
                         <a class="btn btn-info btn-sm" asp-area="" asp-controller="Menu" asp-action="Index">مشاهده منوی عمومی</a>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-outline card-warning mt-3">
+            <div class="card-header">
+                <h3 class="card-title m-0">قالب نمایش منو</h3>
+            </div>
+            <div class="card-body">
+                <form asp-area="Admin" asp-controller="ManageMenu" asp-action="SetTheme" method="post" class="row align-items-end">
+                    @Html.AntiForgeryToken()
+
+                    <div class="col-md-6 form-group">
+                        <label for="themeKey">قالب فعال</label>
+                        <select id="themeKey" name="themeKey" class="form-control">
+                            @foreach (var opt in Model.Options)
+                            {
+                                @if (Model.ActiveThemeKey == opt.Key)
+                                {
+                                    <option value="@opt.Key" selected>@opt.Title</option>
+                                }
+                                else
+                                {
+                                    <option value="@opt.Key">@opt.Title</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <button type="submit" class="btn btn-warning">ذخیره قالب</button>
+                    </div>
+                </form>
+
+                <div class="mt-2 text-muted small">
+                    @foreach (var opt in Model.Options)
+                    {
+                        <div><strong>@opt.Title:</strong> @opt.Description</div>
+                    }
                 </div>
             </div>
         </div>

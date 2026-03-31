@@ -14,6 +14,9 @@ namespace Domain.Entities.FastFood
         [MaxLength(255)]
         public string? Description { get; set; }
 
+        [MaxLength(500)]
+        public string? ImageUrl { get; set; }
+
         public int DisplayOrder { get; set; }
 
 

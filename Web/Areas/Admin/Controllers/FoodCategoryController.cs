@@ -1,6 +1,8 @@
-using Application.Features.FastFood.Dtos;
+﻿using Application.Features.FastFood.Dtos;
 using Application.Interfaces.FastFoodInterface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using System.Globalization;
 using Web.Areas.Admin.Models;
 
 namespace Web.Areas.Admin.Controllers
@@ -9,11 +11,13 @@ namespace Web.Areas.Admin.Controllers
     {
         private readonly IFoodCategoryService _svc;
         private readonly IFoodItemService _itemSvc;
+        private readonly IWebHostEnvironment _env;
 
-        public FoodCategoriesController(IFoodCategoryService svc, IFoodItemService itemSvc)
+        public FoodCategoriesController(IFoodCategoryService svc, IFoodItemService itemSvc, IWebHostEnvironment env)
         {
             _svc = svc;
             _itemSvc = itemSvc;
+            _env = env;
         }
 
         public async Task<IActionResult> Index([FromQuery] FoodCategoryIndexVm vm, CancellationToken ct)
@@ -28,26 +32,45 @@ namespace Web.Areas.Admin.Controllers
             return View(vm);
         }
 
-        public IActionResult Create() => View(new FoodCategoryUpsertDto());
+        public IActionResult Create() => View(new FoodCategoryFormVm { Dto = new FoodCategoryUpsertDto { IsActive = true } });
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(FoodCategoryUpsertDto dto, CancellationToken ct)
+        public async Task<IActionResult> Create(FoodCategoryFormVm vm, CancellationToken ct)
         {
-            dto ??= new FoodCategoryUpsertDto();
-            if (string.IsNullOrWhiteSpace(dto.Title))
+            vm ??= new FoodCategoryFormVm();
+            vm.Dto ??= new FoodCategoryUpsertDto();
+
+            if (string.IsNullOrWhiteSpace(vm.Dto.Title))
             {
-                ModelState.AddModelError(nameof(dto.Title), "عنوان دسته‌بندی الزامی است.");
-                return View(dto);
+                ModelState.AddModelError("Dto.Title", "عنوان دسته‌بندی الزامی است.");
+                return View(vm);
             }
 
-            var res = await _svc.CreateCategoryAsync(dto, ct);
+            string? uploadedPath = null;
+            if (vm.UploadFile != null && vm.UploadFile.Length > 0)
+            {
+                var saveRes = await SaveUploadedCategoryImageAsync(vm.UploadFile, ct);
+                if (!saveRes.IsSuccess)
+                {
+                    ModelState.AddModelError(string.Empty, saveRes.Message);
+                    return View(vm);
+                }
+
+                uploadedPath = saveRes.Path;
+                vm.Dto.ImageUrl = uploadedPath;
+            }
+
+            var res = await _svc.CreateCategoryAsync(vm.Dto, ct);
             if (!res.IsSuccess)
             {
+                if (!string.IsNullOrWhiteSpace(uploadedPath))
+                    DeletePhysicalFile(uploadedPath);
+
                 ModelState.AddModelError(string.Empty, string.IsNullOrWhiteSpace(res.DeveloperMessage)
                     ? (res.Message ?? "خطا در ثبت دسته‌بندی.")
                     : $"{res.Message} ({res.DeveloperMessage})");
-                return View(dto);
+                return View(vm);
             }
 
             TempData["ok"] = "دسته‌بندی با موفقیت ثبت شد.";
@@ -66,6 +89,7 @@ namespace Web.Areas.Admin.Controllers
                 {
                     Title = entity.Title,
                     Description = entity.Description,
+                    ImageUrl = entity.ImageUrl,
                     DisplayOrder = entity.DisplayOrder,
                     IsActive = entity.IsActive
                 }
@@ -87,15 +111,46 @@ namespace Web.Areas.Admin.Controllers
                 return View(vm);
             }
 
+            var entity = await _svc.GetByIdAsync(id);
+            if (entity == null)
+            {
+                TempData["err"] = "دسته‌بندی یافت نشد.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            vm.Dto.ImageUrl = entity.ImageUrl;
+            string? newUploadedPath = null;
+
+            if (vm.UploadFile != null && vm.UploadFile.Length > 0)
+            {
+                var saveRes = await SaveUploadedCategoryImageAsync(vm.UploadFile, ct);
+                if (!saveRes.IsSuccess)
+                {
+                    ModelState.AddModelError(string.Empty, saveRes.Message);
+                    vm.Id = id;
+                    return View(vm);
+                }
+
+                newUploadedPath = saveRes.Path;
+                vm.Dto.ImageUrl = newUploadedPath;
+            }
+
+            var oldPath = entity.ImageUrl;
             var res = await _svc.UpdateCategoryAsync(id, vm.Dto, ct);
             if (!res.IsSuccess)
             {
+                if (!string.IsNullOrWhiteSpace(newUploadedPath))
+                    DeletePhysicalFile(newUploadedPath);
+
                 ModelState.AddModelError(string.Empty, string.IsNullOrWhiteSpace(res.DeveloperMessage)
                     ? (res.Message ?? "خطا در ویرایش دسته‌بندی.")
                     : $"{res.Message} ({res.DeveloperMessage})");
                 vm.Id = id;
                 return View(vm);
             }
+
+            if (!string.IsNullOrWhiteSpace(newUploadedPath) && !string.IsNullOrWhiteSpace(oldPath))
+                DeletePhysicalFile(oldPath);
 
             TempData["ok"] = "دسته‌بندی با موفقیت ویرایش شد.";
             return RedirectToAction(nameof(Index));
@@ -113,8 +168,15 @@ namespace Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken ct)
         {
+            var entity = await _svc.GetByIdAsync(id);
+            var oldPath = entity?.ImageUrl;
+
             var res = await _svc.DeleteCategoryAsync(id, ct);
             TempData[res.IsSuccess ? "ok" : "err"] = res.Message;
+
+            if (res.IsSuccess && !string.IsNullOrWhiteSpace(oldPath))
+                DeletePhysicalFile(oldPath);
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -182,6 +244,76 @@ namespace Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateCategoryItemsPrices([FromForm] int categoryId, [FromForm] string? items, CancellationToken ct)
+        {
+            if (categoryId <= 0 || string.IsNullOrWhiteSpace(items))
+                return Json(new { isSuccess = false, message = "پارامترهای درخواست نامعتبر است." });
+
+            var pairs = items
+                .Split(';', StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Trim())
+                .Where(x => x.Length > 0)
+                .ToList();
+
+            if (pairs.Count == 0)
+                return Json(new { isSuccess = false, message = "لیست قیمت‌ها نامعتبر است." });
+
+            var toUpdate = new List<(int Id, decimal Price)>();
+            foreach (var pair in pairs)
+            {
+                var parts = pair.Split(':', StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length != 2)
+                    return Json(new { isSuccess = false, message = "فرمت لیست قیمت‌ها نامعتبر است." });
+
+                if (!int.TryParse(parts[0], out var itemId) || itemId <= 0)
+                    return Json(new { isSuccess = false, message = "شناسه آیتم نامعتبر است." });
+
+                var priceText = parts[1].Trim();
+                var parsed = decimal.TryParse(priceText, NumberStyles.Number, CultureInfo.InvariantCulture, out var price)
+                             || decimal.TryParse(priceText, NumberStyles.Number, CultureInfo.CurrentCulture, out price);
+                if (!parsed || price < 0)
+                    return Json(new { isSuccess = false, message = "مقدار قیمت نامعتبر است." });
+
+                toUpdate.Add((itemId, price));
+            }
+
+            if (toUpdate.Count == 0)
+                return Json(new { isSuccess = false, message = "قیمتی برای بروزرسانی ارسال نشده است." });
+
+            var listRes = await _itemSvc.GetPagedItemsAsync(1, 500, categoryId, null, ct);
+            if (!listRes.IsSuccess)
+                return Json(new { isSuccess = false, message = listRes.Message });
+
+            var validIds = (listRes.Data?.Items?.Select(x => x.Id).ToHashSet()) ?? new HashSet<int>();
+            if (toUpdate.Any(x => !validIds.Contains(x.Id)))
+                return Json(new { isSuccess = false, message = "برخی آیتم‌ها متعلق به این دسته‌بندی نیستند." });
+
+            foreach (var row in toUpdate)
+            {
+                var entity = await _itemSvc.GetByIdAsync(row.Id);
+                if (entity == null || entity.FoodCategoryId != categoryId)
+                    return Json(new { isSuccess = false, message = "آیتم نامعتبر در لیست بروزرسانی وجود دارد." });
+
+                var dto = new FoodItemUpsertDto
+                {
+                    FoodCategoryId = entity.FoodCategoryId,
+                    Title = entity.Title,
+                    Description = entity.Description,
+                    Price = row.Price,
+                    IsAvailable = entity.IsAvailable,
+                    DisplayOrder = entity.DisplayOrder
+                };
+
+                var updateRes = await _itemSvc.UpdateItemAsync(row.Id, dto, ct);
+                if (!updateRes.IsSuccess)
+                    return Json(new { isSuccess = false, message = updateRes.Message });
+            }
+
+            return Json(new { isSuccess = true, message = "قیمت همه آیتم‌ها بروزرسانی شد." });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ToggleCategoryItemAvailability([FromForm] int id, [FromForm] bool? isAvailable, CancellationToken ct)
         {
             if (id <= 0 || isAvailable is null)
@@ -213,13 +345,13 @@ namespace Web.Areas.Admin.Controllers
                 return Json(new { isSuccess = false, message = listRes.Message });
 
             var validIds = (listRes.Data?.Items?.Select(x => x.Id).ToHashSet()) ?? new HashSet<int>();
-            if (ids.Any(id => !validIds.Contains(id)))
+            if (ids.Any(itemId => !validIds.Contains(itemId)))
                 return Json(new { isSuccess = false, message = "چیدمان ارسالی معتبر نیست." });
 
             var newOrder = 1;
-            foreach (var id in ids)
+            foreach (var itemId in ids)
             {
-                var entity = await _itemSvc.GetByIdAsync(id);
+                var entity = await _itemSvc.GetByIdAsync(itemId);
                 if (entity == null || entity.FoodCategoryId != categoryId)
                     return Json(new { isSuccess = false, message = "آیتم نامعتبر در لیست چیدمان وجود دارد." });
 
@@ -233,14 +365,44 @@ namespace Web.Areas.Admin.Controllers
                     DisplayOrder = newOrder++
                 };
 
-                var updateRes = await _itemSvc.UpdateItemAsync(id, dto, ct);
+                var updateRes = await _itemSvc.UpdateItemAsync(itemId, dto, ct);
                 if (!updateRes.IsSuccess)
                     return Json(new { isSuccess = false, message = updateRes.Message });
             }
 
             return Json(new { isSuccess = true, message = "ترتیب نمایش آیتم‌ها بروزرسانی شد." });
         }
+
+        private async Task<(bool IsSuccess, string? Path, string Message)> SaveUploadedCategoryImageAsync(IFormFile file, CancellationToken ct)
+        {
+            var extension = Path.GetExtension(file.FileName)?.ToLowerInvariant();
+            var allowed = new[] { ".jpg", ".jpeg", ".png", ".webp", ".gif" };
+            if (string.IsNullOrWhiteSpace(extension) || !allowed.Contains(extension))
+                return (false, null, "فرمت فایل مجاز نیست.");
+
+            var uploadsRoot = Path.Combine(_env.WebRootPath, "uploads", "category-images");
+            if (!Directory.Exists(uploadsRoot))
+                Directory.CreateDirectory(uploadsRoot);
+
+            var fileName = $"{Guid.NewGuid():N}{extension}";
+            var physicalPath = Path.Combine(uploadsRoot, fileName);
+
+            await using (var stream = new FileStream(physicalPath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream, ct);
+            }
+
+            return (true, $"/uploads/category-images/{fileName}", string.Empty);
+        }
+
+        private void DeletePhysicalFile(string relativePath)
+        {
+            if (string.IsNullOrWhiteSpace(relativePath) || !relativePath.StartsWith('/'))
+                return;
+
+            var physicalPath = Path.Combine(_env.WebRootPath, relativePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+            if (System.IO.File.Exists(physicalPath))
+                System.IO.File.Delete(physicalPath);
+        }
     }
 }
-
-

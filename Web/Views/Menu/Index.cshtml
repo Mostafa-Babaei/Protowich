@@ -1,100 +1,11 @@
-﻿@model IReadOnlyList<Application.Features.FastFood.Dtos.PublicMenuCategoryDto>
+﻿@model Web.Models.PublicMenuPageVm
 @{
     ViewData["Title"] = "منو";
-    var categories = (Model ?? Array.Empty<Application.Features.FastFood.Dtos.PublicMenuCategoryDto>())
-        .OrderBy(c => c.DisplayOrder)
-        .ToList();
+
+    var activeTheme = (Model.ActiveThemeKey ?? "classic").Trim().ToLowerInvariant();
+    var partialName = activeTheme == "modern1"
+        ? "_MenuThemeModern1"
+        : "_MenuThemeClassic";
 }
 
-<div class="menu-header p-4 p-md-5 mb-4">
-    <div class="d-flex flex-wrap align-items-end justify-content-between gap-3">
-        <div>
-            <h1 class="display-6 fw-bold mb-2">منوی پروتویچ</h1>
-            <p class="text-muted mb-0">دسته‌بندی‌ها، آیتم‌ها و تصاویر غذاها</p>
-        </div>
-        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-outline-dark">بازگشت به اطلاعات</a>
-    </div>
-</div>
-
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-warning mb-4">@ViewBag.Error</div>
-}
-
-@if (categories.Count == 0)
-{
-    <div class="alert alert-info">فعلا آیتمی برای نمایش وجود ندارد.</div>
-}
-else
-{
-    <div class="row g-3 mb-4">
-        @foreach (var category in categories)
-        {
-            <div class="col-auto">
-                <a class="btn btn-sm btn-outline-primary" href="#cat-@category.Id">@category.Title</a>
-            </div>
-        }
-    </div>
-
-    @foreach (var category in categories)
-    {
-        <section id="cat-@category.Id" class="menu-category-section mb-4">
-            <div class="menu-category-head mb-3">
-                <h2 class="h4 mb-1">@category.Title</h2>
-                @if (!string.IsNullOrWhiteSpace(category.Description))
-                {
-                    <p class="text-muted mb-0">@category.Description</p>
-                }
-            </div>
-
-            @if (category.Items == null || category.Items.Count == 0)
-            {
-                <div class="alert alert-light border">در این دسته‌بندی آیتمی ثبت نشده است.</div>
-            }
-            else
-            {
-                <div class="row g-3">
-                    @foreach (var item in category.Items.OrderBy(i => i.DisplayOrder))
-                    {
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <article class="menu-item-card h-100">
-                                <div class="menu-item-image-wrap">
-                                    @if (!string.IsNullOrWhiteSpace(item.MainImageUrl))
-                                    {
-                                        <img src="@item.MainImageUrl" alt="@item.Title" class="menu-item-main-image" />
-                                    }
-                                    else
-                                    {
-                                        <div class="menu-item-no-image">بدون تصویر</div>
-                                    }
-                                </div>
-
-                                <div class="p-3">
-                                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                                        <h3 class="h6 mb-0">@item.Title</h3>
-                                        <span class="badge bg-success menu-item-price">@item.Price.ToString("N0") تومان</span>
-                                    </div>
-
-                                    @if (!string.IsNullOrWhiteSpace(item.Description))
-                                    {
-                                        <p class="small text-muted mb-3">@item.Description</p>
-                                    }
-
-                                    @if (item.ImageUrls != null && item.ImageUrls.Count > 1)
-                                    {
-                                        <div class="menu-thumb-list">
-                                            @foreach (var img in item.ImageUrls.Take(4))
-                                            {
-                                                <img src="@img" alt="@item.Title" class="menu-thumb" />
-                                            }
-                                        </div>
-                                    }
-                                </div>
-                            </article>
-                        </div>
-                    }
-                </div>
-            }
-        </section>
-    }
-}
+@await Html.PartialAsync(partialName, Model)

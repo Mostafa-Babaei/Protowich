@@ -145,7 +145,7 @@
     <script>
         (function () {
             const endpointBase = '@Url.Action("GetCategoryItems", "FoodCategories", new { area = "Admin" })';
-            const updatePriceEndpoint = '@Url.Action("UpdateCategoryItemPrice", "FoodCategories", new { area = "Admin" })';
+            const updatePricesBulkEndpoint = '@Url.Action("UpdateCategoryItemsPrices", "FoodCategories", new { area = "Admin" })';
             const toggleAvailabilityEndpoint = '@Url.Action("ToggleCategoryItemAvailability", "FoodCategories", new { area = "Admin" })';
             const updateOrderEndpoint = '@Url.Action("UpdateCategoryItemsOrder", "FoodCategories", new { area = "Admin" })';
             const modal = $('#categoryItemsModal');
@@ -176,8 +176,11 @@
                 }
 
                 let html = '<div class="d-flex justify-content-between align-items-center mb-2">';
-                html += '<small class="text-muted">ردیف‌ها را بکشید و رها کنید، سپس ذخیره ترتیب را بزنید.</small>';
+                html += '<small class="text-muted">قیمت‌ها را ویرایش کنید و با یک دکمه همه را ذخیره کنید.</small>';
+                html += '<div>';
+                html += '<button type="button" id="btn-save-all-prices" class="btn btn-sm btn-success ml-1">ذخیره همه قیمت‌ها</button>';
                 html += '<button type="button" id="btn-save-items-order" class="btn btn-sm btn-primary">ذخیره ترتیب</button>';
+                html += '</div>';
                 html += '</div>';
 
                 html += '<div class="table-responsive"><table class="table table-sm table-bordered mb-0">';
@@ -194,10 +197,9 @@
                     html += `<td>${escapeHtml(item.title)}</td>`;
                     html += '<td>';
                     html += `<div class="input-group input-group-sm">`;
-                    html += `<input type="number" min="0" step="1000" class="form-control js-price-input" value="${item.price}" data-item-id="${item.id}" />`;
-                    html += `<div class="input-group-append">`;
-                    html += `<button class="btn btn-outline-primary js-save-price" type="button" data-item-id="${item.id}">ثبت قیمت</button>`;
-                    html += `</div></div>`;
+                    html += `<input type="number" min="0" step="1000" class="form-control js-price-input" value="${item.price}" data-item-id="${item.id}" data-original-price="${item.price}" />`;
+                    html += `<div class="input-group-append"><span class="input-group-text">تومان</span></div>`;
+                    html += `</div>`;
                     html += '</td>';
                     html += `<td class="align-middle"><span class="js-status-badge" data-item-id="${item.id}">${statusBadge}</span></td>`;
                     html += '<td class="align-middle">';
@@ -305,26 +307,53 @@
                 }
             });
 
-            $(document).on('click', '.js-save-price', async function () {
-                const itemId = Number($(this).data('item-id') || 0);
-                const input = $(`.js-price-input[data-item-id="${itemId}"]`);
-                const price = Number(input.val());
-
-                if (itemId <= 0 || Number.isNaN(price) || price < 0) {
-                    alert('قیمت وارد شده معتبر نیست.');
+            $(document).on('click', '#btn-save-all-prices', async function () {
+                if (currentCategoryId <= 0) {
+                    alert('دسته‌بندی نامعتبر است.');
                     return;
                 }
 
-                const payload = await postForm(updatePriceEndpoint, {
-                    id: String(itemId),
-                    price: String(price),
+                const pairs = [];
+                let hasInvalid = false;
+
+                $('.js-price-input').each(function () {
+                    const input = $(this);
+                    const itemId = Number(input.data('item-id') || 0);
+                    const price = Number(input.val());
+
+                    if (itemId <= 0 || Number.isNaN(price) || price < 0) {
+                        hasInvalid = true;
+                        return false;
+                    }
+
+                    pairs.push(`${itemId}:${price}`);
+                });
+
+                if (hasInvalid) {
+                    alert('حداقل یک قیمت نامعتبر است.');
+                    return;
+                }
+
+                if (!pairs.length) {
+                    alert('آیتمی برای ذخیره وجود ندارد.');
+                    return;
+                }
+
+                const payload = await postForm(updatePricesBulkEndpoint, {
+                    categoryId: String(currentCategoryId),
+                    items: pairs.join(';'),
                     __RequestVerificationToken: antiForgeryToken
                 });
 
                 if (!payload.isSuccess) {
-                    alert(payload.message || 'خطا در ثبت قیمت.');
+                    alert(payload.message || 'خطا در ذخیره گروهی قیمت‌ها.');
                     return;
                 }
+
+                $('.js-price-input').each(function () {
+                    const input = $(this);
+                    input.attr('data-original-price', String(input.val()));
+                });
             });
 
             $(document).on('click', '.js-toggle-availability', async function () {

@@ -1,57 +1,74 @@
 ﻿@model Web.Areas.Admin.Models.FoodCategoryFormVm
 @{
-    Layout = "_AdminLayout"; ViewData["Title"] = Model.Id == null ? "افزودن دسته‌بندی" : "ویرایش دسته‌بندی";
+    Layout = "_AdminLayout";
+    ViewData["Title"] = Model.Id == null ? "افزودن دسته‌بندی" : "ویرایش دسته‌بندی";
 }
 
 <section class="content-header">
-  <div class="container-fluid">
-    <h1 class="m-0">@ViewData["Title"]</h1>
-  </div>
+    <div class="container-fluid">
+        <h1 class="m-0">@ViewData["Title"]</h1>
+    </div>
 </section>
 
 <section class="content">
-  <div class="container-fluid">
+    <div class="container-fluid">
         @await Html.PartialAsync("_Alerts")
 
-    <div class="card">
-      <div class="card-body">
-        <form method="post">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
                     @Html.AntiForgeryToken()
 
-          <div class="form-group">
-            <label>عنوان</label>
-            <input class="form-control" asp-for="Dto.Title" />
-          </div>
+                    <div class="form-group">
+                        <label asp-for="Dto.Title">عنوان</label>
+                        <input class="form-control" asp-for="Dto.Title" />
+                    </div>
 
-          <div class="form-group">
-            <label>توضیح</label>
-            <textarea class="form-control" rows="3" asp-for="Dto.Description"></textarea>
-          </div>
+                    <div class="form-group">
+                        <label asp-for="Dto.Description">توضیح</label>
+                        <textarea class="form-control" rows="3" asp-for="Dto.Description"></textarea>
+                    </div>
 
-          <div class="row">
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>ترتیب نمایش</label>
-                <input class="form-control" type="number" asp-for="Dto.DisplayOrder" />
-              </div>
+                    <div class="form-group">
+                        <label asp-for="UploadFile">عکس دسته‌بندی</label>
+                        <input class="form-control-file" type="file" asp-for="UploadFile" accept="image/*" />
+                        <small class="text-muted d-block mt-1">اگر آیتم عکس نداشته باشد، این عکس در منو نمایش داده می‌شود.</small>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Dto.ImageUrl))
+                    {
+                        <div class="form-group">
+                            <label>عکس فعلی</label>
+                            <div>
+                                <img src="@Model.Dto.ImageUrl" alt="@Model.Dto.Title" style="max-width:220px; border-radius:8px; border:1px solid #ddd;" />
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="Dto.DisplayOrder">ترتیب نمایش</label>
+                                <input class="form-control" type="number" asp-for="Dto.DisplayOrder" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="Dto.IsActive">فعال</label>
+                                <select class="form-control" asp-for="Dto.IsActive">
+                                    <option value="true">بله</option>
+                                    <option value="false">خیر</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success" type="submit">
+                        <i class="fas fa-save ml-1"></i> ذخیره
+                    </button>
+                    <a class="btn btn-secondary" asp-area="Admin" asp-controller="FoodCategories" asp-action="Index">بازگشت</a>
+                </form>
             </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>فعال</label>
-                <select class="form-control" asp-for="Dto.IsActive">
-                  <option value="true">بله</option>
-                  <option value="false">خیر</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <button class="btn btn-success" type="submit">
-            <i class="fas fa-save ml-1"></i> ذخیره
-          </button>
-          <a class="btn btn-secondary" asp-area="Admin" asp-controller="FoodCategories" asp-action="Index">بازگشت</a>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
 </section>

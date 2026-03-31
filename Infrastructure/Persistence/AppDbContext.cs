@@ -39,6 +39,7 @@ namespace Infrastructure.Persistence
         public DbSet<FoodItem> FoodItems { get; set; }
         public DbSet<FoodImage> FoodImages { get; set; }
         public DbSet<SubscriptionCustomer> SubscriptionCustomers { get; set; }
+        public DbSet<MenuThemeSetting> MenuThemeSettings { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

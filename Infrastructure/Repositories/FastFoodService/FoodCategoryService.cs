@@ -72,6 +72,7 @@ namespace Infrastructure.Repositories
                 {
                     Title = dto.Title.Trim(),
                     Description = dto.Description?.Trim(),
+                    ImageUrl = dto.ImageUrl?.Trim(),
                     DisplayOrder = dto.DisplayOrder,
                     IsActive = dto.IsActive,
                     CreatedAt = DateTime.Now,
@@ -101,6 +102,7 @@ namespace Infrastructure.Repositories
 
                 entity.Title = dto.Title.Trim();
                 entity.Description = dto.Description?.Trim();
+                entity.ImageUrl = dto.ImageUrl?.Trim();
                 entity.DisplayOrder = dto.DisplayOrder;
                 entity.IsActive = dto.IsActive;
                 entity.UpdatedAt = DateTime.Now;

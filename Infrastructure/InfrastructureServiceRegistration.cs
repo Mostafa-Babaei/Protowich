@@ -50,6 +50,7 @@ namespace Infrastructure
             services.AddScoped<IFoodImageService, FoodImageService>();
             services.AddScoped<ISubscriptionCustomerService, SubscriptionCustomerService>();
             services.AddScoped<IMenuPublicService, MenuPublicService>();
+            services.AddScoped<IMenuThemeService, MenuThemeService>();
 
 
             return services;

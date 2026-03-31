@@ -28,6 +28,7 @@ namespace Infrastructure.Repositories
                         Id = c.Id,
                         Title = c.Title,
                         Description = c.Description,
+                        ImageUrl = c.ImageUrl,
                         DisplayOrder = c.DisplayOrder
                     })
                     .ToListAsync(ct);
@@ -74,7 +75,16 @@ namespace Infrastructure.Repositories
                     };
 
                     if (map.TryGetValue(it.FoodCategoryId, out var cat))
+                    {
+                        if (string.IsNullOrWhiteSpace(dto.MainImageUrl) && !string.IsNullOrWhiteSpace(cat.ImageUrl))
+                        {
+                            dto.MainImageUrl = cat.ImageUrl;
+                            if (!dto.ImageUrls.Any())
+                                dto.ImageUrls.Add(cat.ImageUrl);
+                        }
+
                         cat.Items.Add(dto);
+                    }
                 }
 
                 // اگر دسته‌ای آیتم نداشت، خالی می‌مونه (می‌تونی فیلترش هم کنی)
